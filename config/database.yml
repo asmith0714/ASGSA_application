@@ -22,7 +22,6 @@ default: &default
   username: <%= ENV['DATABASE_USER'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
 
-
 development:
   <<: *default
   database: asgsa_application_development

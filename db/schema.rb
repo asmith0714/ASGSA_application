@@ -17,6 +17,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_174330) do
   create_table "event_member_joins", force: :cascade do |t|
     t.boolean "attended"
     t.boolean "rsvp"
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.time "start_time"
+    t.time "end_time"
+    t.date "date"
+    t.string "description"
+    t.integer "capacity"
+    t.integer "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

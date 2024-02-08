@@ -1,0 +1,45 @@
+<%= link_to("Back to List", events_path, class: 'back-link') %>
+
+<div class="events show">
+  <h2>Show event</h2>
+
+  <table summary="Event detail view">
+  <tr>
+  <th>Name:</th>
+  <td><%= @event.name %></td>
+  </tr>
+  <tr>
+  <th>Location:</th>
+  <td><%= @event.location %></td>
+  </tr>
+  <tr>
+  <th>Time:</th>
+  <td><%= @event.start_time&.strftime("%I:%M %p") %> - <%= @event.end_time&.strftime("%I:%M %p") %></td>
+  </tr>
+  <tr>
+  <tr>
+  <th>Date:</th>
+  <td><%= @event.date %></td>
+  </tr>
+  <tr>
+  <th>Description:</th>
+  <td><%= @event.description %></td>
+  </tr>
+  <tr>
+  <th>Capacity:</th>
+  <td><%= @event.capacity || 'No Limit' %></td>
+  </tr>
+  <tr>
+  <th>Points:</th>
+  <td><%= @event.points %></td>
+  </tr>
+  </table>
+  
+	<br>
+
+  <div class="actions">
+    <%= link_to('Edit', edit_event_path(@event)) %>
+    <%= link_to('Delete', delete_event_path(@event)) %>
+  </div>
+
+</div>
