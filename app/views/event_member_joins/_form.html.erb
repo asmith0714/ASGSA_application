@@ -1,0 +1,27 @@
+<%= form_with(model: event_member_join) do |form| %>
+  <% if event_member_join.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(event_member_join.errors.count, "error") %> prohibited this event_member_join from being saved:</h2>
+
+      <ul>
+        <% event_member_join.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :attended, style: "display: block" %>
+    <%= form.check_box :attended %>
+  </div>
+
+  <div>
+    <%= form.label :rsvp, style: "display: block" %>
+    <%= form.check_box :rsvp %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
