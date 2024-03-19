@@ -51,7 +51,7 @@ RSpec.describe "Member View", type: :feature do
         expect(page).to have_css('#edit_btn', count: 1)
         find('#edit_btn').click
         expect(page).to have_content("Edit Profile")
-        fill_in "member[degree]", with: "MS"
+        select 'MS', from: 'member[degree]'
         fill_in "member[area_of_study]", with: "Computer Science"
         fill_in "member[res_topic]", with: "Topic A"
         fill_in "member[res_lab]", with: "Lab A"
