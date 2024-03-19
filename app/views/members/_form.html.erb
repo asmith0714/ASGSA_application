@@ -1,9 +1,4 @@
 <%= form_with(model: member) do |form| %>
-  <% if member.errors.any? %>
-    <div style="color: red">
-      <p>Error when submitting</p>
-    </div>
-  <% end %>
 
   <div class="d-flex align-items-center vh-50" style="background-image: url(<%= asset_path 'tamu_stock5.jpg' %>); background-size: cover; padding: 5%;">
     <div class="card mx-auto" style="width: 60rem;">
@@ -12,8 +7,21 @@
         <h1 style="text-align: center">Edit Profile</h1>
         <p style="color: red; text-align: center">Some fields can only be changed by Officers or Admins<p>
         <div style="text-align: center; margin-bottom: 10px"> 
-          <%= image_tag @member.avatar_url, class: "avatar" %>
+          <% if @member.avatar_url.present? %>
+            <%= image_tag @member.avatar_url, class: "avatar" %>
+          <% else %>
+            <%= image_tag 'default_avatar.jpeg', class: "avatar" %>
+          <% end %>
         </div>
+        <% if @member.errors.any? %>
+          <div style="color: red; text-align: center">
+              <% member.errors.each do |error| %>
+                <div>
+                  <%= error.full_message %>
+                </div>
+              <% end %>
+          </div>
+        <% end %>
       </div>
       <div class="card-body">
         <div class="row">
@@ -40,7 +48,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <%= form.label :date_joined, 'Date Joined', class: 'form-label' %>
+            <%= form.label :date_joined, 'Date Joined', class: 'form-label required' %>
             <%= form.date_field :date_joined, required: true, min: Date.today - 8.years, max: Date.today, class: 'form-control' %>
           </div>
 
@@ -77,12 +85,12 @@
 
         <div class="mb-3">
           <%= form.label :res_description, 'Research Description', class: 'form-label' %>
-          <%= form.text_area :res_description, class: 'form-control' %>
+          <%= form.text_area :res_description, class: 'form-control', style: 'height: 100px' %>
         </div>
 
         <div class="mb-3">
           <%= form.label :food_allergies, 'Food Allergies', class: 'form-label required' %>
-          <%= form.text_area :food_allergies, required: true, class: 'form-control' %>
+          <%= form.text_area :food_allergies, required: true, class: 'form-control', style: 'height: 100px' %>
         </div>
 
         <%= form.submit 'Update Profile', class: 'btn btn-primary'%>

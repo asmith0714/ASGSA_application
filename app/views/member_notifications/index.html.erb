@@ -57,10 +57,10 @@
                     <% end %>
                   </td>
                   <td>
-                    <%= button_to mark_seen_member_notification_path(member_notification), method: :patch, class: "btn btn-secondary" do%>
+                    <%= button_to mark_seen_member_notification_path(member_notification), method: :patch, class: "btn btn-secondary", id: "show_btn" do%>
                       <i class='fas fa-eye'></i>
                     <% end %>
-                    <%= button_to member_notification_path(member_notification), method: :delete, class: "btn btn-danger" do%>
+                    <%= button_to member_notification_path(member_notification), method: :delete, class: "btn btn-danger", id: "delete_btn" do%>
                       <i class='fas fa-trash'></i>
                     <% end %>
                     </td>

@@ -212,7 +212,7 @@ body {
 }
 
 .form-field textarea {
-    height: 100px; /* Adjust the height as needed */
+    height: 150px; /* Adjust the height as needed */
     width: 100%; /* Adjust the width as needed */
     padding: 4px; /* Adjust padding as needed */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
@@ -253,20 +253,20 @@ body {
 }
 
 
-.profile-center {
+.top-bottom-text {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Center vertically */
     margin-right: 30px
 }
 
-.item1 { grid-area: degree; }
-.item2 { grid-area: study; }
-.item3 { grid-area: topic; }
-.item4 { grid-area: lab; }
-.item5 { grid-area: pioneer; }
-.item6 { grid-area: description; }
-.item7 { grid-area: allergies; }
+.additional-info .item1 { grid-area: degree; }
+.additional-info .item2 { grid-area: study; }
+.additional-info .item3 { grid-area: topic; }
+.additional-info .item4 { grid-area: lab; }
+.additional-info .item5 { grid-area: pioneer; }
+.additional-info .item6 { grid-area: description; }
+.additional-info .item7 { grid-area: allergies; }
 
 .additional-info {
     height: auto;
@@ -303,20 +303,37 @@ body {
 // Event Show Styling
 
 .show-event {
-
+   
 }
 
 .event-header {
     // border: 2px solid black;
-    padding: 10px;
-    border-bottom: 2px solid black;
-    text-align: center;
-    width: 35%;
-    margin: auto;
-    margin-bottom: 20px;
+    // padding: 10px;
+    // border-bottom: 4px solid black;
+    display: flex;
+    flex: 1; /* Take up remaining space */
+    // margin-bottom: 20px;
+    // width: 20%;
 }
 
+.event-info .item1 { grid-area: location; }
+.event-info .item2 { grid-area: date; }
+.event-info .item3 { grid-area: time; }
+.event-info .item4 { grid-area: capacity; }
+.event-info .item5 { grid-area: points; }
+.event-info .item6 { grid-area: contact; }
+.event-info .item7 { grid-area: description; }
+
 .event-info {
-    justify-content: center;
-    text-align: center;
+    height: auto;
+    // border: 2px solid black;
+    display: grid;
+    grid-template-areas:
+    'location date time .'
+    'capacity points contact contact'
+    'description description description description';
+    align-items: start;
+    gap: 10px;
+    padding: 10px;
+    word-break: auto;
 }

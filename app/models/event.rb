@@ -6,9 +6,10 @@ class Event < ApplicationRecord
     validates :start_time, presence: true
     validates :end_time, presence: true
     validates :date, presence: true
-    validates :description, presence: false
-    validates :capacity, numericality: {only_integer: true, greater_than_or_equal_to: 0}, allow_blank: true
+    validates :capacity, numericality: {only_integer: true, greater_than_or_equal_to: 1}, allow_blank: true
     validates :points, numericality: {only_integer: true, greater_than_or_equal_to: 0}
+    validates :contact_info, presence: false
+    validates :description, presence: false
     validate :end_time_after_start_time
     has_many :attendees
     has_many :attendees, dependent: :destroy
