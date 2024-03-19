@@ -53,12 +53,15 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <%= form.label :degree, 'Degree', class: 'form-label' %>
-            <%= form.select :degree, ['MS', 'PhD'], { selected: 'MS' }, { class: 'form-control' } %>
+            <%= form.select :degree, ['MS', 'PhD'], { selected: form.object.degree.presence || 'MS' }, { class: 'form-control' } %>
           </div>
 
           <div class="col-md-6 mb-3">
             <%= form.label :area_of_study, 'Area of Study', class: 'form-label' %>
-            <%= form.text_field :area_of_study, class: 'form-control' %>
+            <%= form.select :area_of_study, ['', 'Physiology of Reproduction', 'Animal Nutrition', 'Livestock Extension', 
+            'Meat Science', 'Microbiology', 'Gene Editing', 'Equine Sciences', 'Animal Welfare', 'Animal Breeding & Genetics',
+            'Epigenetics', 'Dairy Science', 'Genomics'], { selected: form.object.area_of_study.presence || ''}, 
+            class: 'form-control' %>
           </div>
         </div>
 
