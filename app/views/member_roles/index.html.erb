@@ -51,12 +51,18 @@
             <tbody>
               <% @member_roles.each do |member_role| %>
                 <tr>
-                  <td><%= image_tag(member_role.member.avatar_url, alt: member_role.member.first_name, class: 'profile-icon2') %></td>
+                  <td>
+                    <% if member_role.member.avatar_url.present? %>
+                      <%= image_tag(member_role.member.avatar_url, alt: member_role.member.first_name, class: 'profile-icon2') %>
+                    <% else %>
+                      <%= image_tag('default_avatar.jpeg', alt: member_role.member.first_name, class: 'profile-icon2') %>
+                    <% end %>
+                  </td>
                   <td><%= member_role.member_id %></td>
                   <td><%= member_role.member.first_name %></td>
                   <td><%= member_role.member.last_name %></td>
                   <td><%= member_role.role.name %></td>
-                  <td><%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_role_path(member_role), id: "edit_button_1", class: "btn btn-primary", style: "background-color: #007bff; border-color: #007bff" %></td>
+                  <td><%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_role_path(member_role), id: "edit_btn", class: "btn btn-primary", style: "background-color: #007bff; border-color: #007bff" %></td>
                 </tr>
               <% end %>
             </tbody>

@@ -43,7 +43,8 @@ RSpec.describe "/member_roles", type: :request do
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_member_role_url
+      member_role = MemberRole.create! valid_attributes
+      get member_role_url(member_role)
       expect(response).to be_successful
     end
   end

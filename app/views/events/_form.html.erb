@@ -1,88 +1,98 @@
 <%= form_with(model: @event) do |form| %>
-  <% if @event.errors.any? %>
-    <div style="color: red">
-      <p>Error when submitting</p>
-    </div>
-  <% end %> 
 
-  <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover;">
-      <div class="card mx-auto" style="width: 40rem;">
-          <div class="card-header">
-              <h1>New Event</h1>
-              <%= link_to("Back to List", events_path, :class => 'back-link') %>
+  <div class="d-flex align-items-center vh-50" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
+    <div class="card mx-auto" style="width: 40rem;">
+      <div class="card-header">
+        <%= link_to "Back to Details", event %>
+        | <%= link_to("Back to List", events_path, :class => 'back-link') %>
+        <h1 style="text-align: center">Edit Event</h1>
+
+        <% if @event.errors.any? %>
+          <div style="color: red; text-align: center">
+              <% @event.errors.each do |error| %>
+                <div>
+                  <%= error.full_message %>
+                </div>
+              <% end %>
           </div>
-          <div class="card-body">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <%= form.label :name, 'Name', class: 'form-label required' %>
-                  <%= form.text_field :name, required: true, class: 'form-control' %>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <%= form.label :location, 'Location', class: 'form-label required' %>
-                  <%= form.text_field :location, required: true, class: 'form-control' %>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <%= form.label :start_time, 'Start Time', class: 'form-label required' %>
-                <%= form.time_field :start_time, required: true, class: 'form-control' %>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                  <%= form.label :end_time, 'End Time', class: 'form-label required' %>
-                <%= form.time_field :end_time, required: true, class: 'form-control' %>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                  <%= form.label :date, 'Date', class: 'form-label required' %>
-                  <%= form.date_field :date, required: true, min: Date.today - 1, class: 'form-control' %>
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <%= form.label :description, 'Description', class: 'form-label' %>
-                <%= form.text_area :description, class: 'form-control' %>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <%= form.label :capacity, 'Capacity', class: 'form-label' %>
-                  <%= form.number_field :capacity, min: 1, class: 'form-control' %>
-                  *Leave blank if no capacity
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <%= form.label :points, 'Points', class: 'form-label required' %>
-                  <%= form.number_field :points, required: true, min: 0, class: 'form-control' %>
-                </div>
-              </div>
-
-      
-              
-              <div class="form-check mb-3">
-                <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
-                <%= label_tag :send_email_all, 'Send email to all members', class: 'form-check-label' %>
-              </div>
-
-              <div class="form-check mb-3">
-                <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
-                <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
-              </div>
-
-              <div class="form-check mb-3">
-                <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
-                <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
-              </div>
-
-              <div class="form-check mb-3">
-                <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
-                <%= label_tag :send_email_members, 'Don\'t send email', class: 'form-check-label' %>
-              </div>
-
-              <%= form.submit 'Create Event', class: 'btn btn-primary'%>
-          </div>
+        <% end %> 
+        
       </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= form.label :name, 'Name', class: 'form-label required' %>
+            <%= form.text_field :name, required: true, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= form.label :location, 'Location', class: 'form-label required' %>
+            <%= form.text_field :location, required: true, class: 'form-control' %>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <%= form.label :start_time, 'Start Time', class: 'form-label required' %>
+          <%= form.time_field :start_time, required: true, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <%= form.label :end_time, 'End Time', class: 'form-label required' %>
+          <%= form.time_field :end_time, required: true, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <%= form.label :date, 'Date', class: 'form-label required' %>
+            <%= form.date_field :date, required: true, min: Date.today.to_s, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= form.label :capacity, 'Capacity', class: 'form-label' %>
+            <%= form.number_field :capacity, min: 1, class: 'form-control' %>
+            *Leave blank if no capacity
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= form.label :points, 'Points', class: 'form-label required' %>
+            <%= form.number_field :points, required: true, min: 0, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :contact_information, 'Contact Information', class: 'form-label' %>
+          <%= form.text_area :contact_info, class: 'form-control', style: 'height: 90px' %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :description, 'Description', class: 'form-label' %>
+          <%= form.text_area :description, class: 'form-control', style: 'height: 150px' %>
+        </div>
+              
+        <div class="form-check mb-3">
+          <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
+          <%= label_tag :send_email_all, 'Send email to all members', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check mb-3">
+          <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
+          <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check mb-3">
+          <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
+          <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check mb-3">
+          <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
+          <%= label_tag :send_email_members, 'Don\'t send email', class: 'form-check-label' %>
+        </div>
+
+        <%= form.submit 'Update Event', class: 'btn btn-primary'%>
+      </div>
+    </div>
   </div>
 <% end %>

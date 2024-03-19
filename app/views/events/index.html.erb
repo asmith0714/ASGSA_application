@@ -51,10 +51,10 @@
                   <td><%= event.capacity || "No Limit" %></td>
                   <td><%= event.points %></td>
                   <td>
-                  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary" %>
+                  	<%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary", id: "show_btn" %>
                     <% if can_see_all_attributes %>
-						<%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary", style: "background-color: #007bff; border-color: #007bff" %>
-                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger" %>
+						<%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
+                      	<%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger", id: "delete_btn" %>
                     <% end %>
                   </td>
                 </tr>
@@ -65,7 +65,7 @@
         <%== pagy_nav @pagy %>
       <% end %>
 	  <% if can_see_all_attributes %>
-	  	<%= link_to("Add New Event", new_event_path, class: 'btn btn-primary') %>
+	  	<%= link_to("Add New Event", new_event_path, class: 'btn btn-primary', id: "create_btn") %>
 	  <% end %>
     </div>
   </div>

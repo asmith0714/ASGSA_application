@@ -4,7 +4,7 @@ class MemberRolesController < ApplicationController
   def index
     @member_roles = MemberRole.all
     if params[:query].present?
-      @member_roles = @member_roles.joins(:member, :role).where("members.first_name LIKE ? OR members.last_name LIKE ? OR roles.name LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%")
+      @member_roles = @member_roles.joins(:member, :role).where("members.first_name ILIKE ? OR members.last_name ILIKE ? OR roles.name ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%")
     end
     @pagy, @member_roles = pagy @member_roles.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
     if params[:role].present?

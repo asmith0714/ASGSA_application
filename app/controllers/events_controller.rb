@@ -92,6 +92,7 @@ class EventsController < ApplicationController
       :end_time,
       :date,
       :description,
+      :contact_info,
       :capacity,
       :points
     )

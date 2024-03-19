@@ -6,12 +6,13 @@ RSpec.describe Event, type: :model do
         {
         name: "Test Event",
         location: "College Station",
-        start_time: Time.now + 2.hour,
-        end_time: Time.current,
         date: Date.today,
-        description: "This is a description for test event",
+        start_time: "1:00PM",
+        end_time: "2:00PM",
         capacity: 20,
-        points: 3
+        points: 3,
+        contact_info: "Contact FakeEmail@tamu.edu for more information",
+        description: "This is a description for test event"
         }
     }
 
@@ -33,6 +34,11 @@ RSpec.describe Event, type: :model do
 
         it 'Is not valid without date' do
             event = Event.new(valid_attributes.merge(date: nil))
+            expect(event).not_to be_valid
+        end
+        
+        it 'End time before start time' do
+            event = Event.new(valid_attributes.merge(start_time: "1:00PM", end_time: "12:00PM"))
             expect(event).not_to be_valid
         end
 

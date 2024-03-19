@@ -12,8 +12,9 @@
           <% else %>
           <%= @event.capacity %>
         <% end %>
+        <br>
+        <%= link_to "RSVP For This Event", new_event_attendee_path(@event), class: "btn btn-primary" %>
         <% if can_see_all_attributes %>
-          <br>
           <%= link_to "Check Members In", check_in_event_attendees_path, class: "btn btn-primary" %>
         <% end %>
       </h1>

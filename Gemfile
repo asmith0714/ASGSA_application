@@ -65,6 +65,7 @@ group :development do
   gem 'rspec-rails'
 
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
+  gem "brakeman"
 end
 
 group :test do
@@ -92,3 +93,7 @@ gem "omniauth-rails_csrf_protection"
 gem "font-awesome-sass", "~> 6.5.1"
 
 gem 'pundit' 
+
+gem 'simplecov', require: false, group: :test
+
+gem 'add_to_calendar'

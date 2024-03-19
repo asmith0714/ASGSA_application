@@ -17,82 +17,77 @@ RSpec.describe "/member_notifications", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # MemberNotification. As you add validations to MemberNotification, be sure to
   # adjust the attributes here as well.
-  let(:valid_event) { Event.create!(
-    name: "Test Event",
-    location: "College Station",
-    start_time: Time.now,
-    end_time: Time.current + 2.hour,
-    date: Date.today,
-    description: "This is a description for test event",
-    capacity: 20,
-    points: 3
-  ) }
-  let(:valid_notification){ Notification.create!(
+  
+  before do
+  
+    @valid_notification = Notification.create!(
       title: "Test notification",
       description: "A test description",
       date: Date.today,
-      event_id: valid_event.id
     )
-  }
-  let(:valid_member) {Member.create!(
-      first_name: "John",
-      last_name: "Doe",
-      email: "john.doe@tamu.edu",
-      points: 100,
-      position: "Member",
-      date_joined: Date.today,
-      degree: "Bachelor",
-      res_topic: "Topic",
-      res_lab: "Lab",
-      res_pioneer: "Pioneer",
-      res_description: "Description",
-      area_of_study: "Study Area",
-      food_allergies: "None"
-    )
-  }
+
+    Rails.application.load_seed
+
+    # Setup mock OmniAuth user
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+      provider: 'google_oauth2',
+      uid: '123456789',
+      info: {
+        email: "john@tamu.edu",
+        first_name: "John",
+        last_name: "Doe",
+        image: "https://example.com/image.jpg"
+      },
+      credentials: {
+        token: "token",
+        refresh_token: "refresh token",
+        expires_at: DateTime.now,
+      }
+    })
+
+    get member_google_oauth2_omniauth_callback_path
+
+    @valid_member = Member.find_by(email: "john@tamu.edu")
+  end
 
   let(:valid_attributes) {
-    {
-      member_id: valid_member.id,
-      notification_id: valid_notification.id,
-      seen: false
+      {
+        member_id: Member.find_by(email: "john@tamu.edu").id,
+        notification_id: Notification.find_by(title: "Test notification").id,
+        seen: false
+      }
     }
-  }
-
-  let(:invalid_attributes) {
-    {
-      member_id: false,
-      notification_id: false,
-      seen: nil 
+  
+    let(:invalid_attributes) {
+      {
+        member_id: nil,
+        notification_id: Notification.find_by(title: "Test notification").id,
+        seen: "7"
+      }
     }
-  }
 
   describe "GET /index" do
     it "renders a successful response" do
-      MemberNotification.create! valid_attributes
-      get member_notifications_url
+      MemberNotification.create!(valid_attributes)
+      get "/member_notifications"
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      member_notification = MemberNotification.create! valid_attributes
+      member_notification = MemberNotification.create!(valid_attributes)
       get member_notification_url(member_notification)
       expect(response).to be_successful
     end
   end
 
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_member_notification_url
-      expect(response).to be_successful
-    end
-  end
+  #No new because we never go to that path directly
 
   describe "GET /edit" do
     it "renders a successful response" do
-      member_notification = MemberNotification.create! valid_attributes
+      member_notification = MemberNotification.create!(valid_attributes)
       get edit_member_notification_url(member_notification)
       expect(response).to be_successful
     end

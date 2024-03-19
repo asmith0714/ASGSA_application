@@ -9,30 +9,35 @@
   <div class="profile">
     <div class="profile-header">
       <div class="profile-image", style="margin-right: 30px"> 
-        <%= image_tag @member.avatar_url, class: "avatar" %>
+        <% if @member.avatar_url.present? %>
+          <%= image_tag @member.avatar_url, class: "avatar" %>
+        <% else %>
+          <%= image_tag 'default_avatar.jpeg', class: "avatar" %>
+        <% end %>
       </div>
 
-      <div class="profile-center">
+      <div class="top-bottom-text">
         <h2><%= @member.first_name %>  <%= @member.last_name %></h2>
       </div>
         
-      <div class="profile-center">
+      <div class="top-bottom-text">
         <strong>Position</strong>
         <%= @member.position %>
       </div>
 
-      <div class="profile-center">
+      <div class="top-bottom-text">
         <strong>Member Since</strong>
         <%= @member.date_joined %>
       </div>
 
-      <div class="profile-center">
+      <div class="top-bottom-text">
         <strong>Email Address</strong>
         <%= @member.email %>
       </div>
       
-      <% if policy(current_member).admin_officer_member_info? %>
-        <div class="profile-center">
+      <!-- Not blocking view properly  -->
+      <% if policy(current_member).admin_officer? || current_member == @member %>
+        <div class="top-bottom-text">
           <strong>Current Points</strong>
           <%= @member.points %>
         </div>
@@ -42,41 +47,41 @@
     </div>
 
     <div class="additional-info">
-      <div class="profile-center item1">
+      <div class="top-bottom-text item1">
         <strong> Degree </strong>
         <%= @member.degree  %>
       </div>
 
-      <div class="profile-center item2">
+      <div class="top-bottom-text item2">
         <strong> Area of Study </strong>
         <%= @member.area_of_study %>
       </div>
 
-      <div class="profile-center item3">
+      <div class="top-bottom-text item3">
         <strong> Research Topic </strong>
         <%= @member.res_topic  %>
       </div>
 
-      <div class="profile-center item4">
+      <div class="top-bottom-text item4">
         <strong> Research Lab </strong>
         <%= @member.res_lab  %>
       </div>
       
-      <div class="profile-center item6">
+      <div class="top-bottom-text item6">
         <strong> Research Description </strong>
         <%= @member.res_description  %>
       </div>
 
-      <div class="profile-center item7">
+      <div class="top-bottom-text item7">
         <strong> Food Allergies </strong>
         <%= @member.food_allergies  %>
       </div>
     </div>
-    
-
+  
   </div>
 
-  <% if policy(current_member).admin_officer_member_info? %>
+  <!-- Not blocking view properly  -->
+  <% if policy(current_member).admin_officer? || current_member == @member %>
     <div class="member-event-history">
       <h1 style="text-align: center; text-decoration: underline">Event History<h1>
       <div class="member-events-list">
@@ -96,10 +101,10 @@
           <% end %>
         <% end %>
       </div>
-
-
-      </div>
     </div>
   <% end %>
 
 </div>
+
+<br>
+<br>
