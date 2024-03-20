@@ -23,7 +23,22 @@
           </div>
         <% end %>
       </div>
+                
       <div class="card-body">
+          <% if policy(current_member).admin_officer? %>
+            <div class="row">
+              <div class="col-md-4 mb-3"></div>
+
+              
+              <div class="col-md-4 mb-3">
+                <%= form.label :status, 'Status', class: 'form-label required' %>
+                <%= form.text_field :status, required: true, class: 'form-control' %>
+              </div>
+
+              <div class="col-md-4 mb-3"></div>
+            </div>
+          <% end %>
+
         <div class="row">
           <div class="col-md-4 mb-3">
             <%= form.label :first_name, 'First Name', class: 'form-label required' %>
