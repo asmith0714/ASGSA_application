@@ -25,20 +25,6 @@
       </div>
                 
       <div class="card-body">
-          <% if policy(current_member).admin_officer? %>
-            <div class="row">
-              <div class="col-md-4 mb-3"></div>
-
-              
-              <div class="col-md-4 mb-3">
-                <%= form.label :status, 'Status', class: 'form-label required' %>
-                <%= form.text_field :status, required: true, class: 'form-control' %>
-              </div>
-
-              <div class="col-md-4 mb-3"></div>
-            </div>
-          <% end %>
-
         <div class="row">
           <div class="col-md-4 mb-3">
             <%= form.label :first_name, 'First Name', class: 'form-label required' %>
@@ -67,9 +53,18 @@
             <%= form.date_field :date_joined, required: true, min: Date.today - 8.years, max: Date.today, class: 'form-control' %>
           </div>
 
-          <div class="col-md-4 mb-3">
+          <div class="col-md-3 mb-3">
             <%= form.label :position, 'Position', class: 'form-label required' %>
             <%= form.text_field :position, required: true, class: 'form-control', readonly: (!policy(current_member).admin? ? true : false) %>
+          </div>
+
+          <div class="col-md-1 mb-3">
+            <% if policy(current_member).admin_officer? %>
+              <%= form.label :status, 'Active', class: 'form-label required' %> <br>
+              <div style="padding-left: 25%;">
+                <%= form.check_box :status, style: "transform: scale(1.8);" %>
+              </div>
+            <% end %>
           </div>
         </div>
 
