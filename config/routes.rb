@@ -14,7 +14,17 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :member_roles
+  resources :member_roles do
+    member do
+      put 'approve'
+      put 'reject'
+    end
+
+    collection do
+      get 'approval'
+    end
+  end
+  
   resources :members do
     member do
       get 'delete_confirmation'
