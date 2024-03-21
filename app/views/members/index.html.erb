@@ -42,6 +42,7 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Position</th>
+                <th scope="col">Area of Study</th>
                 <% if can_see_all_attributes %>
                   <th scope="col">Points</th>
                 <% end %>
@@ -62,6 +63,7 @@
                   <td><%= member.last_name %></td>
                   <td><%= member.email %></td>
                   <td><%= member.position %></td>
+                  <td><%= member.area_of_study %></td>
                   <% if can_see_all_attributes %>
                     <td><%= member.points %></td>
                   <% end %>
