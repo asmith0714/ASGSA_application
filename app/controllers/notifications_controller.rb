@@ -3,30 +3,36 @@ class NotificationsController < ApplicationController
 
   # GET /notifications or /notifications.json
   def index
+    authorize Notification
     @notifications = Notification.all
   end
 
   # GET /notifications/1 or /notifications/1.json
   def show
+    authorize Notification
   end
 
   # GET /notifications/new
   def new
+    authorize Notification
     @notification = Notification.new
     Member.count.times {@notification.member_notifications.build}
   end
 
   # GET /notifications/1/edit
   def edit
+    authorize Notification
   end
 
   # GET /notifications/1/delete_confirmation
   def delete_confirmation
+    authorize Notification
     # Render delete_confirmation view
   end
 
   # POST /notifications or /notifications.json
   def create
+    authorize Notification
     @notification = Notification.new(notification_params)
     @members = Member.all
 
@@ -51,6 +57,7 @@ class NotificationsController < ApplicationController
 
   # PATCH/PUT /notifications/1 or /notifications/1.json
   def update
+    authorize Notification
     respond_to do |format|
       if @notification.update(notification_params)
         format.html { redirect_to notification_url(@notification), notice: "Notification was successfully updated." }
@@ -64,6 +71,7 @@ class NotificationsController < ApplicationController
 
   # DELETE /notifications/1 or /notifications/1.json
   def destroy
+    authorize Notification
     @notification.destroy!
 
     respond_to do |format|
