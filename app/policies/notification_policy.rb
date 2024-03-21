@@ -41,6 +41,10 @@ class NotificationPolicy < ApplicationPolicy
     admin_officer?
   end
 
+  def delete_confirmation?
+    admin_officer?
+  end
+
 
   def admin_officer_member_info?
     user.admin? || user.officer? || record.id == user.id
