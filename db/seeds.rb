@@ -19,6 +19,14 @@
   {
     name:"Member",
     permissions: "Read"
+  },
+  {
+    name:"Unapproved",
+    permissions: "None"
+  },
+  {
+    name:"Approved",
+    permissions: "None"
   }
 ].each do |role|
   Role.find_or_create_by(role)

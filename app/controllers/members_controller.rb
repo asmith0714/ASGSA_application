@@ -17,6 +17,7 @@ class MembersController < ApplicationController
 
   # GET /members/1 or /members/1.json
   def show
+    @member = Member.find(params[:id])
     authorize @member
   end
 

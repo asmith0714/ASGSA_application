@@ -33,6 +33,24 @@ class MemberRolesController < ApplicationController
   def edit
   end
 
+  def approve
+    member_role = MemberRole.find(params[:id])
+    member_role.update(role: Role.find_by(name: 'Member'))
+    redirect_to member_roles_path, notice: 'Account approved successfully'
+  end
+
+  def reject
+    member_role = MemberRole.find(params[:id])
+    member = member_role.member
+    member_role.destroy
+    member.destroy if member.member_roles.empty?
+    redirect_to member_roles_path, notice: 'Account rejected successfully'
+  end
+
+  def approval
+    @pagy, @member_roles = pagy(MemberRole.joins(:role).where(roles: { name: 'Unapproved' }))
+  end
+
   # POST /member_roles or /member_roles.json
   def create
     @member_role = MemberRole.new(member_role_params)
