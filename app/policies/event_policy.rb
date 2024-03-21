@@ -7,11 +7,11 @@ class EventPolicy < ApplicationPolicy
   end
   
     def index?
-      admin_officer_member_info?
+      authorized?
     end
   
     def show?
-      admin_officer_member_info?
+      authorized?
     end
     
     def new?
@@ -49,5 +49,9 @@ class EventPolicy < ApplicationPolicy
   
     def admin?
       user.admin?
+    end
+
+    def authorized? 
+      user.admin? || user.officer? || user.member?
     end
 end
