@@ -39,7 +39,7 @@
 
           <div class="col-md-4 mb-3">
             <%= form.label :end_time, 'End Time', class: 'form-label required' %>
-          <%= form.time_field :end_time, required: true, class: 'form-control' %>
+            <%= form.time_field :end_time, required: true, class: 'form-control' %>
           </div>
 
           <div class="col-md-4 mb-3">
@@ -49,13 +49,18 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
+            <%= form.label :category, 'Category', class: 'form-label required' %>
+            <%= form.select :category, [['Social Event', 'social event'], ['Coffee Breaks', 'coffee break'], ['Service Event', 'service event'], ['Happy Hour', 'happy hour'], ['Member Meeting', 'member meeting'], ['Executive Meeting', 'executive meeting']], {include_blank: true}, {required: true, class: 'form-control'} %>
+          </div>
+      
+          <div class="col-md-4 mb-3">
             <%= form.label :capacity, 'Capacity', class: 'form-label' %>
             <%= form.number_field :capacity, min: 1, class: 'form-control' %>
             *Leave blank if no capacity
           </div>
 
-          <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
             <%= form.label :points, 'Points', class: 'form-label required' %>
             <%= form.number_field :points, required: true, min: 0, class: 'form-control' %>
           </div>
@@ -73,22 +78,22 @@
               
         <div class="form-check mb-3">
           <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_all, 'Send email to all members', class: 'form-check-label' %>
-        </div>
-
-        <div class="form-check mb-3">
-          <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
+          <%= label_tag :send_email_all, 'Notify change to all members', class: 'form-check-label' %>
         </div>
 
         <div class="form-check mb-3">
           <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
+          <%= label_tag :send_email_members, 'Notify change to members only', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check mb-3">
+          <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
+          <%= label_tag :send_email_officers, 'Notify change to officers only', class: 'form-check-label' %>
         </div>
 
         <div class="form-check mb-3">
           <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
-          <%= label_tag :send_email_members, 'Don\'t send email', class: 'form-check-label' %>
+          <%= label_tag :send_email_members, 'Don\'t send notification', class: 'form-check-label' %>
         </div>
 
         <%= form.submit 'Update Event', class: 'btn btn-primary'%>

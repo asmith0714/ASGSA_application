@@ -48,13 +48,18 @@
           </div>
   
           <div class="row">
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
+              <%= form.label :category, 'Category', class: 'form-label required' %>
+              <%= form.select :category, [['Social Event', 'social event'], ['Coffee Breaks', 'coffee break'], ['Service Event', 'service event'], ['Happy Hour', 'happy hour'], ['Member Meeting', 'member meeting'], ['Executive Meeting', 'executive meeting']], {include_blank: true}, {required: true, class: 'form-control'} %>
+            </div>
+
+            <div class="col-md-4 mb-3">
               <%= form.label :capacity, 'Capacity', class: 'form-label' %>
               <%= form.number_field :capacity, min: 1, class: 'form-control' %>
               *Leave blank if no capacity
             </div>
   
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
               <%= form.label :points, 'Points', class: 'form-label required' %>
               <%= form.number_field :points, required: true, min: 0, class: 'form-control' %>
             </div>
