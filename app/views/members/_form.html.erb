@@ -42,28 +42,33 @@
           </div>
         </div>
 
+        <% md_value = 0 %>
+        <% if policy(current_member).admin_officer? %>
+          <% md_value = 3 %>
+        <% else %>
+          <% md_value = 4 %>
+        <% end %>
+
         <div class="row">
-          <div class="col-md-4 mb-3">
+          <div class="col-md-<%= md_value %> mb-3">
             <%= form.label :points, 'Points', class: 'form-label required' %>
             <%= form.number_field :points, required: true, min: 0, class: 'form-control', readonly: (!policy(current_member).admin_officer? ? true : false) %>
           </div>
 
-          <div class="col-md-4 mb-3">
+          <div class="col-md-<%= md_value %> mb-3">
             <%= form.label :date_joined, 'Date Joined', class: 'form-label required' %>
             <%= form.date_field :date_joined, required: true, min: Date.today - 8.years, max: Date.today, class: 'form-control' %>
           </div>
 
-          <div class="col-md-3 mb-3">
+          <div class="col-md-<%= md_value %> mb-3">
             <%= form.label :position, 'Position', class: 'form-label required' %>
             <%= form.text_field :position, required: true, class: 'form-control', readonly: (!policy(current_member).admin? ? true : false) %>
           </div>
 
-          <div class="col-md-1 mb-3">
+          <div class="col-md-<%= md_value %> mb-3">
             <% if policy(current_member).admin_officer? %>
-              <%= form.label :status, 'Active', class: 'form-label required' %> <br>
-              <div style="padding-left: 25%;">
-                <%= form.check_box :status, style: "transform: scale(1.8);" %>
-              </div>
+              <%= form.label :status, 'Status', class: 'form-label required' %> <br>
+              <%= form.select :status, ['Active','Inactive', 'Past'], { selected: form.object.status.presence || 'Active' }, { class: 'form-control' } %>
             <% end %>
           </div>
         </div>
