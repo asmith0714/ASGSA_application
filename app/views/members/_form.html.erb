@@ -42,27 +42,50 @@
           </div>
         </div>
 
-        <% md_value = 0 %>
-        <% if policy(current_member).admin_officer? %>
-          <% md_value = 3 %>
-        <% else %>
-          <% md_value = 4 %>
-        <% end %>
-
         <div class="row">
-          <div class="col-md-<%= md_value %> mb-3">
+          <div class="col-md-4 mb-3">
             <%= form.label :points, 'Points', class: 'form-label required' %>
             <%= form.number_field :points, required: true, min: 0, class: 'form-control', readonly: (!policy(current_member).admin_officer? ? true : false) %>
           </div>
 
-          <div class="col-md-<%= md_value %> mb-3">
+          <div class="col-md-4 mb-3">
             <%= form.label :date_joined, 'Date Joined', class: 'form-label required' %>
             <%= form.date_field :date_joined, required: true, min: Date.today - 8.years, max: Date.today, class: 'form-control' %>
           </div>
 
-          <div class="col-md-<%= md_value %> mb-3">
+          <div class="col-md-4 mb-3">
             <%= form.label :position, 'Position', class: 'form-label required' %>
             <%= form.text_field :position, required: true, class: 'form-control', readonly: (!policy(current_member).admin? ? true : false) %>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <% md_value = 0 %>
+          <% if policy(current_member).admin_officer? %>
+            <% md_value = 3 %>
+          <% else %>
+            <% md_value = 4 %>
+          <% end %>
+
+          <div class="col-md-<%= md_value %> mb-3">
+            <%= form.label :degree, 'Degree', class: 'form-label' %>
+            <%= form.select :degree, ['MS', 'PhD'], { selected: form.object.degree.presence || 'MS' }, { class: 'form-control' } %>
+          </div>
+
+          <div class="col-md-<%= md_value %> mb-3">
+            <%= form.label :area_of_study, 'Area of Study', class: 'form-label' %>
+            <%= form.select :area_of_study, ['', 'Physiology of Reproduction', 'Animal Nutrition', 'Livestock Extension', 
+            'Meat Science', 'Microbiology', 'Gene Editing', 'Equine Sciences', 'Animal Welfare', 'Animal Breeding & Genetics',
+            'Epigenetics', 'Dairy Science', 'Genomics'], { selected: form.object.area_of_study.presence || ''}, 
+            { class: 'form-control' } %>
+          </div>
+
+          <div class="col-md-<%= md_value %> mb-3">
+            <%= form.label :faculty, 'Faculty/Staff', class: 'form-label' %>
+            <%= form.select :faculty, ['', 'Advisor', 'Executive', 'Member'], 
+                { selected: form.object.faculty.presence || '' }, 
+                { class: 'form-control', disabled: (!policy(current_member).admin_officer? ? true : false) } %>
           </div>
 
           <div class="col-md-<%= md_value %> mb-3">
@@ -70,21 +93,6 @@
               <%= form.label :status, 'Status', class: 'form-label required' %> <br>
               <%= form.select :status, ['Active','Inactive', 'Past'], { selected: form.object.status.presence || 'Active' }, { class: 'form-control' } %>
             <% end %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <%= form.label :degree, 'Degree', class: 'form-label' %>
-            <%= form.select :degree, ['MS', 'PhD'], { selected: form.object.degree.presence || 'MS' }, { class: 'form-control' } %>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <%= form.label :area_of_study, 'Area of Study', class: 'form-label' %>
-            <%= form.select :area_of_study, ['', 'Physiology of Reproduction', 'Animal Nutrition', 'Livestock Extension', 
-            'Meat Science', 'Microbiology', 'Gene Editing', 'Equine Sciences', 'Animal Welfare', 'Animal Breeding & Genetics',
-            'Epigenetics', 'Dairy Science', 'Genomics'], { selected: form.object.area_of_study.presence || ''}, 
-            class: 'form-control' %>
           </div>
         </div>
 
