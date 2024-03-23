@@ -56,6 +56,14 @@
     </div>
 
     <div class="additional-info">
+
+      <% if @member.faculty.present? %>
+        <div>
+          <strong> Faculty <span style="color: #b38f00;">*</span></strong><br>
+          <%= @member.faculty %>
+        </div>
+      <% end %>
+
       <div class="top-bottom-text item1">
         <strong> Degree </strong>
         <%= @member.degree  %>
