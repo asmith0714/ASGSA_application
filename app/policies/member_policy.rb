@@ -13,9 +13,13 @@ class MemberPolicy < ApplicationPolicy
     end
   end
  
-
+  def index?
+    approved?
+  end
+  
   def show?
-    true # Information displayed by show is controlled by the view. But everyone can access. 
+ # Information displayed by show is controlled by the view. But everyone can access. 
+    approved?
   end
   
   def new?
@@ -55,4 +59,9 @@ class MemberPolicy < ApplicationPolicy
   def admin?
     user.admin?
   end
+
+  def approved?
+    !user.unapproved?
+  end
+
 end

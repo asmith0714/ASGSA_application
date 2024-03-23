@@ -31,6 +31,10 @@ class Member < ApplicationRecord
     member_roles.exists?(role_id: Role.find_by(name: 'Member').id)
   end
 
+  def unapproved?
+    member_roles.exists?(role_id: Role.find_by(name: 'Unapproved').id)
+  end
+
   def unseen_notifications_count
     member_notifications.where(seen: false).count
   end

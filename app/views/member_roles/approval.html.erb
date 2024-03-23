@@ -50,8 +50,8 @@
                   <td><%= member_role.member.first_name %></td>
                   <td><%= member_role.member.last_name %></td>
                   <td>
-                    <%= button_to 'Approve', approve_member_role_path(member_role), method: :put, class: 'btn btn-success' %>
-                    <%= button_to 'Reject', reject_member_role_path(member_role), method: :put, class: 'btn btn-danger' %>
+                    <%= button_to 'Approve', approve_member_role_path(member_role), method: :put, class: 'btn btn-success d-inline-block' %>
+                    <%= button_to 'Reject', reject_member_role_path(member_role), method: :put, class: 'btn btn-danger d-inline-block' %>
                   </td>
                 </tr>
               <% end %>
