@@ -26,7 +26,7 @@ class NotificationPolicy < ApplicationPolicy
   end
 
   def create?
-    admin_officer? # Only admins and officers can create new members
+    admin_officer? 
   end
 
   def edit?

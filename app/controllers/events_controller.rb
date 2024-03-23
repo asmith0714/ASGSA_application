@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
 
   def index
+    authorize Event
     @events = Event.all
     @events = @events.search(params[:query]) if params[:query].present?
     @pagy, @events = pagy @events.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
@@ -16,21 +17,26 @@ class EventsController < ApplicationController
   end
 
   def show
+    authorize Event
   end
 
   def new
+    authorize Event
     @event = Event.new
   end
 
   def edit
+    authorize Event
   end
 
   def delete_confirmation
+    authorize Event
     # Render delete_confirmation view
     @event = Event.find(params[:id])
   end
 
   def create
+    authorize Event
     @event = Event.new(event_params)
 
     respond_to do |format|
@@ -57,6 +63,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    authorize Event
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to event_path(@event), notice: "Event was successfully updated." }
@@ -69,6 +76,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    authorize Event
     @event.destroy!
 
     respond_to do |format|

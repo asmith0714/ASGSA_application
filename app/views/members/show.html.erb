@@ -35,18 +35,35 @@
         <%= @member.email %>
       </div>
       
-      <!-- Not blocking view properly  -->
       <% if policy(current_member).admin_officer? || current_member == @member %>
+        <!-- Not blocking view properly  -->
         <div class="top-bottom-text">
           <strong>Current Points</strong>
           <%= @member.points %>
         </div>
-        
+      <% end %>
+
+      <% if policy(current_member).admin_officer? %> 
+        <div class="top-bottom-text">
+          <strong>Status</strong>
+          <%= @member.status %>
+        </div>
+      <% end %>
+      
+      <% if policy(current_member).admin_officer? || current_member == @member %>
         <%= link_to "Edit", edit_member_path(@member) %>
       <% end %>
     </div>
 
     <div class="additional-info">
+
+      <% if @member.faculty.present? %>
+        <div>
+          <strong> Faculty <span style="color: #b38f00;">*</span></strong><br>
+          <%= @member.faculty %>
+        </div>
+      <% end %>
+
       <div class="top-bottom-text item1">
         <strong> Degree </strong>
         <%= @member.degree  %>
