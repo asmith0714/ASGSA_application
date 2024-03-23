@@ -39,7 +39,9 @@ class MemberRolesController < ApplicationController
 
   def approve
     member_role = MemberRole.find(params[:id])
+    member = member_role.member
     member_role.update(role: Role.find_by(name: 'Member'))
+    MemberMailer.with(member: member).new_member_email.deliver_now
     redirect_to member_roles_path, notice: 'Account approved successfully'
   end
 

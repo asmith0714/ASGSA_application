@@ -45,7 +45,6 @@ class Member < ApplicationRecord
     member = create_with(uid: uid, first_name: first_name, last_name: last_name, avatar_url: avatar_url, points: 0, position: "Member", date_joined: Time.current, food_allergies: "None").find_or_create_by!(email: email)
     role = Role.find_by(name: 'Unapproved')
     MemberRole.create(member: member, role: role) if first_time
-    MemberMailer.with(member: member).new_member_email.deliver_now if first_time
     [member, first_time]
   end
 end

@@ -3,6 +3,7 @@ class MemberNotificationsController < ApplicationController
 
   # GET /member_notifications or /member_notifications.json
   def index
+    authorize MemberNotification
     @member_notifications = MemberNotification.where(member_id: current_member.id).all
     @member_notifications = @member_notifications.search(params[:query]) if params[:query].present?
     @pagy, @member_notifcations = pagy @member_notifications.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
@@ -18,18 +19,22 @@ class MemberNotificationsController < ApplicationController
 
   # GET /member_notifications/1 or /member_notifications/1.json
   def show
+    authorize MemberNotification
   end
 
   # GET /member_notifications/new
   def new
+    authorize MemberNotification
     @member_notification = MemberNotification.new
   end
 
   # GET /member_notifications/1/edit
   def edit
+    authorize MemberNotification
   end
 
   def mark_seen
+    authorize MemberNotification
     @member_notification = MemberNotification.find(params[:id])
 
     respond_to do |format|
@@ -45,6 +50,7 @@ class MemberNotificationsController < ApplicationController
 
   # POST /member_notifications or /member_notifications.json
   def create
+    authorize MemberNotification
     @member_notification = MemberNotification.new(member_notification_params)
 
     respond_to do |format|
@@ -60,6 +66,7 @@ class MemberNotificationsController < ApplicationController
 
   # PATCH/PUT /member_notifications/1 or /member_notifications/1.json
   def update
+    authorize MemberNotification
     respond_to do |format|
       if @member_notification.update(member_notification_params)
         format.html { redirect_to member_notification_url(@member_notification), notice: "Member notification was successfully updated." }
@@ -73,6 +80,7 @@ class MemberNotificationsController < ApplicationController
 
   # DELETE /member_notifications/1 or /member_notifications/1.json
   def destroy
+    authorize MemberNotification
     @member_notification.destroy!
 
     respond_to do |format|

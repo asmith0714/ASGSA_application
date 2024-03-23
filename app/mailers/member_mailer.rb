@@ -3,7 +3,7 @@ require 'cgi'
 class MemberMailer < ApplicationMailer
     def new_member_email
         @member = params[:member]
-        mail(to: @member.email, subject: 'Welcome to ASGSA!')
+        mail(to: @member.email, subject: 'Your ASGSA Account Has Been Approved!')
     end
 
     def support_email(name, email, issue)

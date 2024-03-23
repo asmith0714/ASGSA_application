@@ -24,6 +24,11 @@
     <% end %>
     <nav class="navbar navbar-expand-lg navbar-custom">
       <%= link_to image_tag("asgsa_logo.png", alt: "ASGSA TAMU", class: 'navbar-brand'), root_path %>
+      <% if member_signed_in? && !policy(current_member).approved? %>
+        <div class="alert alert-warning" role="alert">
+          Your account is pending approval. Once approved, you will receive an email notification and be able to access the website.
+        </div>
+      <% end %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -34,10 +39,10 @@
           <li class="nav-item"><%= link_to 'Events', events_path, class: 'nav-link' %></li>
           <% if member_signed_in? && policy(current_member).admin_officer? %>
            <li class="nav-item"><%= link_to 'Notifications', notifications_path, class: 'nav-link' %></li>
+           <li class="nav-item"><%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %></li>
           <% end %>
           <% if member_signed_in? && policy(current_member).admin? %>
             <li class="nav-item"><%= link_to "Role Management", member_roles_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %></li>
           <% end %>
         </ul>
         <ul class="navbar-nav">
