@@ -1,11 +1,21 @@
 class MembersController < ApplicationController
   before_action :set_member, only: %i[ show edit update destroy delete_confirmation]
+  helper_method :sort_column, :sort_direction
 
   def index
     authorize Member
     @members = Member.all
     @members = @members.search(params[:query]) if params[:query].present?
     @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+
+    if params[:area_of_study].present?
+      @members = @members.where(area_of_study: params[:area_of_study])
+    end
+  end
+
+  def sort
+    @members = Member.order("#{params[:sort_by]} #{params[:direction]}")
+    render :index
   end
 
   def sort_column

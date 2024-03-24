@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     member do
       get 'delete_confirmation'
     end
+
+    collection do
+      get :sort
+    end
   end
 
   root "dashboards#show"
