@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -5,37 +7,37 @@ class MemberPolicy < ApplicationPolicy
     #   scope.all
     # end
     def resolve
-      if user.admin? # Assuming `admin` is a method that determines if a user is an admin
+      if user.admin?
         scope.all
       else
         scope.where(id: user.id)
       end
     end
   end
- 
+
   def index?
     approved?
   end
-  
+
   def show?
- # Information displayed by show is controlled by the view. But everyone can access. 
-    approved?
+    # Information displayed by show is controlled by the view. But everyone can access.
+    !approved?
   end
-  
+
   def new?
     admin_officer?
   end
 
   def create?
-    admin_officer? # Only admins and officers can create new members
+    admin_officer?
   end
 
   def edit?
-    admin_officer_member_info?
+    admin_officer_member_info? || !approved?
   end
 
   def update?
-    admin_officer_member_info?
+    admin_officer_member_info? || !approved?
   end
 
   def destroy?
@@ -46,8 +48,6 @@ class MemberPolicy < ApplicationPolicy
     admin_officer?
   end
 
-
-
   def admin_officer_member_info?
     user.admin? || user.officer? || record.id == user.id
   end
@@ -56,12 +56,9 @@ class MemberPolicy < ApplicationPolicy
     user.admin? || user.officer?
   end
 
-  def admin?
-    user.admin?
-  end
+  delegate :admin?, to: :user
 
   def approved?
     !user.unapproved?
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Notification < ApplicationRecord
   belongs_to :event, optional: true
   has_many :member_notifications, dependent: :destroy

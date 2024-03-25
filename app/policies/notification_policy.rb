@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotificationPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -5,7 +7,7 @@ class NotificationPolicy < ApplicationPolicy
     #   scope.all
     # end
     def resolve
-      if user.admin? # Assuming `admin` is a method that determines if a user is an admin
+      if user.admin?
         scope.all
       else
         scope.where(id: user.id)
@@ -20,13 +22,13 @@ class NotificationPolicy < ApplicationPolicy
   def show?
     admin_officer?
   end
-  
+
   def new?
     admin_officer?
   end
 
   def create?
-    admin_officer? 
+    admin_officer?
   end
 
   def edit?
@@ -45,7 +47,6 @@ class NotificationPolicy < ApplicationPolicy
     admin_officer?
   end
 
-
   def admin_officer_member_info?
     user.admin? || user.officer? || record.id == user.id
   end
@@ -54,8 +55,5 @@ class NotificationPolicy < ApplicationPolicy
     user.admin? || user.officer?
   end
 
-  def admin?
-    user.admin?
-  end
-
+  delegate :admin?, to: :user
 end

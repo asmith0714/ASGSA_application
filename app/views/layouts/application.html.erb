@@ -9,6 +9,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'https://code.jquery.com/jquery-3.5.1.slim.min.js' %>
     <style>
         .flash__alert   { color: red; }
         .flash__notice  { color: blue; }
@@ -19,13 +20,13 @@
   <body>
     <% if flash.any? %>
       <% flash.each do |key, value| -%>
-        <section class="flash flash__<%= key %>"><%= value.html_safe %></section>
+        <div id="flash_<%= key %>" class="alert alert-<%= key %>" style="margin-bottom: 0%"><%= value.html_safe %></div>
       <% end -%>
     <% end %>
     <nav class="navbar navbar-expand-lg navbar-custom">
-      <%= link_to image_tag("asgsa_logo.png", alt: "ASGSA TAMU", class: 'navbar-brand'), root_path %>
+      <%= link_to image_tag("asgsa_logo3.jpg", alt: "ASGSA TAMU", class: 'navbar-brand'), root_path %>
       <% if member_signed_in? && !policy(current_member).approved? %>
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning" role="alert" style="margin-left: 10%">
           Your account is pending approval. Once approved, you will receive an email notification and be able to access the website.
         </div>
       <% end %>
