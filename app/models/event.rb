@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
     include PgSearch::Model
-    pg_search_scope :search, against: [:name, :date, :capacity, :points], using: { tsearch: { prefix: true } }
+    pg_search_scope :search, against: [:name, :date, :category, :capacity, :points], using: { tsearch: { prefix: true } }
     validates :name, presence: true
     validates :location, presence: true
     validates :start_time, presence: true
@@ -12,10 +12,16 @@ class Event < ApplicationRecord
     validates :category, presence: true
     validates :description, presence: false
     validate :end_time_after_start_time
+    validate :archive
+    before_validation :set_default_archive
     has_many :attendees
     has_many :attendees, dependent: :destroy
 
     private
+
+    def set_default_archive
+        self.archive ||= false
+    end
 
     def end_time_after_start_time
         return if end_time.blank? || start_time.blank?
@@ -24,6 +30,4 @@ class Event < ApplicationRecord
         errors.add(:end_time, "must be after the start time")
         end
     end
-
-    
 end
