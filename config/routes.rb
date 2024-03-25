@@ -25,6 +25,11 @@ Rails.application.routes.draw do
 
   resources :events do
     get 'delete_confirmation', on: :member
+    post 'archive_past_events', on: :collection
+    member do
+      get 'delete'
+      patch 'toggle_archive'
+    end
     # attendees resources
     resources :attendees do
       collection do
@@ -36,9 +41,6 @@ Rails.application.routes.draw do
       end
     end
     # end attendees resources
-    member do
-      get 'delete'
-    end
   end
 
   resources :notifications do
