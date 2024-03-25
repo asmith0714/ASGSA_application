@@ -44,14 +44,14 @@
 
           <div class="col-md-4 mb-3">
             <%= form.label :date, 'Date', class: 'form-label required' %>
-            <%= form.date_field :date, required: true, min: Date.today.to_s, class: 'form-control' %>
+            <%= form.date_field :date, required: true, min: Date.today, max: Date.today + 2.year, class: 'form-control' %>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-4 mb-3">
-            <%= form.label :category, 'Category', class: 'form-label required' %>
-            <%= form.select :category, [['Social Event', 'social event'], ['Coffee Breaks', 'coffee break'], ['Service Event', 'service event'], ['Happy Hour', 'happy hour'], ['Member Meeting', 'member meeting'], ['Executive Meeting', 'executive meeting']], {include_blank: true}, {required: true, class: 'form-control'} %>
+            <%= form.label :category, 'Event Type', class: 'form-label required' %>
+            <%= form.select :category, ['Social Event', 'Coffee Break', 'Service Event', 'Happy Hour', 'Member Meeting', 'Executive Meeting'], {include_blank: true}, {required: true, class: 'form-control'} %>
           </div>
       
           <div class="col-md-4 mb-3">
@@ -78,7 +78,7 @@
               
         <div class="form-check mb-3">
           <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_all, 'Notify change to all members', class: 'form-check-label' %>
+          <%= label_tag :send_email_all, 'Notify change to everyone', class: 'form-check-label' %>
         </div>
 
         <div class="form-check mb-3">
@@ -95,7 +95,7 @@
           <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
           <%= label_tag :send_email_members, 'Don\'t send notification', class: 'form-check-label' %>
         </div>
-
+            
         <%= form.submit 'Update Event', class: 'btn btn-primary'%>
       </div>
     </div>
