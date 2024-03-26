@@ -2,7 +2,8 @@ class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   include PgSearch::Model
-  pg_search_scope :search, against: [:member_id, :first_name, :last_name, :email, :position, :points, :date_joined, :res_topic], using: { tsearch: { prefix: true } }
+  pg_search_scope :general_search, against: [:first_name, :last_name, :email, :position, :points], using: { tsearch: { prefix: true } }
+  pg_search_scope :allergies_search, against: [:first_name, :last_name, :food_allergies], using: { tsearch: { prefix: true } }
   devise :omniauthable, omniauth_providers: [:google_oauth2]
   # Validate presence of essential attributes
   validates :first_name, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: "can only contain letters" }
