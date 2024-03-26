@@ -1,4 +1,5 @@
 <%= link_to "Member List", members_path %>
+| <%= link_to "Allergies List", allergies_list_members_path %>
 <% if current_member.admin? %>
   | <%= link_to "Delete Member", @member, method: :delete %>
 <% end %>
