@@ -46,8 +46,10 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Position</th>
+                <th scope="col">Area of Study</th>
                 <% if can_see_all_attributes %>
                   <th scope="col">Points</th>
+                  <th scope="col">Status</th>
                 <% end %>
                 <th scope="col" style="width: 10%"></th>
               </tr>
@@ -66,8 +68,10 @@
                   <td><%= member.last_name %></td>
                   <td><%= member.email %></td>
                   <td><%= member.position %></td>
+                  <td><%= member.area_of_study %></td>
                   <% if can_see_all_attributes %>
                     <td><%= member.points %></td>
+                    <td><%= member.status %></td>
                   <% end %>
                   <td>
                   <%= link_to "<i class='fas fa-eye'></i>".html_safe, member, class: "btn btn-secondary", id: "show_btn" %>

@@ -36,13 +36,22 @@
         <%= @member.email %>
       </div>
       
-      <!-- Not blocking view properly  -->
       <% if policy(current_member).admin_officer? || current_member == @member %>
+        <!-- Not blocking view properly  -->
         <div class="top-bottom-text">
           <strong>Current Points</strong>
           <%= @member.points %>
         </div>
-        
+      <% end %>
+
+      <% if policy(current_member).admin_officer? %> 
+        <div class="top-bottom-text">
+          <strong>Status</strong>
+          <%= @member.status %>
+        </div>
+      <% end %>
+      
+      <% if policy(current_member).admin_officer? || current_member == @member %>
         <%= link_to "Edit", edit_member_path(@member) %>
       <% end %>
     </div>

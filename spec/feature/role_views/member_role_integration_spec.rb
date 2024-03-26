@@ -51,8 +51,8 @@ RSpec.describe "Member View", type: :feature do
         expect(page).to have_css('#edit_btn', count: 1)
         find('#edit_btn').click
         expect(page).to have_content("Edit Profile")
-        fill_in "member[degree]", with: "MS"
-        fill_in "member[area_of_study]", with: "Computer Science"
+        select 'MS', from: 'member[degree]'
+        select 'Meat Science', from: 'member[area_of_study]'
         fill_in "member[res_topic]", with: "Topic A"
         fill_in "member[res_lab]", with: "Lab A"
         fill_in "member[res_description]", with: "This is a description for research topic A" 
@@ -60,7 +60,7 @@ RSpec.describe "Member View", type: :feature do
         click_button "Update Profile"
         expect(page).to have_content("Member was successfully updated")
         expect(page).to have_content("MS")
-        expect(page).to have_content("Computer Science")
+        expect(page).to have_content("Meat Science")
         expect(page).to have_content("Topic A")
         expect(page).to have_content("Lab A")
         expect(page).to have_content("This is a description for research topic A")
