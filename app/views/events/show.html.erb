@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
   <div class="card mx-auto" style="width: 40rem;">
     <div class="card-header">
-      <%= link_to("Back to List", events_path, class: 'back-link') %>
+      <%= link_to("Back to Events List", events_path, class: 'back-link') %>
       | <%= link_to "RSVP", event_attendees_path(@event) %>
       <% if policy(current_member).admin_officer? %>
         <% if !@event.archive %>
