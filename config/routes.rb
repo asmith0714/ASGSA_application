@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   resources :member_roles
   resources :members do
+    collection do
+      get 'allergies_list'
+    end
     member do
       get 'delete_confirmation'
     end
