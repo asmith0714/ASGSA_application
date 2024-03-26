@@ -21,7 +21,7 @@
                 Filter By
               </div>
               <div class="col-auto">
-                <%= form.select :member_filter, options_for_select(["All Members", "Attended", "RSVP", "Non-RSVP"], selected: params[:member_filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+                <%= form.select :member_filter, options_for_select(["RSVP", "Attended", "Non-RSVP", "All Members"], selected: params[:member_filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
               </div>
             </div>
 
@@ -30,7 +30,7 @@
                 Search 
               </div>
               <div class="col-auto">
-                <%= form.search_field :query, value: params[:query], oninput: "this.form.requestSubmit()", class: "form-control" %>
+                <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
               </div>
             </div>
           <% end %>
