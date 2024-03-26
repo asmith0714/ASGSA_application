@@ -3,7 +3,7 @@ class MembersController < ApplicationController
 
   def index
     @members = Member.all
-    @members = @members.search(params[:query]) if params[:query].present?
+    @members = @members.general_search(params[:query]) if params[:query].present?
     @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
   end
 
@@ -77,6 +77,12 @@ class MembersController < ApplicationController
       format.html { redirect_to members_url, notice: "Member was successfully deleted." }
       format.json { head :no_content }
     end
+  end
+
+  def allergies_list
+    @members = Member.all
+    @members = @members.allergies_search(params[:query]) if params[:query].present?
+    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
   end
 
   private

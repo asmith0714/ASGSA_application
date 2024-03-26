@@ -1,16 +1,19 @@
 <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
   <div class="card mx-auto" style="width: 40rem;">
     <div class="card-header">
-      <%= link_to("Back to List", events_path, class: 'back-link') %>
+      <%= link_to("Back to Events List", events_path, class: 'back-link') %>
       | <%= link_to "RSVP", event_attendees_path(@event) %>
       <% if policy(current_member).admin_officer? %>
-      | <%= link_to "Edit Event Details", edit_event_path(@event) %>
+        <% if !@event.archive %>
+          | <%= link_to "Edit Event Details", edit_event_path(@event) %>
+        <% end %>
       | <%= link_to "Delete Event", delete_confirmation_event_path(@event), method: :get%>
       <% end %>
-      <p style="color: green"><%= notice %></p>
+      <!-- <p style="color: green"><%= notice %></p> -->
       <h1 style="text-align: center"><strong><%= @event.name %></strong></h1>
       
     </div>
+
     <div class="card-body">
       <div class="mb-3 top-bottom-text">
         <strong>Location</strong>
@@ -18,7 +21,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4 mb-3 top-bottom-text">
+        <div class="col-md-3 mb-3 top-bottom-text">
           <strong>Time</strong>
           <%= @event.start_time&.strftime("%I:%M %p") %> - <%= @event.end_time&.strftime("%I:%M %p") %>
         </div>
@@ -30,12 +33,21 @@
       </div>
       
       <div class="row">
-        <div class="col-md-4 mb-3 top-bottom-text">
-          <strong>Capacity</strong>
-          <%= @event.capacity || "No Limit" %>
+        <div class="col-md-3 mb-3 top-bottom-text">
+          <strong>Event Type</strong>
+          <%= @event.category %>
         </div>
 
         <div class="col-md-4 mb-3 top-bottom-text">
+          <strong>Capacity</strong>
+          <% if @event.capacity.present? %>
+            <%= @event.capacity - @event.attendees.count %> Spots Left (<%= @event.capacity %> MAX)
+          <% else %>
+            No Limit
+          <% end %>
+        </div>
+
+        <div class="col-md-3 mb-3 top-bottom-text">
           <strong>Points</strong>
           <%= @event.points %>
         </div>
@@ -51,65 +63,16 @@
         <%= @event.description %>
       </div>
 
+      <% @event.archive %>
+      <% if policy(current_member).admin_officer? && @event.date < Time.zone.now %>
+        <div>
+          <% if @event.archive %>
+            <%= button_to "Unarchive Event", toggle_archive_event_path(@event), method: :patch, class: 'btn btn-primary'%>
+          <% else %>
+            <%= button_to "Archive Event", toggle_archive_event_path(@event), method: :patch, class: 'btn btn-primary'%>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
-
-<!--
-<%= link_to("Back to List", events_path, class: 'back-link') %>
-| <%= link_to "RSVP", new_event_attendee_path(@event) %>
-<% if policy(current_member).admin_officer? %>
-| <%= link_to "Edit Event Details", edit_event_path(@event) %>
-| <%= link_to "Delete Event", @event, method: :delete %>
-<% end %>
-<p style="color: green"><%= notice %></p>
-
-
-<div class="show-event">
-  <div class="event-header">
-    <div class="item-title mbr-fonts-style align-center mb-2 display-1">
-      <strong><%= @event.name %></strong>
-    </div>
-  </div>
-
-  <div class="event-info">
-    <div class="top-bottom-text item1">
-      <strong>Location</strong>
-      <%= @event.location %>
-    </div>
-
-    <div class="top-bottom-text item2">
-      <strong>Date</strong>
-      <%= @event.date.strftime('%m/%d') %>
-    </div>
-
-    <div class="top-bottom-text item3">
-      <strong>Time</strong>
-      <%= @event.start_time&.strftime("%I:%M %p") %> - <%= @event.end_time&.strftime("%I:%M %p") %>
-    </div>
-
-    <div class="top-bottom-text item4">
-      <strong>Capacity</strong>
-      <%= @event.capacity || "No Limit" %>
-    </div>
-  
-    <div class="top-bottom-text item5">
-      <strong>Points</strong>
-      <%= @event.points %>
-    </div>
-
-    <div class="top-bottom-text item6">
-      <strong>Contact Information</strong>
-      <%= @event.contact_info %>
-    </div>
-
-    <div class="top-bottom-text item7">
-      <strong>Description</strong>
-      <%= @event.description %>
-    </div>
-  </div>
-  
-	<br>
-
-</div>
--->

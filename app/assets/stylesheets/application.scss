@@ -202,15 +202,6 @@ body {
     color: red;
 }
 
-.form-field input[type="text"],
-.form-field input[type="email"],
-.form-field input[type="date"],
-.form-field input[type="number"] {
-    width: 100%; /* Adjust the width as needed */
-    padding: 4px; /* Adjust padding as needed */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
 .form-field textarea {
     height: 150px; /* Adjust the height as needed */
     width: 100%; /* Adjust the width as needed */
