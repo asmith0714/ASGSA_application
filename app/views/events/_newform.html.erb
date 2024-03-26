@@ -77,22 +77,23 @@
                 
           <div class="form-check mb-3">
             <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
-            <%= label_tag :send_email_all, 'Send email to everyone', class: 'form-check-label' %>
-          </div>
-  
-          <div class="form-check mb-3">
-            <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
-            <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
+            <%= label_tag :send_email_all, 'Notify event to everyone', class: 'form-check-label' %>
           </div>
   
           <div class="form-check mb-3">
             <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
-            <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
+            <%= label_tag :send_email_members, 'Notify event to members only', class: 'form-check-label' %>
           </div>
+
+          <div class="form-check mb-3">
+            <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
+            <%= label_tag :send_email_officers, 'Notify event to officers only', class: 'form-check-label' %>
+          </div>
+  
   
           <div class="form-check mb-3">
             <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
-            <%= label_tag :send_email_members, 'Don\'t send email', class: 'form-check-label' %>
+            <%= label_tag :send_email_members, 'Don\'t send notification', class: 'form-check-label' %>
           </div>
   
           <%= form.submit 'Create Event', class: 'btn btn-primary'%>
