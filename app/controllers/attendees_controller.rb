@@ -84,6 +84,7 @@ class AttendeesController < ApplicationController
   end
 
   def check_in
+    # SEARCH FEATURE NOT WORKING PROPERLY FOR 'Attended' AND 'RSVP'
     attendees = Attendee.where(event_id: params[:event_id])
     @members = Member.all
     @members = @members.search(params[:query]) if params[:query].present?
@@ -92,10 +93,12 @@ class AttendeesController < ApplicationController
     case params[:member_filter]
     when "Attended"
       @members = attendees.where(attended: true).map(&:member)
-    when "RSVP"
-      @members = attendees.where(rsvp: true).map(&:member)
+    when "All Members"
+  
     when "Non-RSVP"
-      @members = Member.where.not(member_id: attendees.pluck(:member_id))
+      @members = @members.where.not(member_id: attendees.pluck(:member_id))
+    else # Default to "RSVP"
+      @members = attendees.where(rsvp: true).map(&:member)
     end
   end
 
