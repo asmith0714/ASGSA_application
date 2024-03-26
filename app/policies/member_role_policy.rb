@@ -14,31 +14,31 @@ class MemberRolePolicy < ApplicationPolicy
   end
 
   def index?
-    admin_officer?
+    admin?
   end
 
   def show?
-    admin_officer?
+    admin?
   end
   
   def new?
-    admin_officer?
+    admin?
   end
 
   def create?
-    admin_officer? 
+    admin? 
   end
 
   def edit?
-    admin_officer?
+    admin?
   end
 
   def update?
-    admin_officer?
+    admin?
   end
 
   def destroy?
-    admin_officer?
+    admin?
   end
 
 
