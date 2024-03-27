@@ -63,7 +63,7 @@
         <%= @event.description %>
       </div>
 
-      <% if policy(current_member).admin_officer? && @event.date < Time.zone.now %>
+      <% if policy(current_member).admin_officer? && @event.date < Date.today %>
         <div>
           <% if @event.archive %>
             <%= button_to "Unarchive Event", toggle_archive_event_path(@event), method: :patch, class: 'btn btn-primary'%>
