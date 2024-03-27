@@ -49,10 +49,12 @@ class AttendeesController < ApplicationController
     if Member.exists?(member_id: attendee_params[:member_id]) && @attendee.save
       respond_to do |format|
         if @attendee.rsvp
-          format.html { redirect_to(event_attendees_path(@event), notice: 'RSVP was successfully created.') }
+          flash[:success] = 'RSVP was successfully created.'
+          format.html { redirect_to(event_attendees_path(@event)) }
         else
           @attendee.update!(rsvp: true)
-          format.html { redirect_to(check_in_event_attendees_path(@event), notice: 'Member was successfully checked in.') }
+          flash[:success] = 'Member was successfully checked in.'
+          format.html { redirect_to(check_in_event_attendees_path(@event)) }
         end
         format.json { render(:show, status: :created, location: @attendee) }
       end
@@ -77,7 +79,8 @@ class AttendeesController < ApplicationController
     @attendee.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(event_attendees_path(Event.find(event_id)), notice: 'RSVP was successfully destroyed.') }
+      flash[:success] = 'RSVP was successfully deleted.'
+      format.html { redirect_to(event_attendees_path(Event.find(event_id))) }
       format.json { head(:no_content) }
     end
   end

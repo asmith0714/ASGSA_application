@@ -21,7 +21,7 @@ class MemberPolicy < ApplicationPolicy
 
   def show?
     # Information displayed by show is controlled by the view. But everyone can access.
-    !approved?
+    approved?
   end
 
   def new?
@@ -33,11 +33,11 @@ class MemberPolicy < ApplicationPolicy
   end
 
   def edit?
-    admin_officer_member_info? || !approved?
+    admin_officer_member_info? || unapproved?
   end
 
   def update?
-    admin_officer_member_info? || !approved?
+    admin_officer_member_info? || unapproved?
   end
 
   def destroy?
@@ -59,6 +59,10 @@ class MemberPolicy < ApplicationPolicy
   delegate :admin?, to: :user
 
   def approved?
-    !user.unapproved?
+    user.approved?
+  end
+
+  def unapproved?
+    user.unapproved?
   end
 end

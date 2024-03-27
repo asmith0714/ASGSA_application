@@ -11,7 +11,8 @@ class PagesController < ApplicationController
       MemberMailer.support_email(name, email, issue).deliver_now
 
       # Redirect to some page with a success message
-      redirect_to(root_path, notice: 'Your message was sent successfully.')
+      flash[:success] = 'Your message was sent successfully.'
+      redirect_to(root_path)
     end
   end
 

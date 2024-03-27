@@ -70,22 +70,29 @@ class MembersController < ApplicationController
     authorize(@member)
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to(member_url(@member), notice: 'Member was successfully updated.') }
+        if @member.profile_completed?
+          format.html { redirect_to(member_url(@member)) }
+          flash[:success] = 'Profile was successfully updated.'
+        else
+          format.html { redirect_to(root_path) }
+          flash[:success] = 'Profile was successfully created.'
+          @member.update!(profile_completed: true)
+        end
         format.json { render(:show, status: :ok, location: @member) }
       else
-        format.html { render(:edit, status: :unprocessable_entity) }
+        format.html { render(:edit) }
         format.json { render(json: @member.errors, status: :unprocessable_entity) }
       end
     end
   end
-
   # DELETE /members/1 or /members/1.json
   def destroy
     authorize(@member)
     @member.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(members_url, notice: 'Member was successfully deleted.') }
+      flash[:success] = 'Member was successfully deleted.'
+      format.html { redirect_to(members_url) }
       format.json { head(:no_content) }
     end
   end

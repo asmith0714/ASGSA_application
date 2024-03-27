@@ -46,7 +46,8 @@ class NotificationsController < ApplicationController
         end
         # sends emails to all members if selected
         MemberMailer.notification_email(@notification).deliver_now if params[:send_email] == '1'
-        format.html { redirect_to(notification_url(@notification), notice: 'Notification was successfully created.') }
+        flash[:success] = 'Notification was successfully created.'
+        format.html { redirect_to(notification_url(@notification)) }
         format.json { render(:show, status: :created, location: @notification) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -60,7 +61,8 @@ class NotificationsController < ApplicationController
     authorize(Notification)
     respond_to do |format|
       if @notification.update(notification_params)
-        format.html { redirect_to(notification_url(@notification), notice: 'Notification was successfully updated.') }
+        flash[:success] = 'Notification was successfully updated.'
+        format.html { redirect_to(notification_url(@notification)) }
         format.json { render(:show, status: :ok, location: @notification) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -75,7 +77,8 @@ class NotificationsController < ApplicationController
     @notification.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(notifications_url, notice: 'Notification was successfully destroyed.') }
+      flash[:success] = 'Notification was successfully destroyed.'
+      format.html { redirect_to(notifications_url) }
       format.json { head(:no_content) }
     end
   end

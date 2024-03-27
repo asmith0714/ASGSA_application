@@ -43,7 +43,8 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to(event_path(@event), notice: 'Event was successfully created.') }
+        flash[:success] = 'Event was successfully created.'
+        format.html { redirect_to(event_path(@event)) }
         format.json { render(:show, status: :create, location: @event) }
         case params[:send_email]
         when 'all'
@@ -51,12 +52,14 @@ class EventsController < ApplicationController
           MemberMailer.event_email(@event, Member.all).deliver_now
         when 'officers'
           # Send email to officers only
-          officers = Member.where(position: 'Officer')
-          MemberMailer.event_email(@event, officers).deliver_now
+          officer_role = Role.find_by(name: 'Officer')
+          officers = officer_role.members if officer_role
+          MemberMailer.event_email(@event, officers).deliver_now if officers
         when 'members'
           # Send email to members only
-          members = Member.where(position: 'Member')
-          MemberMailer.event_email(@event, members).deliver_now
+          member_role = Role.find_by(name: 'Member')
+          members = member_role.members if member_role
+          MemberMailer.event_email(@event, members).deliver_now if members
         end
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -69,7 +72,8 @@ class EventsController < ApplicationController
     authorize(Event)
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to(event_path(@event), notice: 'Event was successfully updated.') }
+        flash[:success] = 'Event was successfully updated.'
+        format.html { redirect_to(event_path(@event)) }
         format.json { render(:show, status: :ok, location: @event) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -83,7 +87,8 @@ class EventsController < ApplicationController
     @event.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(events_url, notice: 'Event was successfully deleted.') }
+      flash[:success] = 'Event was successfully deleted.'
+      format.html { redirect_to(events_url) }
       format.json { head(:no_content) }
     end
   end

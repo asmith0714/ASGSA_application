@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class MemberRolePolicy < ApplicationPolicy
+class RolePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
@@ -16,39 +14,31 @@ class MemberRolePolicy < ApplicationPolicy
   end
 
   def index?
-    admin_officer? || true
+    admin?
   end
 
   def show?
-    admin_officer? 
+    admin?
   end
 
   def new?
-    admin_officer?
+    admin?
   end
 
   def create?
-    admin_officer?
+    admin?
   end
 
   def edit?
-    admin_officer? || true
+    admin?
   end
 
   def update?
-    admin_officer? || true
+    admin?
   end
 
   def destroy?
-    admin_officer?
-  end
-
-  def admin_officer_member_info?
-    user.admin? || user.officer? || record.id == user.id
-  end
-
-  def admin_officer?
-    user.admin? || user.officer?
+    admin?
   end
 
   delegate :admin?, to: :user

@@ -44,7 +44,8 @@ class MemberRolesController < ApplicationController
     member = member_role.member
     member_role.update!(role: Role.find_by(name: 'Member'))
     MemberMailer.with(member: member).new_member_email.deliver_now
-    redirect_to(member_roles_path, notice: 'Account approved successfully')
+    flash[:success] = 'Account approved successfully'
+    redirect_to(member_roles_path)
   end
 
   def reject
@@ -52,7 +53,8 @@ class MemberRolesController < ApplicationController
     member = member_role.member
     member_role.destroy!
     member.destroy! if member.member_roles.empty?
-    redirect_to(member_roles_path, notice: 'Account rejected successfully')
+    flash[:warning] = 'Account deleted successfully'
+    redirect_to(member_roles_path)
   end
 
   def approval
@@ -66,7 +68,8 @@ class MemberRolesController < ApplicationController
 
     respond_to do |format|
       if @member_role.save
-        format.html { redirect_to(member_role_url(@member_role), notice: 'Member role was successfully created.') }
+        flash[:success] = 'Member role was successfully created.'
+        format.html { redirect_to(member_role_url(@member_role)) }
         format.json { render(:show, status: :created, location: @member_role) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -80,7 +83,8 @@ class MemberRolesController < ApplicationController
     authorize(MemberRole)
     respond_to do |format|
       if @member_role.update(member_role_params)
-        format.html { redirect_to(member_role_url(@member_role), notice: 'Member role was successfully updated.') }
+        flash[:success] = "Member's role was successfully updated."
+        format.html { redirect_to(member_role_url(@member_role)) }
         format.json { render(:show, status: :ok, location: @member_role) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -95,7 +99,8 @@ class MemberRolesController < ApplicationController
     @member_role.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(member_roles_url, notice: 'Member role was successfully destroyed.') }
+      flash[:success] = 'Member role was successfully destroyed.'
+      format.html { redirect_to(member_roles_url) }
       format.json { head(:no_content) }
     end
   end

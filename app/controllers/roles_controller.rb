@@ -5,6 +5,7 @@ class RolesController < ApplicationController
 
   # GET /roles or /roles.json
   def index
+    authorize Role
     @roles = Role.all
     @roles = @roles.search(params[:query]) if params[:query].present?
     @pagy, @roles = pagy(@roles.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
@@ -20,26 +21,31 @@ class RolesController < ApplicationController
 
   # GET /roles/1 or /roles/1.json
   def show
+    authorize Role
     @role = Role.find(params[:id])
   end
 
   # GET /roles/new
   def new
+    authorize Role
     @role = Role.new
   end
 
   # GET /roles/1/edit
   def edit
+    authorize Role
     @role = Role.find(params[:id])
   end
 
   # POST /roles or /roles.json
   def create
+    authorize Role
     @role = Role.new(role_params)
 
     respond_to do |format|
       if @role.save
-        format.html { redirect_to(role_url(@role), notice: 'Role was successfully created.') }
+        flash[:success] = 'Role was successfully created.'
+        format.html { redirect_to(role_url(@role)) }
         format.json { render(:show, status: :created, location: @role) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -50,9 +56,11 @@ class RolesController < ApplicationController
 
   # PATCH/PUT /roles/1 or /roles/1.json
   def update
+    authorize Role
     respond_to do |format|
       if @role.update(role_params)
-        format.html { redirect_to(role_url(@role), notice: 'Role was successfully updated.') }
+        flash[:success] = 'Role was successfully updated.'
+        format.html { redirect_to(role_url(@role)) }
         format.json { render(:show, status: :ok, location: @role) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -63,10 +71,12 @@ class RolesController < ApplicationController
 
   # DELETE /roles/1 or /roles/1.json
   def destroy
+    authorize Role
     @role.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(roles_url, notice: 'Role was successfully destroyed.') }
+      flash[:success] = 'Role was successfully destroyed.'
+      format.html { redirect_to(roles_url) }
       format.json { head(:no_content) }
     end
   end

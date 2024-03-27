@@ -41,7 +41,8 @@ class MemberNotificationsController < ApplicationController
 
     respond_to do |format|
       if @member_notification.update(seen: true)
-        format.html { redirect_to(member_notification_url(@member_notification), notice: 'Member notification was marked as read') }
+        flash[:warning] = 'Member notification was marked as read'
+        format.html { redirect_to(member_notification_url(@member_notification)) }
         format.json { render(:show, status: :ok, location: @member_notification) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -57,7 +58,8 @@ class MemberNotificationsController < ApplicationController
 
     respond_to do |format|
       if @member_notification.save
-        format.html { redirect_to(member_notification_url(@member_notification), notice: 'Member notification was successfully created.') }
+        flash[:success] = 'Member notification was successfully created.'
+        format.html { redirect_to(member_notification_url(@member_notification)) }
         format.json { render(:show, status: :created, location: @member_notification) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -71,7 +73,8 @@ class MemberNotificationsController < ApplicationController
     authorize(MemberNotification)
     respond_to do |format|
       if @member_notification.update(member_notification_params)
-        format.html { redirect_to(member_notification_url(@member_notification), notice: 'Member notification was successfully updated.') }
+        flash[:success] = 'Member notification was successfully updated.'
+        format.html { redirect_to(member_notification_url(@member_notification)) }
         format.json { render(:show, status: :ok, location: @member_notification) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -86,7 +89,8 @@ class MemberNotificationsController < ApplicationController
     @member_notification.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(member_notifications_url, notice: 'Member notification was successfully destroyed.') }
+      flash[:success] = 'Member notification was successfully destroyed.'
+      format.html { redirect_to(member_notifications_url) }
       format.json { head(:no_content) }
     end
   end
