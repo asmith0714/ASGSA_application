@@ -1,3 +1,4 @@
+<!--
 <%= link_to "Member List", members_path %>
 | <%= link_to "Allergies List", allergies_list_members_path %>
 <% if current_member.admin? %>
@@ -37,7 +38,6 @@
       </div>
       
       <% if policy(current_member).admin_officer? || current_member == @member %>
-        <!-- Not blocking view properly  -->
         <div class="top-bottom-text">
           <strong>Current Points</strong>
           <%= @member.points %>
@@ -90,7 +90,6 @@
   
   </div>
 
-  <!-- Not blocking view properly  -->
   <% if policy(current_member).admin_officer? || current_member == @member %>
     <div class="member-event-history">
       <h1 style="text-align: center; text-decoration: underline">Event History<h1>
@@ -118,3 +117,97 @@
 
 <br>
 <br>
+
+-->
+
+<div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
+  <div class="card mx-auto" style="width: 40rem;">
+    <div class="card-header">
+      <%= link_to "Member List", members_path %>
+      | <%= link_to "Allergies List", allergies_list_members_path %>
+      <% if policy(current_member).admin_officer? || current_member == @member %>
+      | <%= link_to "Edit Profile", edit_member_path(@member) %>
+      <% end %>
+      <% if policy(current_member).admin_officer? %>
+        | <%= link_to "Delete Member", @member, method: :delete %>
+      <% end %>
+      <h1 style="text-align: center"><%= @member.first_name %> <%= @member.last_name %></h1>
+      <div class="row" style="align-items:center; text-align: center; margin-bottom: 10px; border: 2px solid black">
+        <div class="" style="text-align: center">
+          <% if @member.avatar_url.present? %>
+            <%= image_tag @member.avatar_url, class: "avatar" %>
+          <% else %>
+            <%= image_tag 'default_avatar.jpeg', class: "avatar" %>
+          <% end %>
+        </div>
+
+        <div class="top-bottom-text">
+          <strong>Current Points</strong>
+          <%= @member.points %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="mb-3 top-bottom-text">
+        <strong>Member Since</strong>
+        <%= @member.date_joined %>
+      </div>
+
+      <div class="mb-3 top-bottom-text">
+        <strong>Position</strong>
+        <%= @member.position %>
+      </div>
+
+      <div class="mb-3 top-bottom-text">
+        <strong>Email Address</strong>
+        <%= @member.email %>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 mb-3 top-bottom-text">
+          <strong>Current Points</strong>
+          <%= @member.points %>
+        </div>
+      </div>
+
+      <div class="mb-3 top-bottom-text">
+        <strong>Status</strong>
+        <%= @member.status %>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 mb-3 top-bottom-text">
+          <strong>Degree</strong>
+          <%= @member.degree %>
+        </div>
+
+        <div class="col-md-3 mb-3 top-bottom-text">
+          <strong>Area of Study</strong>
+          <%= @member.area_of_study %>
+        </div>
+
+        <div class="col-md-3 mb-3 top-bottom-text">
+          <strong>Research Topic</strong>
+          <%= @member.res_topic %>
+        </div>
+      </div>
+
+      <div class="mb-3 top-bottom-text">
+        <strong>Research Lab</strong>
+        <%= @member.res_lab %>
+      </div>
+      
+      <div class="mb-3 top-bottom-text">
+        <strong>Research Description</strong>
+        <%= @member.res_description %>
+      </div>
+
+      <div class="mb-3 top-bottom-text">
+        <strong>Food Allergies</strong>
+        <%= @member.food_allergies %>
+      </div>
+
+    </div>
+  </div>
+</div>
