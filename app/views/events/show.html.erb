@@ -63,7 +63,6 @@
         <%= @event.description %>
       </div>
 
-      <% @event.archive %>
       <% if policy(current_member).admin_officer? && @event.date < Time.zone.now %>
         <div>
           <% if @event.archive %>
