@@ -217,6 +217,48 @@ body {
 
 // Show Member Syling
 
+.sidebar-attended-events {
+    position: relative;
+}
+
+.sidebar-attended-events::before, .sidebar-attended-events::after {
+    content: "";
+    position: absolute;
+    width: 28%;
+    height: 2px;
+    background-color: grey;
+    top: 50%;
+}
+
+.sidebar-attended-events::before {
+    left: 0
+}
+
+.sidebar-attended-events::after {
+    right: 0
+}
+
+.sidebar-empty-events {
+    position: relative;
+}
+
+.sidebar-empty-events::before, .sidebar-empty-events::after {
+    content: "";
+    position: absolute;
+    width: 20%;
+    height: 2px;
+    background-color: grey;
+    top: 50%;
+}
+
+.sidebar-empty-events::before {
+    left: 0
+}
+
+.sidebar-empty-events::after {
+    right: 0
+}
+
 .show-member {
     display: flex;
     width: auto;
@@ -284,8 +326,8 @@ body {
 }
 
 .member-events-list {
-    height: 800px;
-    // border: 2px solid black;
+    height: 100%;
+    border-left: 2px solid black;
     font-size: medium;
     padding-top: 20px;
     overflow-y: auto;
