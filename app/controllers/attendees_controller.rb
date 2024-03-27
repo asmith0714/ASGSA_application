@@ -98,7 +98,7 @@ class AttendeesController < ApplicationController
     when "Non-RSVP"
       @members = @members.where.not(member_id: attendees.pluck(:member_id))
     else # Default to "RSVP"
-      @members = attendees.where(rsvp: true).map(&:member)
+      @members = attendees.where(rsvp: true, attended: false).map(&:member)
     end
   end
 
