@@ -68,7 +68,7 @@
               </div>
             </li>
           <% else %>
-            <%= button_to member_google_oauth2_omniauth_authorize_path, class: 'btn btn-primary', style: 'color: #500000; background-color: white; border-color: white;' do %>
+            <%= button_to member_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: 'btn btn-primary', style: 'color: #500000; background-color: white; border-color: white;' do %>
               <i class="fab fa-google"></i> Sign in with Google
             <% end %>
           <% end %>
@@ -84,8 +84,8 @@
       <div class="footer">
         <div class="row">
           <div class="col-md-4">
-            <h2 class="display-4" style="font-size: 3rem; font-style: italic;">Connect With Us</h1>
-            <div class="social-icons">
+            <h2 class="display-4" style="font-size: 3vw; font-style: italic;">Connect With Us</h1>
+            <div class="social-icons" style="font-size: 2vw;">
               <%= link_to "https://www.instagram.com/asgsa.tamu", target: "_blank", style: "color: white; text-decoration: none" do %>
                 <i class="fa-brands fa-instagram fa-xl"></i> - @asgsa.tamu
               <% end %>
@@ -102,8 +102,8 @@
             </div>
           </div>
           <div class="col-md-4" style="margin-left: 1%; margin-right: -1%;">
-            <h2 class="display-4" style="font-size: 3rem; font-style: italic;">Active Member Requirements</h2>
-            <div class="requirements">
+            <h2 class="display-4" style="font-size: 3vw; font-style: italic;">Active Member Requirements</h2>
+            <div class="requirements" style="font-size: 2vw;">
               <i class="fa-regular fa-square-check"></i> Pay membership dues (Fall Semester - by the October club meeting, Spring Semester - by the March club meeting)
               <br><br>
               <i class="fa-regular fa-square-check"></i> Attend no less than 50% of the regular club meetings of their membership period
@@ -112,8 +112,8 @@
             </div>
           </div>
           <div class="col-md-4">
-            <h2 class="display-4" style="font-size: 3rem; margin-left: 20%; font-style: italic;">Help</h2>
-            <div class="help">
+            <h2 class="display-4" style="font-size: 3vw; margin-left: 20%; font-style: italic;">Help</h2>
+            <div class="help" style="font-size: 2vw;">
               <% if member_signed_in? && policy(current_member).admin_officer? %>
                 <%= link_to faq_officer_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
