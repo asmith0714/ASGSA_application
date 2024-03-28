@@ -88,7 +88,7 @@ body {
 }
 
 .landing-main {
-    height: 80%;
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,6 +101,7 @@ body {
 .flex-row {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .header {
@@ -128,45 +129,42 @@ body {
 .footer {
     background-color: #500000;
     color: white;
-    padding: 5%;
+    padding: 3%;
     height: auto;
     margin-top: auto;
     font-weight: 300;
 }
 
 .social-icons {
-    max-height: 10vh;
+    height: fit-content;
     width: auto;
     margin: 1em 0;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
 }
 
 .social-icons i {
-    margin: 2rem 0;
+    margin: 10% 0;
 }
 
 .requirements {
-    max-height: 10vh;
     width: auto;
     margin: 1em 0;
-    font-size: 1.5rem;
-    margin-bottom: 40%;
+    font-size: 1.5vw;
 }
 
 .requirements i {
-    margin: 0.5rem 0;
+    margin: 5% 0;
 }
 
 .help {
-    max-height: 10vh;
     width: auto;
     margin: 1em 0;
-    font-size: 1.5rem;
-    margin-left: 20%
+    font-size: 1.5vw;
+    margin-left: 20%;
 }
 
 .help i {
-    margin: 2rem 0;
+    margin: 10% 0;
 }
 
 .dropdown-toggle-check {
