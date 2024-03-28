@@ -72,7 +72,7 @@
               <% @events.order(date: :asc, start_time: :desc).each do |event| %>
                 <tr>
                   <td><%= event.name %></td>
-                  <td><%= event.date.strftime('%m/%d') %></td>
+                  <td><%= event.date.strftime('%m/%d/%y') %></td>
                   <td><%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></td>
                   <td><%= event.category %></td>
                   <td>
