@@ -43,17 +43,20 @@ class EventsController < ApplicationController
       if @event.save
         format.html { redirect_to event_path(@event), notice: "Event was successfully created." }
         format.json { render :show, status: :create, location: @event }
-        if params[:send_email] == 'all'
-          # Send email to all members
-          MemberMailer.event_email(@event, Member.all).deliver_now
-        elsif params[:send_email] == 'officers'
-          # Send email to officers only
-          officers = Member.where(position: 'Officer')
-          MemberMailer.event_email(@event, officers).deliver_now
-        elsif params[:send_email] == 'members'
-          # Send email to members only
-          members = Member.where(position: 'Member')
-          MemberMailer.event_email(@event, members).deliver_now
+        case params[:send_email]
+          when 'all'
+            # Send email to all members
+            MemberMailer.event_email(@event, Member.all).deliver_now
+          when 'officers'
+            # Send email to officers only
+            officer_role = Role.find_by(name: 'Officer')
+            officers = officer_role.members if officer_role
+            MemberMailer.event_email(@event, officers).deliver_now if officers
+          when 'members'
+            # Send email to members only
+            member_role = Role.find_by(name: 'Member')
+            members = member_role.members if member_role
+            MemberMailer.event_email(@event, members).deliver_now if members
         end
       else
         format.html { render :new, status: :unprocessable_entity }

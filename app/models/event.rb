@@ -13,6 +13,7 @@ class Event < ApplicationRecord
     validate :end_time_after_start_time
     has_many :attendees
     has_many :attendees, dependent: :destroy
+    has_many :notifications, dependent: :destroy
 
     private
 

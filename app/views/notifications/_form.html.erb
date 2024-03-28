@@ -48,17 +48,32 @@
 
             <% if notification.new_record? %>
               <div class="form-check mb-3">
-                <%= check_box_tag :send_email, class: 'form-check-input' %>
-                <%= label_tag :send_email, 'Send email to all members', class: 'form-check-label' %>
+                <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
+                <%= label_tag :send_email_all, 'Send email to all members', class: 'form-check-label' %>
+              </div>
+      
+              <div class="form-check mb-3">
+                <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
+                <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
+              </div>
+      
+              <div class="form-check mb-3">
+                <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
+                <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
+              </div>
+      
+              <div class="form-check mb-3">
+                <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
+                <%= label_tag :send_email_members, 'Send in app notification only', class: 'form-check-label' %>
               </div>
 
               <%= form.hidden_field :date, :value => Date.today %>
               
             <% end %>
               <% if notification.new_record? %>
-                <%= form.submit 'Create Event', class: 'btn btn-primary'%>
+                <%= form.submit 'Send Notification', class: 'btn btn-primary'%>
               <% else %>
-                <%= form.submit 'Edit Event', class: 'btn btn-primary'%>
+                <%= form.submit 'Edit Notification', class: 'btn btn-primary'%>
               <% end %>
           </div>
       </div>

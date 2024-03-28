@@ -3,9 +3,9 @@ Notification <%= @notification.title %>
 <%= @notification.description %>
 
 <% if @notification.event %>
-    Event: <%= @notification.event.name %><br>
-    Time: <%= @notification.event.start_time&.strftime("%I:%M %p") %> - <%= @notification.event.end_time&.strftime("%I:%M %p") %><br>
-    Date: <%= @notification.event.date %><br>
-    Capacity: <%= @notification.event.capacity || 'No Limit' %><br>
+    Event: <%= @notification.event.name %>
+    Time: <%= @notification.event.start_time&.strftime("%I:%M %p") %> - <%= @notification.event.end_time&.strftime("%I:%M %p") %>
+    Date: <%= @notification.event.date %>
+    Capacity: <%= @notification.event.capacity || 'No Limit' %>
     Points: <%= @notification.event.points %>
 <% end %>

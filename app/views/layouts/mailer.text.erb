@@ -1,1 +1,14 @@
 <%= yield %>
+<% if Date.current < Date.current.change(month: 6, day: 1) %> 
+ASGSA Executive Committe <%= Date.current.advance(years: -1).year %> - <%= Date.current.year %>
+<% else %>
+ASGSA Executive Committe <%= Date.current.year %> - <%= Date.current.advance(years: 1).year %>
+<% end %>
+President: <%=  Email.first.president %> 
+Vice President: <%=  Email.first.vice_president %> 
+Secretary: <%=  Email.first.secretary %> 
+Treasurer: <%=  Email.first.treasurer %> 
+Secretary: <%=  Email.first.secretary %> 
+Public Relations: <%=  Email.first.public_relations %> 
+Members at Large: <%=  Email.first.members_at_large %> 
+Email: <%=  Email.first.org_email %> 
