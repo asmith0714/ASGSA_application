@@ -100,8 +100,14 @@ RSpec.describe "Member View", type: :feature do
         expect(page).to have_no_css('#edit_btn')
     end
 
+    puts "Before update: Events and their attributes"
+        Event.all.each do |event|
+        puts "Event ID: #{event.id}, Attributes: #{event.attributes}"
+    end
+
     scenario "Member can view events" do
         visit events_path
+        save_page
         expect(page).to have_css('#show_btn')
     end
   
