@@ -46,9 +46,17 @@ class MemberMailer < ApplicationMailer
     @event.attachment.purge if @event.attachment.attached?
   end
 
-  def notification_email(notification)
+  def notification_email(notification, recipients)
     @notification = notification
 
-    mail(to: Member.pluck(:email), subject: 'ASGSA: Notification')
+    if @notification.attachment.attached?
+      attachments[@notification.attachment.filename.to_s] = {
+        mime_type: @notification.attachment.content_type,
+        content: @notification.attachment.download
+      }
+    end
+
+    mail(to: recipients.pluck(:email), subject: 'ASGSA: Notification')
+    @notification.attachment.purge if @notification.attachment.attached?
   end
 end

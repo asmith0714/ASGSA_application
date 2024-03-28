@@ -34,24 +34,39 @@ class NotificationsController < ApplicationController
 
   # POST /notifications or /notifications.json
   def create
-    authorize(Notification)
+    authorize Notification
     @notification = Notification.new(notification_params)
     @members = Member.all
 
     respond_to do |format|
       if @notification.save
+        case params[:send_email]
+        when 'all'
+          # Send email to all members
+          MemberMailer.notification_email(@notification, Member.all).deliver_now
+        when 'officers'
+          # Send email to officers only
+          officer_role = Role.find_by(name: 'Officer')
+          @members = officer_role.members if officer_role
+          MemberMailer.notification_email(@notification, @members).deliver_now if officers
+        when 'members'
+          # Send email to members only
+          member_role = Role.find_by(name: 'Member')
+          @members = member_role.members if member_role
+          MemberMailer.notification_email(@notification, @members).deliver_now if members
+      end
+        
+        
         # creates a member_notification for all members id selected
         @members.each do |mem|
-          @notification.member_notifications.create!(member_id: mem.id, notification_id: @notification.id, seen: false)
+          @notification.member_notifications.create(member_id: mem.id, notification_id: @notification.id, seen: false)
         end
-        # sends emails to all members if selected
-        MemberMailer.notification_email(@notification).deliver_now if params[:send_email] == '1'
-        flash[:success] = 'Notification was successfully created.'
-        format.html { redirect_to(notification_url(@notification)) }
-        format.json { render(:show, status: :created, location: @notification) }
+        
+        format.html { redirect_to notification_url(@notification), notice: "Notification was successfully created." }
+        format.json { render :show, status: :created, location: @notification }
       else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @notification.errors, status: :unprocessable_entity) }
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @notification.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -92,6 +107,6 @@ class NotificationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def notification_params
-    params.require(:notification).permit(:description, :title, :date, :event_id)
+    params.require(:notification).permit(:description, :title, :date, :event_id, :attachment)
   end
 end
