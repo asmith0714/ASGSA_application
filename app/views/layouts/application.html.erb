@@ -22,6 +22,7 @@
       <% if flash.any? %>
         <% flash.each do |key, value| -%>
           <% key = 'warning' if key == 'alert' %>
+          <% key = 'success' if key == 'notice' %>
           <div class="toast text-dark" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" style="position: absolute; top: 13%; right: 1%; z-index: 1050;">
             <div class="toast-header bg-<%= key %> text-white">
               <strong class="mr-auto">Notification</strong>
@@ -37,9 +38,23 @@
       <% end %>
     </div>
     <nav class="navbar navbar-expand-lg navbar-custom">
-      <%= link_to image_tag("asgsa_logo3.jpg", alt: "ASGSA TAMU", class: 'navbar-brand'), root_path %>
+      <% if member_signed_in? && current_member.profile_completed == false %>
+        <div class="toast text-dark" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 120%; right: 1%; z-index: 1050;" id="special">
+          <div class="toast-header bg-danger text-white">
+            <strong class="mr-auto">Notification</strong>
+          </div>
+          <div class="toast-body bg-danger-light text-dark">
+            Finish setting up your profile<br>
+            <%= link_to "Go to Profile", edit_member_path(current_member), class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+      <%= link_to image_tag("ASGSA_logo-2.jpg", alt: "ASGSA TAMU", class: 'navbar-brand'), root_path %>
+      <div style="color: white; font-size: 1.2rem; font-family: Georgia;">
+        Animal Science Graduate Student Association
+      </div>
       <% if member_signed_in? && !policy(current_member).approved? %>
-        <div class="alert alert-warning" role="alert" style="margin-left: 10%">
+        <div class="alert alert-warning" role="alert" style="margin-left: 2.5%; margin-top: 1%;">
           Your account is pending approval. Once approved, you will receive an email notification and be able to access the website.
         </div>
       <% end %>
@@ -152,6 +167,11 @@
   <script>
     $(document).ready(function(){
       $('.toast').toast('show');
+      var toastEl = document.getElementById('special');
+      var toast = new bootstrap.Toast(toastEl, {
+        autohide: false
+      });
+      toast.show();
     });
   </script>
 </html>

@@ -84,7 +84,7 @@ class MemberRolesController < ApplicationController
     respond_to do |format|
       if @member_role.update(member_role_params)
         flash[:success] = "Member's role was successfully updated."
-        format.html { redirect_to(member_role_url(@member_role)) }
+        format.html { redirect_to(member_roles_path) }
         format.json { render(:show, status: :ok, location: @member_role) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }

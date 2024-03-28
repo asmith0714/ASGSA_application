@@ -110,7 +110,8 @@ class EventsController < ApplicationController
       :description,
       :contact_info,
       :capacity,
-      :points
+      :points,
+      :attachment
     )
   end
 end

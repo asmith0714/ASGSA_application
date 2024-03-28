@@ -14,6 +14,8 @@ class Event < ApplicationRecord
   validates :description, presence: false
   validate :end_time_after_start_time
   has_many :attendees, dependent: :destroy
+  has_one_attached :attachment
+  validate :acceptable_file
 
   private
 
@@ -21,5 +23,14 @@ class Event < ApplicationRecord
     return if end_time.blank? || start_time.blank?
 
     errors.add(:end_time, 'must be after the start time') if end_time <= start_time
+  end
+
+  def acceptable_file
+    return unless attachment.attached?
+
+    acceptable_types = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf']
+    return if acceptable_types.include?(attachment.content_type)
+
+    errors.add(:attachment, 'must be a JPEG, JPG, PNG, or PDF file')
   end
 end

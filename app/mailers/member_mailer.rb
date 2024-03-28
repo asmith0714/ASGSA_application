@@ -35,7 +35,15 @@ class MemberMailer < ApplicationMailer
     ics_content = CGI.unescape(@calendar_link.ical_url.split(',')[1])
     attachments['event.ics'] = { mime_type: 'text/calendar', content: ics_content }
 
+    if @event.attachment.attached?
+      attachments[@event.attachment.filename.to_s] = {
+        mime_type: @event.attachment.content_type,
+        content: @event.attachment.download
+      }
+    end
+
     mail(to: recipients.pluck(:email), subject: 'ASGSA: New Upcoming Event!')
+    @event.attachment.purge if @event.attachment.attached?
   end
 
   def notification_email(notification)
