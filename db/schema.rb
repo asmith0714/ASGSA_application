@@ -47,6 +47,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_034013) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "contact_info"
+    t.string "category"
+    t.boolean "archive"
   end
 
   create_table "member_notifications", force: :cascade do |t|
