@@ -191,12 +191,6 @@ body {
 
 // Edit Page Styling
 
-.label-header {
-    display: block;
-    text-transform: capitalize;
-    font-weight: bold;
-}
-
 .required::after {
     content: '*';
     color: red;
@@ -209,12 +203,6 @@ body {
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.centered-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 // Show Member Syling
 
 .sidebar-attended-events {
@@ -224,7 +212,7 @@ body {
 .sidebar-attended-events::before, .sidebar-attended-events::after {
     content: "";
     position: absolute;
-    width: 28%;
+    width: 25%;
     height: 2px;
     background-color: grey;
     top: 50%;
@@ -259,26 +247,6 @@ body {
     right: 0
 }
 
-.show-member {
-    display: flex;
-    width: auto;
-}
-
-.profile {
-    // margin: auto; 
-    width: 100%;
-    // padding-right: 50px; /* Adjust spacing between details and event history */
-}
-
-.profile-header {
-    // border: 2px solid black;
-    padding: 10px;
-    border-bottom: 2px solid black;
-    display: flex;
-    flex: 1; /* Take up remaining space */
-    margin-bottom: 20px;
-}
-
 .avatar {
     width: 100px; /* Adjust as needed */
     height: 100px; /* Adjust as needed */
@@ -291,82 +259,4 @@ body {
     flex-direction: column;
     justify-content: center; /* Center vertically */
     margin-right: 30px
-}
-
-.additional-info .item1 { grid-area: degree; }
-.additional-info .item2 { grid-area: study; }
-.additional-info .item3 { grid-area: topic; }
-.additional-info .item4 { grid-area: lab; }
-.additional-info .item5 { grid-area: pioneer; }
-.additional-info .item6 { grid-area: description; }
-.additional-info .item7 { grid-area: allergies; }
-
-.additional-info {
-    height: auto;
-    // border: 2px solid black;
-    display: grid;
-    grid-template-areas:
-    'degree study . .'
-    'topic lab . .'
-    'description description allergies allergies';
-    align-items: start;
-    gap: 10px;
-    padding: 10px;
-    word-break: auto;
-}
-
-.member-event-history {
-    // border: 2px solid black;    
-    // border-left: 2px solid black;
-    right: 0;
-    width: 50%; /* Adjust as needed */
-    // padding-left: 20px; /* Adjust spacing between details and event history */
-    justify-content: center;
-    // text-align: center;
-}
-
-.member-events-list {
-    height: 100%;
-    border-left: 2px solid black;
-    font-size: medium;
-    padding-top: 20px;
-    overflow-y: auto;
-}
-
-// Event Show Styling
-
-.show-event {
-   
-}
-
-.event-header {
-    // border: 2px solid black;
-    // padding: 10px;
-    // border-bottom: 4px solid black;
-    display: flex;
-    flex: 1; /* Take up remaining space */
-    // margin-bottom: 20px;
-    // width: 20%;
-}
-
-.event-info .item1 { grid-area: location; }
-.event-info .item2 { grid-area: date; }
-.event-info .item3 { grid-area: time; }
-.event-info .item4 { grid-area: capacity; }
-.event-info .item5 { grid-area: points; }
-.event-info .item6 { grid-area: contact; }
-.event-info .item7 { grid-area: description; }
-
-.event-info {
-    height: auto;
-    // border: 2px solid black;
-    display: grid;
-    grid-template-areas:
-    'location date time .'
-    'capacity points contact contact'
-    'description description description description';
-    align-items: start;
-    gap: 10px;
-    padding: 10px;
-    word-break: auto;
 }
