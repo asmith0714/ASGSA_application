@@ -3,32 +3,30 @@ require 'rails_helper'
 RSpec.describe "Officer View", type: :feature do
     before do
         Rails.application.load_seed
-    end
-  
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-    provider: 'google_oauth2',
-    uid: '123456789',
-    info: {
-        email: "jack@tamu.edu",
-        first_name: "Jane",
-        last_name: "Doe",
-        image: "https://example.com/image.jpg"
-    },
-    credentials: {
-        token: "token",
-        refresh_token: "refresh token",
-        expires_at: DateTime.now,
-    }
-    })
-  
-    before do
+    
+        @member1 = create(:member, :officer)
+
+        # Setup mock OmniAuth user
+        OmniAuth.config.test_mode = true
+        OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+          provider: 'google_oauth2',
+          uid: '123456789',
+          info: {
+            email: @member1.email,
+            first_name: @member1.first_name,
+            last_name: @member1.last_name,
+            image: @member1.avatar_url
+          },
+          credentials: {
+            token: "token",
+            refresh_token: "refresh token",
+            expires_at: DateTime.now,
+          }
+        })
+    
+        # Route to trigger the OmniAuth callback directly for testing
         visit member_google_oauth2_omniauth_callback_path
-        click_button "Update Profile"
-        visit member_roles_path
-        find('#edit_btn').click
-        select 'Officer', from: 'member_role_id'
-        click_button "Update Member's Role"
+    
     end
 
     scenario "Nav Links" do
@@ -56,7 +54,7 @@ RSpec.describe "Officer View", type: :feature do
 
     scenario "Officer can create events" do
         visit events_path
-        expect(page).to have_content("Add New Event")
+        expect(page).to have_content("Create New Event")
     end
 
     scenario "Officer can edit events" do     
