@@ -33,7 +33,7 @@
 end
 
 # Create a mock event
-Event.find_or_create_by(name: "Test Event") do |event|
+event = Event.find_or_create_by(name: "Test Event") do |event|
   event.location = "Test Location"
   event.start_time = Time.now
   event.end_time = Time.now + 1.hour
@@ -44,6 +44,13 @@ Event.find_or_create_by(name: "Test Event") do |event|
   event.contact_info = "test@example.com"
   event.category = "Test Category"
   event.archive = false
+end
+
+# Create a mock notification
+Notification.find_or_create_by(title: "Test Notification") do |notification|
+  notification.description = "This is a test notification"
+  notification.event_id = event.id
+  notification.date = Date.today
 end
 
 

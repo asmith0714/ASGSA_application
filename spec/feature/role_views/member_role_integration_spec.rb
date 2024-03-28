@@ -103,7 +103,6 @@ RSpec.describe "Member View", type: :feature do
 
     scenario "Member can view events" do
         visit events_path
-        save_page
         expect(page).to have_css('#show_btn')
     end
   
