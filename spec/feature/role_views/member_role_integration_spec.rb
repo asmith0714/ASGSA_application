@@ -68,11 +68,12 @@ RSpec.describe "Member View", type: :feature do
         visit members_path
         find('#edit_btn').click
         expect(page).to have_content("Edit Profile")
-        expect(page).to have_field('member[first_name]', readonly: true)
-        expect(page).to have_field('member[last_name]', readonly: true)
-        expect(page).to have_field('member[email]', readonly: true)
-        expect(page).to have_field('member[points]', readonly: true)
-        expect(page).to have_field('member[position]', readonly: true)
+        expect(page).to have_field('member[first_name]', disabled: true)
+        expect(page).to have_field('member[last_name]', disabled: true)
+        expect(page).to have_field('member[email]', disabled: true)
+        expect(page).to have_field('member[points]', disabled: true)
+        expect(page).to have_field('member[position]', disabled: true)
+        expect(page).to have_field('member[status]', disabled: true)
     end
 
     scenario "Member can't edit other members' info" do
@@ -98,11 +99,6 @@ RSpec.describe "Member View", type: :feature do
     scenario "Member can't edit events" do
         visit events_path
         expect(page).to have_no_css('#edit_btn')
-    end
-
-    puts "Before update: Events and their attributes"
-        Event.all.each do |event|
-        puts "Event ID: #{event.id}, Attributes: #{event.attributes}"
     end
 
     scenario "Member can view events" do
