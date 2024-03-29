@@ -94,7 +94,7 @@
                   <%= image_tag('default_avatar.jpeg', alt: 'Default Avatar', class: 'profile-icon2') %>
                 <% end %>
               </label>
-              <div class="dropdown-menu" aria-labelledby="profileDropdown">
+              <div class="dropdown-menu" aria-labelledby="profileDropdown" style="left: auto; right: 0">
                 <%= link_to 'View Profile', member_path(current_member), class: 'dropdown-item' %>
                 <%= link_to 'Sign Out', destroy_member_session_path, class: 'dropdown-item' %>
               </div>
