@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_event, only: %i[show edit update destroy]
 
   def index
-    authorize Event
+    authorize(Event)
     @events = Event.all
     @events = @events.search(params[:query]) if params[:query].present?
     # if params[:query].present?
@@ -54,75 +56,81 @@ class EventsController < ApplicationController
   end
 
   def sort_direction
-    %w{ asc desc }.include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   def show
-    authorize Event
+    authorize(Event)
   end
 
   def new
-    authorize Event
+    authorize(Event)
     @event = Event.new
   end
 
   def edit
-    authorize Event
+    authorize(Event)
   end
 
   def delete_confirmation
-    authorize Event
+    authorize(Event)
     # Render delete_confirmation view
     @event = Event.find(params[:id])
   end
 
   def create
-    authorize Event
+    authorize(Event)
     @event = Event.new(event_params)
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to event_path(@event), notice: "Event was successfully created." }
-        format.json { render :show, status: :create, location: @event }
-        if params[:send_email] == 'all'
+        flash[:success] = 'Event was successfully created.'
+        format.html { redirect_to(event_path(@event)) }
+        format.json { render(:show, status: :create, location: @event) }
+        case params[:send_email]
+        when 'all'
           # Send email to all members
           MemberMailer.event_email(@event, Member.all).deliver_now
-        elsif params[:send_email] == 'officers'
+        when 'officers'
           # Send email to officers only
-          officers = Member.where(position: 'Officer')
-          MemberMailer.event_email(@event, officers).deliver_now
-        elsif params[:send_email] == 'members'
+          officer_role = Role.find_by(name: 'Officer')
+          officers = officer_role.members if officer_role
+          MemberMailer.event_email(@event, officers).deliver_now if officers
+        when 'members'
           # Send email to members only
-          members = Member.where(position: 'Member')
-          MemberMailer.event_email(@event, members).deliver_now
+          member_role = Role.find_by(name: 'Member')
+          members = member_role.members if member_role
+          MemberMailer.event_email(@event, members).deliver_now if members
         end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @event.errors, status: :unprocessable_entity) }
       end
     end
   end
 
   def update
-    authorize Event
+    authorize(Event)
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to event_path(@event), notice: "Event was successfully updated." }
-        format.json { render :show, status: :ok, location: @event }
+        flash[:success] = 'Event was successfully updated.'
+        format.html { redirect_to(event_path(@event)) }
+        format.json { render(:show, status: :ok, location: @event) }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.html { render(:edit, status: :unprocessable_entity) }
+        format.json { render(json: @event.errors, status: :unprocessable_entity) }
       end
     end
   end
 
   def destroy
-    authorize Event
+    authorize(Event)
     @event.destroy!
 
     respond_to do |format|
-      format.html { redirect_to events_url, notice: "Event was successfully deleted." }
-      format.json { head :no_content }
+      flash[:success] = 'Event was successfully deleted.'
+      format.html { redirect_to(events_url) }
+      format.json { head(:no_content) }
     end
   end
 
@@ -157,8 +165,8 @@ class EventsController < ApplicationController
       :description,
       :capacity,
       :points,
-      :archive
+      :archive,
+      :attachment
     )
   end
-
 end

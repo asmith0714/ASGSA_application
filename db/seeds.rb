@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -9,31 +11,31 @@
 #   end
 [
   {
-    name:"Admin",
-    permissions: "Create, Read, Update, Delete"
+    name: 'Admin',
+    permissions: 'Create, Read, Update, Delete'
   },
   {
-    name:"Officer",
-    permissions: "Create, Read, Update"
+    name: 'Officer',
+    permissions: 'Create, Read, Update'
   },
   {
-    name:"Member",
-    permissions: "Read"
+    name: 'Member',
+    permissions: 'Read'
   },
   {
-    name:"Unapproved",
-    permissions: "None"
+    name: 'Unapproved',
+    permissions: 'None'
   },
   {
-    name:"Approved",
-    permissions: "None"
+    name: 'Approved',
+    permissions: 'None'
   }
 ].each do |role|
-  Role.find_or_create_by(role)
+  Role.find_or_create_by!(role)
 end
 
 # Create a mock event
-Event.find_or_create_by(name: "Mock Event", location: "1234 Fake St", start_time: Time.now, end_time: Time.now + 1.hour, date: Date.today, description: "This is a mock event", capacity: 100, points: 1, contact_info: "123-456-7890")
-Notification.find_or_create_by(title: "Mock Notification", description: "This is a mock notification", date: Date.today)
-
-
+Event.find_or_create_by!(name: 'Mock Event', location: '1234 Fake St', start_time: Time.zone.now, end_time: Time.zone.now + 1.hour, date: Time.zone.today,
+                         description: 'This is a mock event', capacity: 100, points: 1, contact_info: '123-456-7890'
+)
+Notification.find_or_create_by!(title: 'Mock Notification', description: 'This is a mock notification', date: Time.zone.today)

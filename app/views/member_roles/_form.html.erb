@@ -1,37 +1,46 @@
 <%= form_with(model: member_role, html: { onsubmit: "return confirm('Are you sure you want to proceed?');" }) do |form| %>
-  <% if member_role.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(member_role.errors.count, "error") %> prohibited this member_role from being saved:</h2>
+  <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
+    <div class="card mx-auto" style="width: 45rem;">
+      <div class="card-header">
+        <%= link_to("Back to List", member_roles_path, :class => 'back-link') %>
+        <h1 style="text-align: center">Edit Member's Role</h1>
 
-      <ul>
-        <% member_role.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <% if member_role.errors.any? %>
+          <div style="color: red; text-align: center">
+              <% member_role.errors.each do |error| %>
+                <div>
+                  <%= error.full_message %>
+                </div>
+              <% end %>
+          </div>
+        <% end %> 
+        
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= form.label :member_id, 'Member ID', class: 'form-label' %>
+            <%= form.text_field :member_id, readonly: true, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= form.label :first_name, 'First Name', class: 'form-label' %>
+            <%= form.text_field :first_name, value: member_role.member.first_name, readonly: true, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= form.label :last_name, 'Last Name', class: 'form-label' %>
+            <%= form.text_field :last_name, value: member_role.member.last_name, readonly: true, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <%= form.label :role_id, 'Role', class: 'form-label required' %>
+            <%= form.collection_select :role_id, Role.all, :id, :name, {}, { class: 'form-control' } %>
+          </div>
+
+          <%= form.submit "Update Member's Role", class: 'btn btn-primary', style: "margin-left: 2%"%>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <label>Member ID</label>
-    <p><%= member_role.member_id %></p>
-  </div>
-
-  <div>
-    <label>First Name</label>
-    <p><%= member_role.member.first_name %></p>
-  </div>
-
-  <div>
-    <label>Last Name</label>
-    <p><%= member_role.member.last_name %></p>
-  </div>
-
-  <div>
-    <%= form.label :role_id, style: "display: block" %>
-    <%= form.collection_select :role_id, Role.all, :id, :name, {}, { id: 'member_role_id' } %>
-  </div>
-
-  <div>
-    <%= form.submit "Update Member's Role" %>
   </div>
 <% end %>
