@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MemberRolePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -7,7 +5,7 @@ class MemberRolePolicy < ApplicationPolicy
     #   scope.all
     # end
     def resolve
-      if user.admin?
+      if user.admin? # Assuming `admin` is a method that determines if a user is an admin
         scope.all
       else
         scope.where(id: user.id)
@@ -16,32 +14,33 @@ class MemberRolePolicy < ApplicationPolicy
   end
 
   def index?
-    admin_officer? || true
+    admin?
   end
 
   def show?
-    admin_officer? 
+    admin?
   end
-
+  
   def new?
-    admin_officer?
+    admin?
   end
 
   def create?
-    admin_officer?
+    admin? 
   end
 
   def edit?
-    admin_officer? || true
+    admin?
   end
 
   def update?
-    admin_officer? || true
+    admin?
   end
 
   def destroy?
-    admin_officer?
+    admin?
   end
+
 
   def admin_officer_member_info?
     user.admin? || user.officer? || record.id == user.id
@@ -51,5 +50,8 @@ class MemberRolePolicy < ApplicationPolicy
     user.admin? || user.officer?
   end
 
-  delegate :admin?, to: :user
+  def admin?
+    user.admin?
+  end
+
 end

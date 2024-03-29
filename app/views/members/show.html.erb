@@ -1,127 +1,132 @@
-<%= link_to "Member List", members_path %>
-<% if current_member.admin? %>
-  | <%= link_to "Delete Member", @member, method: :delete %>
+<% width = 38 %>
+<% if policy(current_member).admin_officer? || current_member == @member %>
+  <% width = 45 %>
 <% end %>
-<p style="color: green"><%= notice %></p>
 
-<div class="show-member">
+<div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
+  <div class="card mx-auto" style="width: <%= width %>rem;">
+    <div class="card-header">
+      <%= link_to "Member List", members_path %>
+      | <%= link_to "Allergies List", allergies_list_members_path %>
+      <% if policy(current_member).admin_officer? || current_member == @member %>
+      | <%= link_to "Edit Profile", edit_member_path(@member) %>
+      <% end %>
+      <% if policy(current_member).admin? %>
+        | <%= link_to "Delete Member", @member, method: :delete %>
+      <% end %>
+      <div class="row justify-content-center align-items-center mt-3">
+        <div class="">
+          <% if @member.avatar_url.present? %>
+            <%= image_tag @member.avatar_url, class: "avatar" %>
+          <% else %>
+            <%= image_tag 'default_avatar.jpeg', class: "avatar" %>
+          <% end %>
+        </div>
+          
+        <div class="ml-4">
+          <h1 class="" style=""><%= @member.first_name %> <%= @member.last_name %></h1>
 
-  <div class="profile">
-    <div class="profile-header">
-      <div class="profile-image", style="margin-right: 30px"> 
-        <% if @member.avatar_url.present? %>
-          <%= image_tag @member.avatar_url, class: "avatar" %>
-        <% else %>
-          <%= image_tag 'default_avatar.jpeg', class: "avatar" %>
-        <% end %>
+          <div class="row">
+            <div class="top-bottom-text ml-3">
+              <strong>Status</strong>
+              <%= @member.status %>
+            </div>
+
+            <div class="top-bottom-text">
+              <strong>Position</strong>
+              <%= @member.position %>
+            </div>
+            
+            <div class="top-bottom-text">
+              <strong>Member Since</strong>
+              <%= @member.date_joined %>
+            </div>
+
+            <div class="top-bottom-text">
+              <strong>Email Address</strong>
+              <%= @member.email %>
+            </div>
+            
+
+            <% if policy(current_member).admin_officer? || current_member == @member %>
+              <div class="top-bottom-text" style="">
+                <strong>Current Points</strong>
+                <%= @member.points %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div class="top-bottom-text">
-        <h2><%= @member.first_name %>  <%= @member.last_name %></h2>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5 mb-3 top-bottom-text">
+          <strong>Degree</strong>
+          <%= @member.degree %>
+        </div>
+
+        <div class="col-md-5 mb-3 top-bottom-text">
+          <strong>Area of Study</strong>
+          <%= @member.area_of_study %>
+        </div>
       </div>
         
-      <div class="top-bottom-text">
-        <strong>Position</strong>
-        <%= @member.position %>
-      </div>
-
-      <div class="top-bottom-text">
-        <strong>Member Since</strong>
-        <%= @member.date_joined %>
-      </div>
-
-      <div class="top-bottom-text">
-        <strong>Email Address</strong>
-        <%= @member.email %>
-      </div>
-      
-      <% if policy(current_member).admin_officer? || current_member == @member %>
-        <!-- Not blocking view properly  -->
-        <div class="top-bottom-text">
-          <strong>Current Points</strong>
-          <%= @member.points %>
+      <div class="row">
+        <div class="col-md-5 mb-3 top-bottom-text">
+          <strong>Research Topic</strong>
+          <%= @member.res_topic %>
         </div>
-      <% end %>
-
-      <% if policy(current_member).admin_officer? %> 
-        <div class="top-bottom-text">
-          <strong>Status</strong>
-          <%= @member.status %>
+        
+        <div class="col-md-5 mb-3 top-bottom-text">
+          <strong>Research Lab</strong>
+          <%= @member.res_lab %>
         </div>
-      <% end %>
+      </div>
+
       
-      <% if policy(current_member).admin_officer? || current_member == @member %>
-        <%= link_to "Edit", edit_member_path(@member) %>
-      <% end %>
-    </div>
-
-    <div class="additional-info">
-
-      <% if @member.faculty.present? %>
-        <div>
-          <strong> Faculty <span style="color: #b38f00;">*</span></strong><br>
-          <%= @member.faculty %>
-        </div>
-      <% end %>
-
-      <div class="top-bottom-text item1">
-        <strong> Degree </strong>
-        <%= @member.degree  %>
+      <div class="mb-3 top-bottom-text">
+        <strong>Research Description</strong>
+        <%= @member.res_description %>
       </div>
 
-      <div class="top-bottom-text item2">
-        <strong> Area of Study </strong>
-        <%= @member.area_of_study %>
-      </div>
-
-      <div class="top-bottom-text item3">
-        <strong> Research Topic </strong>
-        <%= @member.res_topic  %>
-      </div>
-
-      <div class="top-bottom-text item4">
-        <strong> Research Lab </strong>
-        <%= @member.res_lab  %>
-      </div>
-      
-      <div class="top-bottom-text item6">
-        <strong> Research Description </strong>
-        <%= @member.res_description  %>
-      </div>
-
-      <div class="top-bottom-text item7">
-        <strong> Food Allergies </strong>
-        <%= @member.food_allergies  %>
+      <div class="mb-3 top-bottom-text">
+        <strong>Food Allergies</strong>
+        <%= @member.food_allergies %>
       </div>
     </div>
-  
   </div>
 
-  <!-- Not blocking view properly  -->
   <% if policy(current_member).admin_officer? || current_member == @member %>
-    <div class="member-event-history">
-      <h1 style="text-align: center; text-decoration: underline">Event History<h1>
-      <div class="member-events-list">
-        <% events_attended = Event.joins(:attendees).where(attendees: { member_id: @member.id, attended: true }).order(date: :desc, start_time: :desc).limit(5) %>
+    <div class="card mx-auto" style="width: 27rem; height: 50rem">
+      <div class="card-header">
+        <h1 style="text-align: center">Event History</h1>
+      </div>
+      
+      <div class="card-body">
+        <% events_attended = Event.joins(:attendees).where(archive: false, attendees: { member_id: @member.id, attended: true }).order(date: :desc, start_time: :desc) %>
         <% if events_attended.empty? %>
-          <p style="text-align: center; color: grey">*Has not attended any events*</p>
+          <p class="h5 sidebar-empty-events" style="text-align: center; color: grey">Has Not Attented Any Events</p>
         <% else %>
-          <% events_attended.each do |event| %>
-            <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; width: 75%; margin: auto;">
-              <div class="card-body">
-                <h3 class="card-title"><%= event.name %></h3>
-                <p class="card-subtitle mb-2 text-muted">Date: <%= event.date.strftime('%m/%d') %></p>
-                <p class="card-subtitle mb-2 text-muted">Points: <%= event.points %></p>
-                <p class="card-text"><%= event.description %></p>
+          <p class="h5 mb-3 sidebar-attended-events" style="text-align: center; color: grey">Showing <%= events_attended.count %> Total Event<%= events_attended.count > 1 ? 's' : '' %> </p>
+          <div style="overflow-y: auto; max-height: 40rem">
+            <% events_attended.each do |event| %>
+                <div class="card card-body border-dark mb-3">
+                  <p class="card-title h3"><%= event.name %></p>
+                  <p class="card-subtitle h6 mb-2"><%= event.category %></p>
+                  <p class="card-subtitle mb-2 text-muted">Date: <%= event.date.strftime('%m/%d/%y') %>,   Points: <%= event.points %></p>
+                  <% if event.description.present? %>
+                    <% max_words = 25 %>
+                    <% words = event.description.split(' ') %>
+                    <% shorten_description = words.length > max_words ? words.first(max_words).join(' ') + '...' : event.description %>                
+                    <p class="card-text"><%= shorten_description %></p>
+                  <% end %>
+                  <%= link_to "Full Details", event, class: "btn btn-primary", style: "width: 6rem" %>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>
   <% end %>
-
 </div>
-
-<br>
-<br>

@@ -7,7 +7,11 @@
 <div style="padding: 5%; background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover; height: 100vh;">
   <div class="card">
     <div class="card-header">
-      <h1>Members</h1>
+      <h1>
+      Members
+      <br>
+      <%= link_to "Allergies List", allergies_list_members_path, class: "btn btn-primary" %>
+      </h1>
     </div>
     <div class="card-body">
       <%= turbo_frame_tag "members" do %>

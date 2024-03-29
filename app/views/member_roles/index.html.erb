@@ -31,7 +31,7 @@
               Filter by Role
             </div>
             <div class="col-auto">
-              <%= form.select :role, options_for_select(['Admin', 'Officer', 'Member'], selected: params[:role]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+              <%= form.select :role, options_for_select(['Admin', 'Officer', 'Member'], selected: params[:role]), {include_blank: true}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
             </div>
             <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
           </div>

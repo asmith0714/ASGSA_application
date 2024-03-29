@@ -86,18 +86,21 @@ class AttendeesController < ApplicationController
   end
 
   def check_in
+    # SEARCH FEATURE NOT WORKING PROPERLY FOR 'Attended' AND 'RSVP'
     attendees = Attendee.where(event_id: params[:event_id])
     @members = Member.all
     @members = @members.search(params[:query]) if params[:query].present?
-    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
     case params[:member_filter]
-    when 'Attended'
+    when "Attended"
       @members = attendees.where(attended: true).map(&:member)
-    when 'RSVP'
-      @members = attendees.where(rsvp: true).map(&:member)
-    when 'Non-RSVP'
-      @members = Member.where.not(member_id: attendees.pluck(:member_id))
+    when "All Members"
+  
+    when "Non-RSVP"
+      @members = @members.where.not(member_id: attendees.pluck(:member_id))
+    else # Default to "RSVP"
+      @members = attendees.where(rsvp: true, attended: false).map(&:member)
     end
   end
 

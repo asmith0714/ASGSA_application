@@ -19,12 +19,6 @@ class Event < ApplicationRecord
 
   private
 
-  def end_time_after_start_time
-    return if end_time.blank? || start_time.blank?
-
-    errors.add(:end_time, 'must be after the start time') if end_time <= start_time
-  end
-
   def acceptable_file
     return unless attachment.attached?
 
@@ -33,4 +27,17 @@ class Event < ApplicationRecord
 
     errors.add(:attachment, 'must be a JPEG, JPG, PNG, or PDF file')
   end
+
+  def set_default_archive
+      self.archive ||= false
+  end
+
+  def end_time_after_start_time
+      return if end_time.blank? || start_time.blank?
+
+      if end_time <= start_time
+      errors.add(:end_time, "must be after the start time")
+      end
+  end
+
 end

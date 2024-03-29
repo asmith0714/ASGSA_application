@@ -7,7 +7,7 @@ class MembersController < ApplicationController
   def index
     authorize(Member)
     @members = Member.all
-    @members = @members.search(params[:query]) if params[:query].present?
+    @members = @members.general_search(params[:query]) if params[:query].present?
     @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
 
     @members = @members.where(area_of_study: params[:area_of_study]) if params[:area_of_study].present?
@@ -95,6 +95,12 @@ class MembersController < ApplicationController
       format.html { redirect_to(members_url) }
       format.json { head(:no_content) }
     end
+  end
+
+  def allergies_list
+    @members = Member.all
+    @members = @members.allergies_search(params[:query]) if params[:query].present?
+    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
   end
 
   private

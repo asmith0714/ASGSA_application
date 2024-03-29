@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Attendee < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :search, against: [:first_name, :last_name, :email, :position], using: { tsearch: { prefix: true } }
   belongs_to :event
   belongs_to :member
 
