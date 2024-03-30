@@ -9,13 +9,10 @@
 
   <body>
     <%= yield %>
-    <p> 
-    <% if Date.current < Date.current.change(month: 6, day: 1) %>
-      <b style="color:#953132;">ASGSA Executive Committe <%= Date.current.advance(years: -1).year %> - <%= Date.current.year %></b>
-    <% else %>
-      <b style="color:#953132;">ASGSA Executive Committe <%= Date.current.year %> - <%= Date.current.advance(years: 1).year %></b>
-    <% end %> <br>
-    President: <%=  Email.first.president %> <br>
+    <% if Email.exists? %>
+      <p> 
+      <b style="color:#953132;font-size:1.3em">ASGSA Executive Committe <%= Email.first.start_year %> - <%= Email.first.end_year %></b><br>
+      President: <%=  Email.first.president %> <br>
       Vice President: <%=  Email.first.vice_president %> <br>
       Secretary: <%=  Email.first.secretary %> <br>
       Treasurer: <%=  Email.first.treasurer %> <br>
@@ -23,5 +20,6 @@
       Public Relations: <%=  Email.first.public_relations %> <br>
       Members at Large: <%=  Email.first.members_at_large %> <br>
       Email: <%=  Email.first.org_email %> </p>
+    <% end %>
   </body>
 </html>

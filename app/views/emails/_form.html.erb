@@ -25,6 +25,18 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6 mb-3">
+                <%= form.label :start_year, 'Start Year', class: 'form-label' %>
+                <%= form.text_area :start_year, required: true, class: 'form-control', style: 'height: 40px' %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :end_year, 'End Year', class: 'form-label' %>
+                <%= form.text_area :end_year, class: 'form-control', style: 'height: 40px' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
                 <%= form.label :president, 'President', class: 'form-label' %>
                 <%= form.text_area :president, required: true, class: 'form-control', style: 'height: 40px' %>
               </div>

@@ -3,14 +3,6 @@ class EmailsController < ApplicationController
   
     def index
       @emails = Email.all 
-      @first_year = Date.current
-      @second_year = Date.current.advance(years: 1) 
-      switch = Date.current.change(month: 6, day: 1)
-      if Date.current < switch
-        @first_year = Date.current.advance(years: -1)
-        @second_year = Date.current
-      end
-
     end
    
     # GET /emails/new
@@ -68,7 +60,8 @@ class EmailsController < ApplicationController
   
       # Only allow a list of trusted parameters through.
       def email_params
-        params.require(:email).permit(:president, :vice_president, :secretary, :treasurer, :public_relations, :members_at_large, :org_email)
+        params.require(:email).permit(:president, :vice_president, :secretary, :treasurer, 
+            :public_relations, :members_at_large, :org_email, :start_year, :end_year)
       end
   
   end

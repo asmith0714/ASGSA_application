@@ -6,4 +6,6 @@ class Email < ApplicationRecord
     validates :public_relations, presence: true
     validates :members_at_large, presence: true
     validates :org_email, presence: true
+    validates :start_year, presence: true
+    validates :end_year, presence: true
 end
