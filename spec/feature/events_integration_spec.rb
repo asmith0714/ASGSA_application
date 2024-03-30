@@ -38,6 +38,7 @@ RSpec.feature "EventsFeature", type: :feature do
         date: Date.today,
         capacity: 40,
         points: 5,
+        category: "Social Event",
         contact_info: "You can contact FakeUser@tamu.edu",
         description: "This is a description for test event"
         }
@@ -51,6 +52,7 @@ RSpec.feature "EventsFeature", type: :feature do
     fill_in "Start Time", with: "1:00PM"
     fill_in "End Time", with: "2:00PM"
     fill_in "Date", with: Date.today
+    select 'Social Event', from: 'event[category]'
     fill_in "Capacity", with: "40"
     fill_in "Points", with: "5"
     # fill_in "Contact Information", with: "You can contact FakeUser@tamu.edu"
@@ -82,8 +84,8 @@ RSpec.feature "EventsFeature", type: :feature do
 
   scenario "View events list" do
     # Create some events to test against
-    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Date.today, points: 5)
-    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Date.today, points: 5)
+    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Date.today, points: 5, category: "Social Event")
+    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Date.today, points: 5, category: "Coffee Break")
 
     visit events_path
 
@@ -144,7 +146,7 @@ RSpec.feature "EventsFeature", type: :feature do
 
     visit event_path(event)
     click_link "Delete Event"
-    click_button "Delete this event"
+    click_button "Delete"
 
     expect(page).to have_content("Event was successfully deleted.")
     # expect(page).not_to have_content(event.name)
