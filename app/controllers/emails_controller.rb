@@ -2,20 +2,24 @@ class EmailsController < ApplicationController
     before_action :set_email, only: %i[edit update destroy ]
   
     def index
+      authorize(Email)
       @emails = Email.all 
     end
    
     # GET /emails/new
     def new
+      authorize(Email)
       @email = Email.new
     end
   
     # GET /emails/1/edit
     def edit
+      authorize(Email)
     end
     
     # POST /emails or /emails.json
     def create
+      authorize(Email)
       @email = Email.new(email_params)
   
       respond_to do |format|
@@ -31,6 +35,7 @@ class EmailsController < ApplicationController
   
     # PATCH/PUT /emails/1 or /emails/1.json
     def update
+      authorize(Email)
       respond_to do |format|
         if @email.update(email_params)
           format.html { redirect_to emails_path, notice: "Footer was successfully updated." }
@@ -44,6 +49,7 @@ class EmailsController < ApplicationController
 
     # DELETE /emails/1 or /emails/1.json
     def destroy
+      authorize(Email)
       @email.destroy!
   
       respond_to do |format|
