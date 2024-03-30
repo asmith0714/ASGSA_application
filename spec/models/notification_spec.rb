@@ -9,7 +9,8 @@ RSpec.describe Notification, type: :model do
     date: Date.today,
     description: "This is a description for test event",
     capacity: 20,
-    points: 3
+    points: 3, 
+    category: "Social Event"
   ) }
   #Define a valid member
   let(:valid_attributes){
