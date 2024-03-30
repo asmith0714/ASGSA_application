@@ -10,13 +10,14 @@ RSpec.describe Attendee, type: :model do
       points: 100,
       position: "Member",
       date_joined: Date.today,
-      degree: "Bachelor",
+      degree: "MS",
       res_topic: "Topic",
       res_lab: "Lab",
       res_pioneer: "Pioneer",
       res_description: "Description",
       area_of_study: "Study Area",
-      food_allergies: "None"
+      food_allergies: "None", 
+      status: "Active"
     }
   }
 
@@ -29,6 +30,7 @@ RSpec.describe Attendee, type: :model do
       end_time: Time.now,
       date: Date.today,
       description: "Sample Description",
+      category: "Social Event",
       capacity: 100,
       points: 5
     )

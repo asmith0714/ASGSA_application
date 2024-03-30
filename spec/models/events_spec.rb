@@ -12,7 +12,8 @@ RSpec.describe Event, type: :model do
         capacity: 20,
         points: 3,
         contact_info: "Contact FakeEmail@tamu.edu for more information",
-        description: "This is a description for test event"
+        description: "This is a description for test event", 
+        category: "Social Event"
         }
     }
 
