@@ -70,6 +70,25 @@
               <%= form.hidden_field :date, :value => Date.today %>
               
             <% end %>
+
+            <div class="mb-3" id="fileUpload" style="display: none;">
+              <%= form.label :attachment, 'Upload File (optional)', class: 'form-label' %>
+              <%= form.file_field :attachment, accept: 'image/jpeg, image/png, image/jpeg, application/pdf', class: 'form-control', id: 'fileInput' %>
+              <p style="color: red;">.jpg, .jpeg, .png, or .pdf only</p>
+            </div>
+
+            <div id="filePreviewModal" class="modal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body" style="width: 100%; height: 100%;">
+                    <img id="filePreview" class="img-fluid" src="#" alt="File Preview">
+                  </div>
+                </div>
+              </div>
+            </div>
               <% if notification.new_record? %>
                 <%= form.submit 'Send Notification', class: 'btn btn-primary'%>
               <% else %>
@@ -78,4 +97,30 @@
           </div>
       </div>
   </div>
+  <script>
+      $(document).ready(function() {
+        $('input[name="send_email"]').change(function() {
+          if ($(this).val() === 'none') {
+            $('#fileUpload').hide();
+          } else {
+            $('#fileUpload').show();
+          }
+        });
+
+        $('#fileInput').change(function() {
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+            $('#filePreview').attr('src', e.target.result);
+            $('#filePreviewModal').modal('show');
+          }
+
+          reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#filePreviewModal .close').click(function() {
+          $('#filePreviewModal').modal('hide');
+        });
+      });
+    </script>
 <% end %>
