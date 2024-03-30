@@ -9,7 +9,8 @@ RSpec.describe "member_notifications/edit", type: :view do
     date: Date.today,
     description: "This is a description for test event",
     capacity: 20,
-    points: 3
+    points: 3, 
+    category: "Social Event"
   ) }
   let(:valid_notification){ Notification.create!(
       title: "Test notification",
@@ -31,7 +32,8 @@ RSpec.describe "member_notifications/edit", type: :view do
       res_pioneer: "Pioneer",
       res_description: "Description",
       area_of_study: "Study Area",
-      food_allergies: "None"
+      food_allergies: "None",
+      status: "Active"
     )
   }
   let(:member_notification) {
