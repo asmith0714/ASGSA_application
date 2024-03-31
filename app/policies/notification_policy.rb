@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotificationPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -5,7 +7,7 @@ class NotificationPolicy < ApplicationPolicy
     #   scope.all
     # end
     def resolve
-      if user.admin? # Assuming `admin` is a method that determines if a user is an admin
+      if user.admin?
         scope.all
       else
         scope.where(id: user.id)

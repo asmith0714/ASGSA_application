@@ -35,6 +35,18 @@
               <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
             </div>
           </div>
+
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
+              Filter by Area Of Study
+            </div>
+            <div class="col-auto">
+              <%= form.select :area_of_study, options_for_select(['None', 'Physiology of Reproduction', 'Animal Nutrition', 'Livestock Extension', 
+              'Meat Science', 'Microbiology', 'Gene Editing', 'Equine Sciences', 'Animal Welfare', 'Animal Breeding & Genetics',
+              'Epigenetics', 'Dairy Science', 'Genomics'], selected: params[:area_of_study]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+            </div>
+            <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
+          </div>
         <% end %>
 
         <div class="table-responsive">
@@ -42,13 +54,19 @@
             <thead>
               <tr>
                 <th scope="col"></th>
-                <th scope="col">First Name</th>
+                <th scope="col">
+                  First Name
+                  <%= link_to "#{sort_arrow('first_name')}", {sort: 'first_name', direction: sort_direction == 'asc' ? 'desc' : 'asc'} %>
+                </th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Position</th>
                 <th scope="col">Area of Study</th>
                 <% if can_see_all_attributes %>
-                  <th scope="col">Points</th>
+                  <th scope="col">
+                    Points
+                    <%= link_to "#{sort_arrow('points')}", {sort: 'points', direction: sort_direction == 'asc' ? 'desc' : 'asc'} %>
+                  </th>
                   <th scope="col">Status</th>
                 <% end %>
                 <th scope="col" style="width: 10%"></th>

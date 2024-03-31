@@ -1,0 +1,10 @@
+
+<h1> Email Settings </h1>
+<% if @emails.count == 0 %>
+<%= link_to "New footer", new_email_path, class: 'btn btn-primary' %>
+<% end %>
+
+    <% @emails.each do |email| %>
+      <%= render email %>
+    <% end %>
+

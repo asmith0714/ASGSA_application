@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "member_notifications/edit", type: :view do
@@ -15,14 +17,15 @@ RSpec.describe "member_notifications/edit", type: :view do
   let(:valid_notification){ Notification.create!(
       title: "Test notification",
       description: "A test description",
-      date: Date.today,
+      date: Time.zone.today,
       event_id: valid_event.id
     )
-  }
-  let(:valid_member) {Member.create!(
-      first_name: "John",
-      last_name: "Doe",
-      email: "john.doe@tamu.edu",
+  end
+  let(:valid_member) do
+    Member.create!(
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john.doe@tamu.edu',
       points: 100,
       position: "Member",
       date_joined: Date.today,
@@ -35,25 +38,24 @@ RSpec.describe "member_notifications/edit", type: :view do
       food_allergies: "None",
       status: "Active"
     )
-  }
-  let(:member_notification) {
+  end
+  let(:member_notification) do
     MemberNotification.create!(
       member_id: valid_member.id,
       notification_id: valid_notification.id,
       seen: false
     )
-  }
+  end
 
-  before(:each) do
+  before do
     assign(:member_notification, member_notification)
   end
 
-  it "renders the edit member_notification form" do
+  it 'renders the edit member_notification form' do
     render
 
-    assert_select "form[action=?][method=?]", member_notification_path(member_notification), "post" do
-
-      assert_select "input[name=?]", "member_notification[seen]"
+    assert_select 'form[action=?][method=?]', member_notification_path(member_notification), 'post' do
+      assert_select 'input[name=?]', 'member_notification[seen]'
     end
   end
 end

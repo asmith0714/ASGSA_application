@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -9,23 +11,23 @@
 #   end
 [
   {
-    name:"Admin",
-    permissions: "Create, Read, Update, Delete"
+    name: 'Admin',
+    permissions: 'Create, Read, Update, Delete'
   },
   {
-    name:"Officer",
-    permissions: "Create, Read, Update"
+    name: 'Officer',
+    permissions: 'Create, Read, Update'
   },
   {
-    name:"Member",
-    permissions: "Read"
+    name: 'Member',
+    permissions: 'Read'
   },
   {
     name:"Unapproved",
     permissions: "None"
   }
 ].each do |role|
-  Role.find_or_create_by(role)
+  Role.find_or_create_by!(role)
 end
 
 # Create a mock event
@@ -48,5 +50,3 @@ Notification.find_or_create_by(title: "Test Notification") do |notification|
   notification.event_id = event.id
   notification.date = Date.today
 end
-
-

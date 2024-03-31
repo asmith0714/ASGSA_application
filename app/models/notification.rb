@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Notification < ApplicationRecord
   belongs_to :event, optional: true
   has_many :member_notifications, dependent: :destroy
@@ -6,4 +8,15 @@ class Notification < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :date, presence: true
+  has_one_attached :attachment
+  validate :acceptable_file
+
+  def acceptable_file
+    return unless attachment.attached?
+
+    acceptable_types = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf']
+    return if acceptable_types.include?(attachment.content_type)
+
+    errors.add(:attachment, 'must be a JPEG, JPG, PNG, or PDF file')
+  end
 end

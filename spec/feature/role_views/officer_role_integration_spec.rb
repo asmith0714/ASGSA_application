@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "Officer View", type: :feature do
@@ -37,54 +39,61 @@ RSpec.describe "Officer View", type: :feature do
         expect(page).to have_no_content("Roles")
     end
 
-    scenario "Officer can delete other members" do
-        visit members_path
-        expect(page).to have_css('#delete_btn')
-    end
+  it 'Nav Links' do
+    expect(page).to(have_content('Members'))
+    expect(page).to(have_content('Events'))
+    expect(page).to(have_content('Notifications'))
+    expect(page).to(have_no_content('Role Management'))
+    expect(page).to(have_no_content('Roles'))
+  end
 
-    scenario "Officer can edit other members" do
-        visit members_path
-        expect(page).to have_css('#edit_btn')
-    end
+  it 'Officer can delete other members' do
+    visit members_path
+    expect(page).to(have_css('#delete_btn'))
+  end
 
-    scenario "Officer can view other members" do
-        visit members_path
-        expect(page).to have_css('#show_btn')
-    end
+  it 'Officer can edit other members' do
+    visit members_path
+    expect(page).to(have_css('#edit_btn'))
+  end
 
-    scenario "Officer can create events" do
-        visit events_path
-        expect(page).to have_content("Create New Event")
-    end
+  it 'Officer can view other members' do
+    visit members_path
+    expect(page).to(have_css('#show_btn'))
+  end
 
-    scenario "Officer can edit events" do     
-        visit events_path
-        expect(page).to have_css('#edit_btn')
-    end
+  it 'Officer can create events' do
+    visit events_path
+    expect(page).to(have_content('Add New Event'))
+  end
 
-    scenario "Officer can delete events" do
-        visit events_path
-        expect(page).to have_css('#delete_btn')
-    end
+  it 'Officer can edit events' do
+    visit events_path
+    expect(page).to(have_css('#edit_btn'))
+  end
 
-    scenario "Officer can view events" do
-        visit events_path
-        expect(page).to have_css('#show_btn')
-    end
+  it 'Officer can delete events' do
+    visit events_path
+    expect(page).to(have_css('#delete_btn'))
+  end
 
-    scenario "Officer can create notifications" do
-        visit new_notification_path
-        expect(page).to have_content("New notification")
-    end
+  it 'Officer can view events' do
+    visit events_path
+    expect(page).to(have_css('#show_btn'))
+  end
 
-    scenario "Officer can delete notifications" do
-        visit notifications_path
-        expect(page).to have_content("Delete")
-    end
+  it 'Officer can create notifications' do
+    visit new_notification_path
+    expect(page).to(have_content('New notification'))
+  end
 
-    scenario "Officer can edit notifications" do
-        visit notifications_path
-        expect(page).to have_content("Edit")
-    end
+  it 'Officer can delete notifications' do
+    visit notifications_path
+    expect(page).to(have_content('Delete'))
+  end
 
+  it 'Officer can edit notifications' do
+    visit notifications_path
+    expect(page).to(have_content('Edit'))
+  end
 end

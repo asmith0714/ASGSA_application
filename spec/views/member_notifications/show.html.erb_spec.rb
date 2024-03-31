@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "member_notifications/show", type: :view do
@@ -15,14 +17,15 @@ RSpec.describe "member_notifications/show", type: :view do
   let(:valid_notification){ Notification.create!(
       title: "Test notification",
       description: "A test description",
-      date: Date.today,
+      date: Time.zone.today,
       event_id: valid_event.id
     )
-  }
-  let(:valid_member) {Member.create!(
-      first_name: "John",
-      last_name: "Doe",
-      email: "john.doe@tamu.edu",
+  end
+  let(:valid_member) do
+    Member.create!(
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john.doe@tamu.edu',
       points: 100,
       position: "Member",
       date_joined: Date.today,
@@ -35,19 +38,21 @@ RSpec.describe "member_notifications/show", type: :view do
       food_allergies: "None", 
       status: "Active"
     )
-}
-  before(:each) do
-    assign(:member_notification, MemberNotification.create!(
-      member_id: valid_member.id,
-      notification_id: valid_notification.id,
-      seen: false
-    ))
   end
 
-  it "renders attributes in <p>" do
+  before do
+    assign(:member_notification, MemberNotification.create!(
+                                   member_id: valid_member.id,
+                                   notification_id: valid_notification.id,
+                                   seen: false
+                                 )
+    )
+  end
+
+  it 'renders attributes in <p>' do
     render
-    expect(rendered).to match(/Test notification/)
-    expect(rendered).to match(/A test description/)
-    expect(rendered).to match(/Test Event/)
+    expect(rendered).to(match(/Test notification/))
+    expect(rendered).to(match(/A test description/))
+    expect(rendered).to(match(/Test Event/))
   end
 end

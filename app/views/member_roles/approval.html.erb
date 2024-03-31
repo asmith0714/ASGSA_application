@@ -34,7 +34,8 @@
                 <th scope="col" colspan="0"></th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
-                <th scope="col" style="width: 30%;"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -49,10 +50,8 @@
                   </td>
                   <td><%= member_role.member.first_name %></td>
                   <td><%= member_role.member.last_name %></td>
-                  <td>
-                    <%= button_to 'Approve', approve_member_role_path(member_role), method: :put, class: 'btn btn-success' %>
-                    <%= button_to 'Reject', reject_member_role_path(member_role), method: :put, class: 'btn btn-danger' %>
-                  </td>
+                  <td><%= button_to 'Approve', approve_member_role_path(member_role), method: :put, class: 'btn btn-success d-inline-block' %> </td>
+                  <td><%= button_to 'Reject', reject_member_role_path(member_role), method: :put, class: 'btn btn-danger d-inline-block'%></td>
                 </tr>
               <% end %>
             </tbody>

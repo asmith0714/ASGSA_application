@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 
 RSpec.describe NotificationPolicy, type: :policy do
@@ -8,7 +9,7 @@ RSpec.describe NotificationPolicy, type: :policy do
     event.location = "Test Location"
     event.start_time = Time.now
     event.end_time = Time.now + 1.hour
-    event.date = Date.today
+    event.date = Time.zone.today
     event.description = "This is a test event"
     event.capacity = 100
     event.points = 10
