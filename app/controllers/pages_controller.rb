@@ -19,4 +19,6 @@ class PagesController < ApplicationController
   def faq_member; end
 
   def faq_officer; end
+
+  def faq_admin; end
 end

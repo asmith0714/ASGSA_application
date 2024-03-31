@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post 'help', to: 'pages#help'
   get 'faq_member', to: 'pages#faq_member'
   get 'faq_officer', to: 'pages#faq_officer'
+  get 'faq_admin', to: 'pages#faq_admin'
 
   resources :roles
 
