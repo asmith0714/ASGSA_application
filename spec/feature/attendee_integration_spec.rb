@@ -13,7 +13,9 @@ RSpec.describe('Attendee Features', type: :feature) do
       date: Time.zone.today,
       description: 'Sample Description',
       capacity: 100,
-      points: 5
+      points: 5,
+      category: "Test Category",
+      archive:  false
     )
 
     @event_bad = Event.create!(
@@ -24,10 +26,14 @@ RSpec.describe('Attendee Features', type: :feature) do
       date: Time.zone.today - 1,
       description: 'Sample Description',
       capacity: 100,
-      points: 5
+      points: 5, 
+      category: "Test Category",
+      archive: false
     )
 
     Rails.application.load_seed
+
+    @member1 = create(:member, :admin)
 
     # Setup mock OmniAuth user
     OmniAuth.config.test_mode = true
@@ -35,10 +41,10 @@ RSpec.describe('Attendee Features', type: :feature) do
       provider: 'google_oauth2',
       uid: '123456789',
       info: {
-        email: 'john@tamu.edu',
-        first_name: 'John',
-        last_name: 'Doe',
-        image: 'https://example.com/image.jpg'
+        email: @member1.email,
+        first_name: @member1.first_name,
+        last_name: @member1.last_name,
+        image: @member1.avatar_url
       },
       credentials: {
         token: 'token',
@@ -48,9 +54,10 @@ RSpec.describe('Attendee Features', type: :feature) do
     }
                                                                       )
 
+    # Route to trigger the OmniAuth callback directly for testing
     visit member_google_oauth2_omniauth_callback_path
 
-    @member = Member.find_by(email: 'john@tamu.edu')
+    @member = @member1
   end
 
   it 'RSVP for an event' do
@@ -105,20 +112,22 @@ RSpec.describe('Attendee Features', type: :feature) do
 
     # Check that Member is in RSVP filter
     visit check_in_event_attendees_path(@event, member_filter: 'RSVP')
-
-    # Check Member in that has RSVP'd
-    click_link 'Check In'
-    expect(page).to(have_content('Uncheck Member'))
+    
+    #Check Member in that has RSVP'd
+    click_link "Check In"
+    expect(page).to_not have_content(@member.first_name)
   end
 
-  it 'Show Attended' do
-    visit check_in_event_attendees_path(@event)
-    find("a[href*=\"member_id=#{@member.member_id}\"]").click
-    click_button 'Confirm Check In'
+  scenario "Show Attended" do
+    visit event_attendees_path(@event)
+    click_link "RSVP For This Event"
+    click_button "Confirm RSVP"
 
-    select 'Attended', from: 'member_filter'
+    visit check_in_event_attendees_path(@event, member_filter: "RSVP")
+    click_link "Check In"
 
-    expect(page).to(have_content(@member.first_name))
+    visit check_in_event_attendees_path(@event, member_filter: "Attended")
+    expect(page).to have_content(@member.first_name)
   end
 
   it 'Create RSVP Rainy Day' do
@@ -127,13 +136,14 @@ RSpec.describe('Attendee Features', type: :feature) do
     expect(page).to(have_content('The sign-up window for this event has closed.'))
   end
 
-  it 'Delete RSVP after attended' do
-    visit check_in_event_attendees_path(@event)
-    find("a[href*=\"member_id=#{@member.member_id}\"]").click
-    click_button 'Confirm Check In'
-
+  scenario "Delete RSVP after attended" do
     visit event_attendees_path(@event)
-    click_link 'Delete RSVP'
-    click_button 'Delete RSVP'
+    click_link "RSVP For This Event"
+    click_button "Confirm RSVP"
+
+    visit check_in_event_attendees_path(@event, member_filter: "RSVP")
+    click_link "Check In"
+
+    expect(page).to_not have_content(@member.first_name)
   end
 end

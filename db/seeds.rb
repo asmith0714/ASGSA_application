@@ -23,19 +23,30 @@
     permissions: 'Read'
   },
   {
-    name: 'Unapproved',
-    permissions: 'None'
-  },
-  {
-    name: 'Approved',
-    permissions: 'None'
+    name:"Unapproved",
+    permissions: "None"
   }
 ].each do |role|
   Role.find_or_create_by!(role)
 end
 
 # Create a mock event
-Event.find_or_create_by!(name: 'Mock Event', location: '1234 Fake St', start_time: Time.zone.now, end_time: Time.zone.now + 1.hour, date: Time.zone.today,
-                         description: 'This is a mock event', capacity: 100, points: 1, contact_info: '123-456-7890'
-)
-Notification.find_or_create_by!(title: 'Mock Notification', description: 'This is a mock notification', date: Time.zone.today)
+event = Event.find_or_create_by(name: "Test Event") do |event|
+  event.location = "Test Location"
+  event.start_time = Time.now
+  event.end_time = Time.now + 1.hour
+  event.date = Date.today
+  event.description = "This is a test event"
+  event.capacity = 100
+  event.points = 10
+  event.contact_info = "test@example.com"
+  event.category = "Test Category"
+  event.archive = false
+end
+
+# Create a mock notification
+Notification.find_or_create_by(title: "Test Notification") do |notification|
+  notification.description = "This is a test notification"
+  notification.event_id = event.id
+  notification.date = Date.today
+end
