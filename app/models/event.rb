@@ -29,10 +29,6 @@ class Event < ApplicationRecord
     errors.add(:attachment, 'must be a JPEG, JPG, PNG, or PDF file')
   end
 
-  def set_default_archive
-      self.archive ||= false
-  end
-
   def end_time_after_start_time
       return if end_time.blank? || start_time.blank?
 
