@@ -56,6 +56,10 @@ class MemberPolicy < ApplicationPolicy
     user.admin? || user.officer?
   end
 
+  def officer?
+    user.officer?
+  end
+
   delegate :admin?, to: :user
 
   def approved?

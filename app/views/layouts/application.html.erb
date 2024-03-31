@@ -72,6 +72,7 @@
           <% end %>
           <% if member_signed_in? && policy(current_member).admin? %>
             <li class="nav-item"><%= link_to "Role Management", member_roles_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to 'Email Settings', emails_path, class: 'nav-link' %></li>
           <% end %>
         </ul>
         <ul class="navbar-nav">
@@ -146,7 +147,11 @@
           <div class="col-md-4">
             <h2 class="display-4" style="font-size: 3rem; margin-left: 20%; font-style: italic;">Help</h2>
             <div class="help">
-              <% if member_signed_in? && policy(current_member).admin_officer? %>
+              <% if member_signed_in? && policy(current_member).admin? %>
+                <%= link_to faq_admin_path , style: "color: white; text-decoration: none" do %>
+                  <i class="fa-solid fa-question fa-xl"></i>  FAQs
+                <% end %>
+              <% elsif member_signed_in? && policy(current_member).officer? %>
                 <%= link_to faq_officer_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
                 <% end %>

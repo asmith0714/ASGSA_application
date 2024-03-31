@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+
   include PgSearch::Model
   pg_search_scope :search, against: %i[name date capacity points], using: { tsearch: { prefix: true } }
   validates :name, presence: true

@@ -9,9 +9,17 @@
         <%= @notification.description %>
         <br>
         <% if @notification.event %>
-            Event: <%= @notification.event.name %><br>
+            Event: <%= @notification.event.name %> <br>
+            <%= @notification.event.category %><br>
+            <% if @notification.event.description %>
+              Description: <%= @notification.event.description %> <br>
+            <% end %>
+            <% if @notification.event.contact_info %>
+              Contact Info: <%= @notification.event.contact_info %> <br>
+            <% end %>
             Time: <%= @notification.event.start_time&.strftime("%I:%M %p") %> - <%= @notification.event.end_time&.strftime("%I:%M %p") %><br>
             Date: <%= @notification.event.date %><br>
+            Location: <%= @notification.event.location %><br>
             Capacity: <%= @notification.event.capacity || 'No Limit' %><br>
             Points: <%= @notification.event.points %>
         <% end %>
