@@ -45,17 +45,8 @@ class NotificationPolicy < ApplicationPolicy
     admin_officer?
   end
 
-
-  def admin_officer_member_info?
-    user.admin? || user.officer? || record.id == user.id
-  end
-
   def admin_officer?
     user.admin? || user.officer?
-  end
-
-  def admin?
-    user.admin?
   end
 
 end
