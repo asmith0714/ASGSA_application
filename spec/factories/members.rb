@@ -25,6 +25,12 @@ FactoryBot.define do
                 role { "Officer" }
             end
         end
+
+        trait :unapproved do
+            transient do
+                role { "Unapproved" }
+            end
+        end
     
         after(:create) do |member, evaluator|
             role_id = Role.find_by(name: evaluator.role).id
