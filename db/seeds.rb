@@ -33,9 +33,9 @@ end
 # Create a mock event
 event = Event.find_or_create_by(name: "Test Event") do |event|
   event.location = "Test Location"
-  event.start_time = Time.now
-  event.end_time = Time.now + 1.hour
-  event.date = Date.today
+  event.start_time = Time.zone.now
+  event.end_time = Time.zone.now + 1.hour
+  event.date = Time.zone.today
   event.description = "This is a test event"
   event.capacity = 100
   event.points = 10
