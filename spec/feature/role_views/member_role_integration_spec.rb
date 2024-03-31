@@ -55,7 +55,8 @@ RSpec.describe "Member View", type: :feature do
         fill_in "member[res_description]", with: "This is a description for research topic A" 
         fill_in "member[food_allergies]", with: "peanuts, dairy, gluten"
         click_button "Update Profile"
-        expect(page).to have_content("Member was successfully updated")
+        expect(page).to have_content("Profile was successfully created.")
+        visit member_path(@member1)
         expect(page).to have_content("MS")
         expect(page).to have_content("Meat Science")
         expect(page).to have_content("Topic A")
