@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_180230) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_31_224733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,7 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_180230) do
     t.datetime "updated_at", null: false
     t.string "contact_info"
     t.string "category"
-    t.boolean "archive"
+    t.boolean "archive", default: false
   end
 
   create_table "member_notifications", primary_key: "member_notification_id", force: :cascade do |t|
