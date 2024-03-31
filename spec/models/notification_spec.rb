@@ -22,7 +22,7 @@ RSpec.describe Notification, type: :model do
       date: Time.zone.today,
       event_id: valid_event.id
     }
-  end
+  }
 
   context 'validations' do
     it 'is valid with valid attributes' do

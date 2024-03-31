@@ -14,13 +14,15 @@ RSpec.describe "member_notifications/edit", type: :view do
     points: 3, 
     category: "Social Event"
   ) }
+
   let(:valid_notification){ Notification.create!(
       title: "Test notification",
       description: "A test description",
       date: Time.zone.today,
       event_id: valid_event.id
     )
-  end
+  }
+
   let(:valid_member) do
     Member.create!(
       first_name: 'John',
@@ -38,7 +40,8 @@ RSpec.describe "member_notifications/edit", type: :view do
       food_allergies: "None",
       status: "Active"
     )
-  end
+  end 
+
   let(:member_notification) do
     MemberNotification.create!(
       member_id: valid_member.id,
