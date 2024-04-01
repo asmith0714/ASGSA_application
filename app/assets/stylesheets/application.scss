@@ -117,7 +117,7 @@ body {
         flex-direction: column;
     }
 
-    .show-member {
+    .d-flex {
         flex-direction: column;
     }
 }
@@ -173,7 +173,8 @@ body {
     }
 
     .members-table th:nth-last-child(-n+6):not(:last-child),
-    .members-table td:nth-last-child(-n+6):not(:last-child) {
+    .members-table td:nth-last-child(-n+6):not(:last-child),
+    .members-table th:first-child, .members-table td:first-child {
         display: none;
     }
 }
