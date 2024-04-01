@@ -106,6 +106,18 @@ body {
     height: 100%;
 }
 
+.upcoming-events-list {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+@media (max-width: 600px) {
+    .upcoming-events-list {
+        flex-direction: column;
+    }
+}
+
 .header {
     // transform: translate(-50%, -50%);
     //background-color: rgba(255, 255, 255, 0.8);
@@ -118,6 +130,7 @@ body {
 
 .upcoming-events {
     margin: 0 5% 20% 5%;
+    min-width: 80%;
     width: fit-content;
     padding: 5% 5%;
     text-align: center;
@@ -125,6 +138,38 @@ body {
     font-weight: bold;
     border: 1px solid #ccc; /* Adjust color as needed */
     background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+}
+
+@media (max-width: 600px) {
+    .entity-table h1{
+        font-size: 36px !important;
+    }
+    
+    .entity-table th{
+        font-size: 16px !important;
+    }
+    
+    .entity-table td {
+        font-size: 12px !important;
+    }
+    
+    .events-table th:nth-last-child(-n+4):not(:last-child), 
+    .events-table td:nth-last-child(-n+4):not(:last-child) {
+      display: none;
+    }
+    .attendees-table th:nth-child(3), .attendees-table td:nth-child(3) {
+        display: none;
+    }
+
+    .check-in-table th:nth-child(1), .check-in-table td:nth-child(1),
+    .check-in-table th:nth-child(4), .check-in-table td:nth-child(4),
+    .check-in-table th:nth-child(5), .check-in-table td:nth-child(5) {
+      display: none;
+    }
+
+    .entity-table a, .entity-table button, .entity-table span {
+        font-size: 12px !important;
+    }
 }
 
 .footer {
@@ -341,33 +386,33 @@ body {
 }
 
 .entity-table {
-    padding: 10% 5vw;
+    padding: 5% 10vw;
     min-height: 70vh;
 }
 
 .entity-table h1{
-    font-size: 5vw;
+    font-size: 4vw;
 }
 
 .entity-table th{
-    font-size: 2vw;
-}
-
-.entity-table td {
     font-size: 1.5vw;
 }
 
+.entity-table td {
+    font-size: 1vw;
+}
+
 .entity-table a, .entity-table button, .entity-table span {
-    font-size: 2vw;
+    font-size: 1vw;
     padding: .5vw .75vw;
 }
 
 .entity-filter {
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: bold;
 }
 
 .entity-filter select, .entity-filter input {
-    font-size: 2vw;
-    padding: .6vw 1vw;
+    font-size: 1vw;
+    padding: 0 1vw;
 }
