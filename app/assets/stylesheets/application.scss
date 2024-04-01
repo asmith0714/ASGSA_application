@@ -103,7 +103,6 @@ body {
 .flex-row {
     display: flex;
     flex-direction: row;
-    height: 100%;
 }
 
 .upcoming-events-list {
@@ -131,7 +130,6 @@ body {
 
 .upcoming-events {
     margin: 0 5% 20% 5%;
-    min-width: 80%;
     width: fit-content;
     padding: 5% 5%;
     text-align: center;
@@ -183,41 +181,36 @@ body {
     background-color: #500000;
     color: white;
     padding: 3%;
-    height: auto;
     margin-top: auto;
-    font-weight: 300;
 }
 
 .social-icons {
     height: fit-content;
     width: auto;
-    margin: 1em 0;
-    font-size: 1.5vw;
+    font-size: 1vw;
 }
 
 .social-icons i {
-    margin: 10% 0;
+    margin: 5% 0;
 }
 
 .requirements {
     width: auto;
-    margin: 1em 0;
-    font-size: 1.5vw;
+    font-size: 1vw;
 }
 
 .requirements i {
-    margin: 5% 0;
+    margin-top: 5%;
 }
 
 .help {
     width: auto;
-    margin: 1em 0;
-    font-size: 1.5vw;
+    font-size: 1vw;
     margin-left: 20%;
 }
 
 .help i {
-    margin: 10% 0;
+    margin: 5% 0;
 }
 
 .dropdown-toggle-check {

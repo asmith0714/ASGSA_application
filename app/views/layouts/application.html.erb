@@ -120,7 +120,7 @@
       <div class="footer" style="margin-top: 0">
         <div class="flex-row">
           <div class="col-md-4" style="height: fit-content">
-            <h2 class="display-4" style="font-size: 3vw; font-style: italic;">Connect With Us</h1>
+            <h2 class="display-4" style="font-size: 2.5vw; font-style: italic;">Connect With Us</h1>
             <div class="social-icons">
               <%= link_to "https://www.instagram.com/asgsa.tamu", target: "_blank", style: "color: white; text-decoration: none;" do %>
                 <i class="fa-brands fa-instagram fa-xl"></i> - @asgsa.tamu
@@ -138,7 +138,7 @@
             </div>
           </div>
           <div class="col-md-4" style="height: fit-content">
-            <h2 class="display-4" style="font-size: 3vw; font-style: italic;">Active Member Requirements</h2>
+            <h2 class="display-4" style="font-size: 2.5vw; font-style: italic;">Active Member Requirements</h2>
             <div class="requirements">
               <i class="fa-regular fa-square-check"></i> Pay membership dues (Fall Semester - by the October club meeting, Spring Semester - by the March club meeting)
               <br><br>
@@ -149,8 +149,8 @@
           </div>
 
           <div class="col-md-4" style="height: fit-content">
-            <h2 class="display-4" style="font-size: 3vw; margin-left: 20%; font-style: italic;">Help</h2>
-            <div class="help" style="font-size: 2vw;">
+            <h2 class="display-4" style="font-size: 2.5vw; margin-left: 20%; font-style: italic;">Help</h2>
+            <div class="help">
               <% if member_signed_in? && policy(current_member).admin? %>
                 <%= link_to faq_admin_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
