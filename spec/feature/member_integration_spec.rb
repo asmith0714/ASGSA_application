@@ -5,6 +5,7 @@ RSpec.feature "MemberFeatures", type: :feature do
     Rails.application.load_seed
 
     @member1 = create(:member, :admin)
+    @member2 = create(:member, :admin)
 
     # Setup mock OmniAuth user
     OmniAuth.config.test_mode = true

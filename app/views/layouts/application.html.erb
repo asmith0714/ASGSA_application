@@ -8,6 +8,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
     <%= javascript_include_tag 'https://code.jquery.com/jquery-3.5.1.slim.min.js' %>
     <%= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
     <style>
@@ -37,7 +38,7 @@
         <% end -%>
       <% end %>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-custom" style="padding: 20px;">
       <% if member_signed_in? && current_member.profile_completed == false %>
         <div class="toast text-dark" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 120%; right: 1%; z-index: 1050;" id="special">
           <div class="toast-header bg-danger text-white">
@@ -50,7 +51,7 @@
         </div>
       <% end %>
       <%= link_to image_tag("asgsa_logo2.jpg", alt: "ASGSA TAMU", class: 'navbar-brand'), root_path %>
-      <div style="color: white; font-size: 1.2rem; font-family: Georgia;">
+      <div style="color: white; font-size: 18px; font-family: Georgia;">
         Animal Science Graduate Student Association
       </div>
       <% if member_signed_in? && !policy(current_member).approved? %>
@@ -59,7 +60,9 @@
         </div>
       <% end %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon">
+          <%= image_tag "hamburger_icon.png" %>
+        </span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto mr-5">
@@ -95,13 +98,13 @@
                   <%= image_tag('default_avatar.jpeg', alt: 'Default Avatar', class: 'profile-icon2') %>
                 <% end %>
               </label>
-              <div class="dropdown-menu" aria-labelledby="profileDropdown" style="left: auto; right: 0">
+              <div class="dropdown-menu" aria-labelledby="profileDropdown" style="min-width: fit-content;">
                 <%= link_to 'View Profile', member_path(current_member), class: 'dropdown-item' %>
                 <%= link_to 'Sign Out', destroy_member_session_path, class: 'dropdown-item' %>
               </div>
             </li>
           <% else %>
-            <%= button_to member_google_oauth2_omniauth_authorize_path, class: 'btn btn-primary', style: 'color: #500000; background-color: white; border-color: white;' do %>
+            <%= button_to member_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: 'btn btn-primary', style: 'color: #500000; background-color: white; border-color: white;' do %>
               <i class="fab fa-google"></i> Sign in with Google
             <% end %>
           <% end %>
@@ -114,12 +117,12 @@
     </div>
 
     <% unless action_name == 'edit' || ((controller_name == 'events' || controller_name == 'members') && action_name == 'show') %>
-      <div class="footer">
-        <div class="row">
-          <div class="col-md-4">
-            <h2 class="display-4" style="font-size: 3rem; font-style: italic;">Connect With Us</h1>
+      <div class="footer" style="margin-top: 0">
+        <div class="flex-row">
+          <div class="col-md-4" style="height: fit-content">
+            <h2 class="display-4" style="font-size: 3vw; font-style: italic;">Connect With Us</h1>
             <div class="social-icons">
-              <%= link_to "https://www.instagram.com/asgsa.tamu", target: "_blank", style: "color: white; text-decoration: none" do %>
+              <%= link_to "https://www.instagram.com/asgsa.tamu", target: "_blank", style: "color: white; text-decoration: none;" do %>
                 <i class="fa-brands fa-instagram fa-xl"></i> - @asgsa.tamu
               <% end %>
               <br>
@@ -134,8 +137,8 @@
               <i class="fa-solid fa-envelope fa-xl"></i> - asgsa@ag.tamu.edu
             </div>
           </div>
-          <div class="col-md-4" style="margin-left: 1%; margin-right: -1%;">
-            <h2 class="display-4" style="font-size: 3rem; font-style: italic;">Active Member Requirements</h2>
+          <div class="col-md-4" style="height: fit-content">
+            <h2 class="display-4" style="font-size: 3vw; font-style: italic;">Active Member Requirements</h2>
             <div class="requirements">
               <i class="fa-regular fa-square-check"></i> Pay membership dues (Fall Semester - by the October club meeting, Spring Semester - by the March club meeting)
               <br><br>
@@ -144,18 +147,15 @@
               <i class="fa-regular fa-square-check"></i> Participate in at least one philanthropic event and one social event within their membership period
             </div>
           </div>
-          <div class="col-md-4">
-            <h2 class="display-4" style="font-size: 3rem; margin-left: 20%; font-style: italic;">Help</h2>
-            <div class="help">
+
+          <div class="col-md-4" style="height: fit-content">
+            <h2 class="display-4" style="font-size: 3vw; margin-left: 20%; font-style: italic;">Help</h2>
+            <div class="help" style="font-size: 2vw;">
               <% if member_signed_in? && policy(current_member).admin? %>
                 <%= link_to faq_admin_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
                 <% end %>
               <% elsif member_signed_in? && policy(current_member).officer? %>
-                <%= link_to faq_officer_path , style: "color: white; text-decoration: none" do %>
-                  <i class="fa-solid fa-question fa-xl"></i>  FAQs
-                <% end %>
-              <% else %>
                 <%= link_to faq_member_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
                 <% end %>
