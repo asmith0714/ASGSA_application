@@ -7,7 +7,7 @@
       <h1>
       Events
       <br>
-      <div class="row">
+      <div class="row px-2">
         <% if can_see_all_attributes %>
           <div class='col-auto mx-0 px-1'>
             <%= link_to("Create New Event", new_event_path, class: 'btn btn-primary', id: "create_btn") %>
@@ -42,6 +42,7 @@
               <% filter_list = can_see_all_attributes ? ['Upcoming Events', 'Past Events', 'Archived Events'] : ['Upcoming Events', 'Past Events'] %>
               <%= form.select :filter, options_for_select(filter_list, selected: params[:filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
             </div>
+            <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
           </div>
 
           <div class="form-row align-items-center mb-3">
