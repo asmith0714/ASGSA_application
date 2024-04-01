@@ -1,0 +1,87 @@
+<%= form_with(model: email) do |form| %>
+  <% if email.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(email.errors.count, "error") %> prohibited this Footer from being saved:</h2>
+
+      <ul>
+        <% email.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="d-flex align-items-center vh-90" style="background-image: url(<%= asset_path 'tamu_stock5.jpg' %>); background-size: cover;">
+      <div class="card mx-auto" style="width: 50rem;">
+          <div class="card-header">
+            <% if email.new_record? %>
+              <h1>New Footer</h1>
+            <% else %>
+              <h1>Edit Footer</h1>
+            <% end %>
+            <%= link_to("Back to List", emails_path, :class => 'back-link') %>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= form.label :start_year, 'Start Year', class: 'form-label' %>
+                <%= form.text_area :start_year, required: true, class: 'form-control', style: 'height: 40px' %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :end_year, 'End Year', class: 'form-label' %>
+                <%= form.text_area :end_year, class: 'form-control', style: 'height: 40px' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= form.label :president, 'President', class: 'form-label' %>
+                <%= form.text_area :president, required: true, class: 'form-control', style: 'height: 40px' %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :vice_president, 'Vice President', class: 'form-label' %>
+                <%= form.text_area :vice_president, class: 'form-control', style: 'height: 40px' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= form.label :secretary, 'Secretary', class: 'form-label' %>
+                <%= form.text_area :secretary, class: 'form-control', style: 'height: 40px' %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :treasurer, 'Treasurer', class: 'form-label' %>
+                <%= form.text_area :treasurer, class: 'form-control', style: 'height: 40px' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= form.label :public_relations, 'Public Relations', class: 'form-label' %>
+                <%= form.text_area :public_relations, class: 'form-control', style: 'height: 40px' %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :members_at_large, 'Members at Large', class: 'form-label' %>
+                <%= form.text_area :members_at_large, class: 'form-control', style: 'height: 40px' %>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :org_email, 'Email', class: 'form-label' %>
+              <%= form.text_area :org_email, class: 'form-control', style: 'height: 40px'  %>
+            </div>
+
+              <% if email.new_record? %>
+                <%= form.submit 'Update Footer', class: 'btn btn-primary'%>
+              <% else %>
+                <%= form.submit 'Edit Footer', class: 'btn btn-primary'%>
+              <% end %>
+          </div>
+      </div>
+  </div>
+<% end %>

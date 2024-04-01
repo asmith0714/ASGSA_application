@@ -74,7 +74,7 @@
               <% @events.order(date: :asc, start_time: :desc).each do |event| %>
                 <tr>
                   <td><%= event.name %></td>
-                  <td><%= event.date.strftime('%m/%d') %></td>
+                  <td><%= event.date.strftime('%m/%d/%y') %></td>
                   <td><%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></td>
                   <td><%= event.category %></td>
                   <td>
@@ -91,7 +91,7 @@
                       <% if can_see_all_attributes %>
                         <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-1", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
                         <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-1", id: "delete_btn" %>
-                        <% if event.date < DateTime.now %>
+                        <% if event.date < Date.today %>
                           <%= button_to "<i class='fa-solid fa-box-archive'></i>".html_safe, toggle_archive_event_path(event), method: :patch, class: "btn btn-warning rounded mr-1", id: "archive_btn" %>
                         <% end %>
                       <% end %>

@@ -43,7 +43,7 @@ body {
 }
 
 .navbar-brand {
-    max-height: 12vh;
+    max-height: 7vh;
     width: auto;
 }
 
@@ -123,13 +123,10 @@ body {
 }
 
 .header {
-    // transform: translate(-50%, -50%);
-    //background-color: rgba(255, 255, 255, 0.8);
     margin: 5% 15% 10% 15%;
     text-align: center;
     color: black;
     font-weight: bold;
-    // margin-top: 3.5em;
 }
 
 .upcoming-events {
@@ -256,12 +253,6 @@ body {
 
 // Edit Page Styling
 
-.label-header {
-    display: block;
-    text-transform: capitalize;
-    font-weight: bold;
-}
-
 .required::after {
     content: '*';
     color: red;
@@ -274,27 +265,22 @@ body {
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.centered-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 // Show Member Syling
 
-.show-member {
-    display: flex;
-    width: auto;
+.sidebar-attended-events {
+    position: relative;
 }
 
-.profile {
-    // margin: auto; 
-    width: 100%;
-    // padding-right: 50px; /* Adjust spacing between details and event history */
+.sidebar-attended-events::before, .sidebar-attended-events::after {
+    content: "";
+    position: absolute;
+    width: 25%;
+    height: 2px;
+    background-color: grey;
+    top: 50%;
 }
 
 .profile-header {
-    // border: 2px solid black;
     flex-wrap: wrap;
     padding: 10px;
     border-bottom: 2px solid black;
@@ -303,18 +289,16 @@ body {
     margin-bottom: 20px;
 }
 
-.avatar {
-    width: 100px; /* Adjust as needed */
-    height: 100px; /* Adjust as needed */
-    border-radius: 50%; /* This will make the image circular */
+.sidebar-attended-events::before {
+    left: 0
 }
 
+.sidebar-attended-events::after {
+    right: 0
+}
 
-.top-bottom-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center vertically */
-    margin-right: 30px
+.sidebar-empty-events {
+    position: relative;
 }
 
 .additional-info .item1 { grid-area: degree; }
@@ -348,38 +332,29 @@ body {
     justify-content: center;
     // text-align: center;
 }
-
-.member-events-list {
-    height: 800px;
-    // border: 2px solid black;
-    font-size: medium;
-    padding-top: 20px;
-    overflow-y: auto;
+  
+.sidebar-empty-events::before, .sidebar-empty-events::after {
+    content: "";
+    position: absolute;
+    width: 20%;
+    height: 2px;
+    background-color: grey;
+    top: 50%;
 }
 
-// Event Show Styling
-
-.show-event {
-   
+.sidebar-empty-events::before {
+    left: 0
 }
 
-.event-header {
-    // border: 2px solid black;
-    // padding: 10px;
-    // border-bottom: 4px solid black;
-    display: flex;
-    flex: 1; /* Take up remaining space */
-    // margin-bottom: 20px;
-    // width: 20%;
+.sidebar-empty-events::after {
+    right: 0
 }
 
-.event-info .item1 { grid-area: location; }
-.event-info .item2 { grid-area: date; }
-.event-info .item3 { grid-area: time; }
-.event-info .item4 { grid-area: capacity; }
-.event-info .item5 { grid-area: points; }
-.event-info .item6 { grid-area: contact; }
-.event-info .item7 { grid-area: description; }
+.avatar {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    border-radius: 50%; /* This will make the image circular */
+}
 
 .event-info {
     height: auto;
@@ -426,3 +401,10 @@ body {
 //     font-size: 1vw;
 //     padding: 0 1vw;
 // }
+
+.top-bottom-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    margin-right: 30px
+}
