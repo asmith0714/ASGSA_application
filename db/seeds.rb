@@ -27,7 +27,7 @@
     permissions: "None"
   }
 ].each do |role|
-  Role.find_or_initialize_by(role)
+  Role.find_or_create_by(role)
 end
 
 # Create a mock event
