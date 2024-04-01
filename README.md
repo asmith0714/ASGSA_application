@@ -27,6 +27,12 @@ Download this code repository by using git:
 
  `git clone https://github.com/nicknguyen72/ASGSA_Application.git`
 
+## Documentation
+
+Our product and sprint backlog can be found in Jira, with project name Wade
+
+`https://asgsa.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog`
+
 
 ## Tests ##
 
@@ -40,9 +46,10 @@ Run the following code in Powershell if using windows or the terminal using Linu
 
   `cd ASGSA_Application`
 
-  `docker run --rm -it --volume "$(pwd):/rails_app" -e DATABASE_USER=test_app -e DATABASE_PASSWORD=test_password -p 3000:3000 [username]/ruby_rails_postgresql:latest`
+  `docker run -it --volume "${PWD}:/directory" -e DATABASE_USER=scraper_user -e DATABASE_PASSWORD=scraper_password -p 3000:3000 paulinewade/csce431:latest`
 
-  `cd rails_app`
+* Note: directory is where the app code is located. If you want to re-enter an existing container, run the following:
+  docker start -ai determined_dubinsky (determined_dubinsky is the name of the docker container)
 
 Install the app
 
@@ -107,9 +114,17 @@ For continuous integration, we set up a Github action to run our specs, security
 
 ## References ##
 
-- https://www.w3schools.com/howto/howto_js_filter_table.asp
+- https://stackoverlfow.com
+- https://chat.openai.com
+- https://guides.rubyonrails.org/index.html
 
 ## Support ##
 
 All users looking for support should first look at the FAQ page linked in the footer.
+
 If further assistance is required, users should navigate to the Contact Us page linked in the footer and fill out the support form, and a representative from the support team will get back to you.
+
+The support of this app has been officially closed as the support team has been
+reassigned to other projects. No major features remain for development and any bugs
+are no longer responsibility of the dev team.
+
