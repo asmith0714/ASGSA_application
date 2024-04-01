@@ -69,7 +69,6 @@ RSpec.describe "Officer View", type: :feature do
 
   it 'Officer can edit events' do
     visit events_path
-    save_and_open_page
     expect(page).to(have_css('#edit_btn'))
   end
 
