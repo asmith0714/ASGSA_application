@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post 'help', to: 'pages#help'
   get 'faq_member', to: 'pages#faq_member'
   get 'faq_officer', to: 'pages#faq_officer'
+  get 'faq_admin', to: 'pages#faq_admin'
 
   resources :roles
 
@@ -69,6 +70,10 @@ Rails.application.routes.draw do
     member do
       patch 'mark_seen'
     end
+  end
+
+  resources :emails do
+    get 'delete'
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

@@ -55,7 +55,8 @@ RSpec.describe "Member View", type: :feature do
         fill_in "member[res_description]", with: "This is a description for research topic A" 
         fill_in "member[food_allergies]", with: "peanuts, dairy, gluten"
         click_button "Update Profile"
-        expect(page).to have_content("Member was successfully updated")
+        expect(page).to have_content("Profile was successfully created.")
+        visit member_path(@member1)
         expect(page).to have_content("MS")
         expect(page).to have_content("Meat Science")
         expect(page).to have_content("Topic A")
@@ -68,11 +69,12 @@ RSpec.describe "Member View", type: :feature do
         visit members_path
         find('#edit_btn').click
         expect(page).to have_content("Edit Profile")
-        expect(page).to have_field('member[first_name]', readonly: true)
-        expect(page).to have_field('member[last_name]', readonly: true)
-        expect(page).to have_field('member[email]', readonly: true)
-        expect(page).to have_field('member[points]', readonly: true)
-        expect(page).to have_field('member[position]', readonly: true)
+        expect(page).to have_field('member[first_name]', disabled: true)
+        expect(page).to have_field('member[last_name]', disabled: true)
+        expect(page).to have_field('member[email]', disabled: true)
+        expect(page).to have_field('member[points]', disabled: true)
+        expect(page).to have_field('member[position]', disabled: true)
+        expect(page).to have_field('member[status]', disabled: true)
     end
 
     scenario "Member can't edit other members' info" do

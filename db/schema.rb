@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_27_235420) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_31_224733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_235420) do
     t.bigint "member_id"
   end
 
+  create_table "emails", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "president"
+    t.string "vice_president"
+    t.string "secretary"
+    t.string "treasurer"
+    t.string "public_relations"
+    t.string "members_at_large"
+    t.string "org_email"
+    t.integer "start_year"
+    t.integer "end_year"
+  end
+
   create_table "events", primary_key: "event_id", force: :cascade do |t|
     t.string "name"
     t.string "location"
@@ -64,7 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_235420) do
     t.datetime "updated_at", null: false
     t.string "contact_info"
     t.string "category"
-    t.boolean "archive"
+    t.boolean "archive", default: false
   end
 
   create_table "member_notifications", primary_key: "member_notification_id", force: :cascade do |t|

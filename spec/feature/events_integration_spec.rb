@@ -25,36 +25,38 @@ RSpec.describe('EventsFeature', type: :feature) do
         expires_at: DateTime.now
       }
     }
-                                                                      )
+    )
 
     # Route to trigger the OmniAuth callback directly for testing
     visit member_google_oauth2_omniauth_callback_path
   end
 
-  let(:new_event) do
-    {
-      name: 'Events integration Test',
-      location: '1234 Fake Street',
-      start_time: '1:00PM',
-      end_time: '2:00PM',
+  let(:new_event) {
+      {
+      name: "Events integration Test",
+      location: "1234 Fake Street",
+      start_time: "1:00PM",
+      end_time: "2:00PM",
       date: Time.zone.today,
       capacity: 40,
       points: 5,
-      contact_info: 'You can contact FakeUser@tamu.edu',
-      description: 'This is a description for test event'
-    }
-  end
+      category: "Social Event",
+      contact_info: "You can contact FakeUser@tamu.edu",
+      description: "This is a description for test event"
+      }
+  }
 
   it 'Create an event' do
     visit new_event_path
 
-    fill_in 'Name', with: 'Events integration Test'
-    fill_in 'Location', with: '1234 Fake Street'
-    fill_in 'Start Time', with: '1:00PM'
-    fill_in 'End Time', with: '2:00PM'
-    fill_in 'Date', with: Time.zone.today
-    fill_in 'Capacity', with: '40'
-    fill_in 'Points', with: '5'
+    fill_in "Name", with: "Events integration Test"
+    fill_in "Location", with: "1234 Fake Street"
+    fill_in "Start Time", with: "1:00PM"
+    fill_in "End Time", with: "2:00PM"
+    fill_in "Date", with: Time.zone.today
+    select 'Social Event', from: 'event[category]'
+    fill_in "Capacity", with: "40"
+    fill_in "Points", with: "5"
     # fill_in "Contact Information", with: "You can contact FakeUser@tamu.edu"
     fill_in 'Description', with: 'This is a test for the events integration test'
 
@@ -84,8 +86,8 @@ RSpec.describe('EventsFeature', type: :feature) do
 
   it 'View events list' do
     # Create some events to test against
-    event1 = Event.create!(name: 'Event 1', location: '1234 Fake Street', start_time: '1:00PM', end_time: '2:00PM', date: Time.zone.today, points: 5)
-    event2 = Event.create!(name: 'Event 2', location: '1234 Fake Street', start_time: '1:00PM', end_time: '2:00PM', date: Time.zone.today, points: 5)
+    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today, points: 5, category: "Social Event")
+    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today, points: 5, category: "Coffee Break")
 
     visit events_path
 
@@ -143,8 +145,9 @@ RSpec.describe('EventsFeature', type: :feature) do
     event = Event.create!(new_event)
 
     visit event_path(event)
-    click_link 'Delete Event'
-    click_button 'Delete this event'
+    click_link "Delete Event"
+    click_button "Delete"
+
 
     expect(page).to(have_content('Event was successfully deleted.'))
     # expect(page).not_to have_content(event.name)

@@ -6,8 +6,18 @@
   <body>
     <a href="<%= @calendar_link.google_url %>">Add to Google Calendar</a>
     <br>
-    <h2 class="card-title"><%= @event.name %></h2>
-    <p>
+    <h2 style="margin-bottom:0"><%= @event.name %></h2>
+    <p style="margin-top:0">
+        <strong><%= @event.category %></strong>
+        <br>
+        <% if @event.description %>
+        <strong>Description: </strong><%= @event.description %>
+        <br>
+        <% end %>
+        <% if @event.contact_info %>
+        <strong>Contact Info: </strong><%= @event.contact_info %>
+        <br>
+        <% end %>
         <strong>Date: </strong><%= @event.date.strftime('%m/%d') %>
         <br>
         <strong>Time: </strong><%= @event.start_time.strftime('%I:%M %p') %> - <%= @event.end_time.strftime('%I:%M %p') %>
@@ -17,8 +27,7 @@
         <strong>Capacity: </strong><%= @event.capacity || 'No Limit' %>
         <br>
         <strong>Points: </strong><%= @event.points %>
-        <br>
-        <strong>Description: </strong><%= @event.description %>
+  
     </p>
 </body>
 </html>

@@ -2,28 +2,27 @@
 
 require 'rails_helper'
 
-RSpec.describe(Notification, type: :model) do
-  let(:valid_event) do
-    Event.create!(
-      name: 'Test Event',
-      location: 'College Station',
-      start_time: Time.zone.now,
-      end_time: Time.current + 2.hours,
-      date: Time.zone.today,
-      description: 'This is a description for test event',
-      capacity: 20,
-      points: 3
-    )
-  end
-  # Define a valid member
-  let(:valid_attributes) do
+RSpec.describe Notification, type: :model do
+  let(:valid_event) { Event.create!(
+    name: "Test Event",
+    location: "College Station",
+    start_time: Time.now ,
+    end_time: Time.current + 2.hour,
+    date: Time.zone.today,
+    description: "This is a description for test event",
+    capacity: 20,
+    points: 3, 
+    category: "Social Event"
+  ) }
+  #Define a valid member
+  let(:valid_attributes){
     {
       title: 'Test notification',
       description: 'A test description',
       date: Time.zone.today,
       event_id: valid_event.id
     }
-  end
+  }
 
   context 'validations' do
     it 'is valid with valid attributes' do

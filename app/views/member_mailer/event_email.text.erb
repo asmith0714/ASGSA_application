@@ -1,0 +1,16 @@
+<%= @event.name %>
+<%= @event.category %>
+<% if @event.description %>
+Description: <%= @event.description %>
+<% end %>
+<% if @event.contact_info %>
+Contact Info: <%= @event.contact_info %>
+<% end %>
+Date: <%= @event.date.strftime('%m/%d') %>
+Time: <%= @event.start_time.strftime('%I:%M %p') %> - <%= @event.end_time.strftime('%I:%M %p') %>
+Location: <%= @event.location %>
+Capacity: <%= @event.capacity || 'No Limit' %>
+Points: <%= @event.points %>
+
+
+<%= @calendar_link.google_url %>

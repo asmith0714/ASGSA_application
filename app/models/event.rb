@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+
   include PgSearch::Model
   pg_search_scope :search, against: %i[name date capacity points], using: { tsearch: { prefix: true } }
   validates :name, presence: true
@@ -26,10 +27,6 @@ class Event < ApplicationRecord
     return if acceptable_types.include?(attachment.content_type)
 
     errors.add(:attachment, 'must be a JPEG, JPG, PNG, or PDF file')
-  end
-
-  def set_default_archive
-      self.archive ||= false
   end
 
   def end_time_after_start_time

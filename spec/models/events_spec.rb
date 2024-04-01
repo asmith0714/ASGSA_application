@@ -2,20 +2,22 @@
 
 require 'rails_helper'
 
-RSpec.describe(Event, type: :model) do
-  let(:valid_attributes) do
-    {
-      name: 'Test Event',
-      location: 'College Station',
+RSpec.describe Event, type: :model do
+
+  let(:valid_attributes) {
+      {
+      name: "Test Event",
+      location: "College Station",
       date: Time.zone.today,
-      start_time: '1:00PM',
-      end_time: '2:00PM',
+      start_time: "1:00PM",
+      end_time: "2:00PM",
       capacity: 20,
       points: 3,
-      contact_info: 'Contact FakeEmail@tamu.edu for more information',
-      description: 'This is a description for test event'
-    }
-  end
+      contact_info: "Contact FakeEmail@tamu.edu for more information",
+      description: "This is a description for test event", 
+      category: "Social Event"
+      }
+  }
 
   context 'validations' do
     it 'Is valid with valid attributes' do

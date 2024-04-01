@@ -36,6 +36,10 @@ class MemberNotificationPolicy < ApplicationPolicy
     admin_officer_member_info?
   end
 
+  def mark_seen?
+    admin_officer_member_info?
+  end
+
   def update?
     admin_officer_member_info?
   end
