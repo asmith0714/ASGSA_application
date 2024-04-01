@@ -24,6 +24,20 @@ RSpec.describe Notification, type: :model do
     }
   }
 
+  # Directly inside your RSpec.describe block, define a method to attach files
+  def attach_file_to(notification, filename, content_type)
+    # Create a mock file using StringIO, including the original filename
+    mock_file = Rack::Test::UploadedFile.new(
+      StringIO.new('Fake file content'),
+      content_type,
+      original_filename: filename # Provide the original filename here
+    )
+    
+    # Attach the mock file to the notification object
+    notification.attachment.attach(mock_file)
+  end
+  
+
   context 'validations' do
     it 'is valid with valid attributes' do
       notification = described_class.new(valid_attributes)
@@ -48,4 +62,32 @@ RSpec.describe Notification, type: :model do
       expect(notification).not_to(be_valid)
     end
   end
+
+  let(:notification) do
+    described_class.new(title: 'Test Notification', description: 'A test description', date: Date.today, event: valid_event)
+  end
+  
+  context 'attachment validations' do
+    it 'is valid with a JPEG file attached' do
+      attach_file_to(notification, 'test.jpeg', 'image/jpeg')
+      expect(notification).to be_valid
+    end
+  
+    it 'is valid with a PNG file attached' do
+      attach_file_to(notification, 'test.png', 'image/png')
+      expect(notification).to be_valid
+    end
+  
+    it 'is valid with a PDF file attached' do
+      attach_file_to(notification, 'test.pdf', 'application/pdf')
+      expect(notification).to be_valid
+    end
+  
+    it 'is not valid with a GIF file attached' do
+      attach_file_to(notification, 'test.gif', 'image/gif')
+      notification.valid?
+      expect(notification.errors[:attachment]).to include('must be a JPEG, JPG, PNG, or PDF file')
+    end
+  end
+  
 end
