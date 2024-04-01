@@ -1,27 +1,23 @@
+# spec/policies/role_policy_spec.rb
 require 'rails_helper'
 
-RSpec.describe RolePolicy, type: :policy do
-  let(:user) { User.new }
+RSpec.describe RolePolicy do
+  before do
+    Rails.application.load_seed
+  end
 
   subject { described_class }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  let(:admin) { create(:member, :admin) }
+  let(:member) { create(:member) }
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  permissions :index?, :show?, :new?, :create?, :edit?, :update?, :destroy? do
+    it 'grants access if user is an admin' do
+      expect(subject).to permit(admin)
+    end
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'denies access if user is not an admin' do
+      expect(subject).not_to permit(member)
+    end
   end
 end

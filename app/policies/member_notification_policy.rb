@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 class MemberNotificationPolicy < ApplicationPolicy
-  class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
-    def resolve
-      if user.admin?
-        scope.all
-      else
-        scope.where(id: user.id)
-      end
-    end
-  end
+  # class Scope < Scope
+  #   # NOTE: Be explicit about which records you allow access to!
+  #   # def resolve
+  #   #   scope.all
+  #   # end
+  #   def resolve
+  #     if user.admin?
+  #       scope.all
+  #     else
+  #       scope.where(id: user.id)
+  #     end
+  #   end
+  # end
 
   def index?
     approved?
