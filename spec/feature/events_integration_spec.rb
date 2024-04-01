@@ -86,8 +86,8 @@ RSpec.describe('EventsFeature', type: :feature) do
 
   it 'View events list' do
     # Create some events to test against
-    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today, points: 5, category: "Social Event")
-    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today, points: 5, category: "Coffee Break")
+    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today + 1.day, points: 5, category: "Social Event")
+    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today + 1.day, points: 5, category: "Coffee Break")
 
     visit events_path
 

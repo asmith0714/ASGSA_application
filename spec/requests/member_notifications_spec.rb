@@ -28,16 +28,18 @@ RSpec.describe('/member_notifications', type: :request) do
 
     Rails.application.load_seed
 
+    @member1 = create(:member, :admin)
+
     # Setup mock OmniAuth user
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
       provider: 'google_oauth2',
       uid: '123456789',
       info: {
-        email: 'john@tamu.edu',
-        first_name: 'John',
-        last_name: 'Doe',
-        image: 'https://example.com/image.jpg'
+        email: @member1.email,
+        first_name: @member1.first_name,
+        last_name: @member1.last_name,
+        image: @member1.avatar_url
       },
       credentials: {
         token: 'token',
@@ -49,12 +51,12 @@ RSpec.describe('/member_notifications', type: :request) do
 
     get member_google_oauth2_omniauth_callback_path
 
-    @valid_member = Member.find_by(email: 'john@tamu.edu')
+    @valid_member = Member.find_by(email: @member1.email)
   end
 
   let(:valid_attributes) do
     {
-      member_id: Member.find_by(email: 'john@tamu.edu').id,
+      member_id: Member.find_by(email: @member1.email).id,
       notification_id: Notification.find_by(title: 'Test notification').id,
       seen: false
     }
