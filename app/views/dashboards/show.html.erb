@@ -19,7 +19,14 @@
             <h3 class="card-title"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
             <p class="card-text">Location: <%= event.location %></p>
             <p class="card-text">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
-            <p class="card-text">Capacity: <%= event.capacity %></p>
+            <p class="card-text">
+              Spots Left:
+              <% if event.capacity.present? %>
+                <%= event.capacity - event.attendees.count %>
+              <% else %>
+                No Limit
+              <% end %>
+            </p>
             <p class="card-text">Points: <%= event.points %></p>
             <% if member_signed_in? %>
               <%= link_to "View Event", event_path(event), class: "btn btn-primary" %>
