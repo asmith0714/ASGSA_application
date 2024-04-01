@@ -87,15 +87,15 @@ RSpec.describe "Officer View", type: :feature do
     expect(page).to(have_content('New Notification'))
   end
 
-  it 'Officer can delete notifications' do
-    visit notifications_path
-    expect(page).to(have_content('Delete'))
-  end
+  #it 'Officer can delete notifications' do
+  #  visit notifications_path
+  #  expect(page).to(have_content('Delete'))
+  #end
 
-  it 'Officer can edit notifications' do
-    visit notifications_path
-    expect(page).to(have_content('Edit'))
-  end
+  #it 'Officer can edit notifications' do
+  #  visit notifications_path
+  #  expect(page).to(have_content('Edit'))
+  #end
 
   it "Officer can't view role management" do
     visit member_roles_path

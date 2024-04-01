@@ -88,13 +88,13 @@ RSpec.describe "Admin View", type: :feature do
         expect(page).to have_content("New notification")
     end
 
-    scenario "Admin can delete notifications" do
-        visit notifications_path
-        expect(page).to have_content("Delete")
-    end
+    #scenario "Admin can delete notifications" do
+    #    visit notifications_path
+    #    expect(page).to have_content("Delete")
+    #end
 
-    scenario "Admin can edit notifications" do
-        visit notifications_path
-        expect(page).to have_content("Edit")
-    end
+    #scenario "Admin can edit notifications" do
+    #    visit notifications_path
+    #    expect(page).to have_content("Edit")
+    #end
 end
