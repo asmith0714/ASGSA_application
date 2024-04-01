@@ -43,18 +43,23 @@
   
             <div class="col-md-4 mb-3">
               <%= form.label :date, 'Date', class: 'form-label required' %>
-              <%= form.date_field :date, required: true, min: Date.today.to_s, class: 'form-control' %>
+              <%= form.date_field :date, required: true, min: Date.today, max: Date.today + 2.year, class: 'form-control' %>
             </div>
           </div>
   
           <div class="row">
-            <div class="col-md-6 mb-3">
+          <div class="col-md-4 mb-3">
+            <%= form.label :category, 'Event Type', class: 'form-label required' %>
+            <%= form.select :category, ['Social Event', 'Coffee Break', 'Service Event', 'Happy Hour', 'Member Meeting', 'Executive Meeting'], {include_blank: true}, {required: true, class: 'form-control'} %>
+          </div>
+
+            <div class="col-md-4 mb-3">
               <%= form.label :capacity, 'Capacity', class: 'form-label' %>
               <%= form.number_field :capacity, min: 1, class: 'form-control' %>
-              *Leave blank if no capacity
+              *Leave blank if no limit
             </div>
   
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
               <%= form.label :points, 'Points', class: 'form-label required' %>
               <%= form.number_field :points, required: true, min: 0, class: 'form-control' %>
             </div>
@@ -72,27 +77,73 @@
                 
           <div class="form-check mb-3">
             <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
-            <%= label_tag :send_email_all, 'Send email to all members', class: 'form-check-label' %>
-          </div>
-  
-          <div class="form-check mb-3">
-            <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
-            <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
+            <%= label_tag :send_email_all, 'Notify event to everyone', class: 'form-check-label' %>
           </div>
   
           <div class="form-check mb-3">
             <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
-            <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
+            <%= label_tag :send_email_members, 'Notify event to members only', class: 'form-check-label' %>
           </div>
+
+          <div class="form-check mb-3">
+            <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
+            <%= label_tag :send_email_officers, 'Notify event to officers only', class: 'form-check-label' %>
+          </div>
+  
   
           <div class="form-check mb-3">
             <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
-            <%= label_tag :send_email_members, 'Don\'t send email', class: 'form-check-label' %>
+            <%= label_tag :send_email_members, 'Don\'t send notification', class: 'form-check-label' %>
+          </div>
+
+          <div class="mb-3" id="fileUpload" style="display: none;">
+            <%= form.label :attachment, 'Upload File (optional)', class: 'form-label' %>
+            <%= form.file_field :attachment, accept: 'image/jpeg, image/png, image/jpeg, application/pdf', class: 'form-control', id: 'fileInput' %>
+            <p style="color: red;">.jpg, .jpeg, .png, or .pdf only</p>
+          </div>
+
+          <div id="filePreviewModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" style="width: 100%; height: 100%;">
+                  <img id="filePreview" class="img-fluid" src="#" alt="File Preview">
+                </div>
+              </div>
+            </div>
           </div>
   
           <%= form.submit 'Create Event', class: 'btn btn-primary'%>
         </div>
       </div>
     </div>
+    <script>
+      $(document).ready(function() {
+        $('input[name="send_email"]').change(function() {
+          if ($(this).val() === 'none') {
+            $('#fileUpload').hide();
+          } else {
+            $('#fileUpload').show();
+          }
+        });
+
+        $('#fileInput').change(function() {
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+            $('#filePreview').attr('src', e.target.result);
+            $('#filePreviewModal').modal('show');
+          }
+
+          reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#filePreviewModal .close').click(function() {
+          $('#filePreviewModal').modal('hide');
+        });
+      });
+    </script>
   <% end %>
   

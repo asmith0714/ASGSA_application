@@ -9,5 +9,17 @@
 
   <body>
     <%= yield %>
+    <% if Email.exists? %>
+      <p> 
+      <b style="color:#953132;font-size:1.3em">ASGSA Executive Committe <%= Email.first.start_year %> - <%= Email.first.end_year %></b><br>
+      President: <%=  Email.first.president %> <br>
+      Vice President: <%=  Email.first.vice_president %> <br>
+      Secretary: <%=  Email.first.secretary %> <br>
+      Treasurer: <%=  Email.first.treasurer %> <br>
+      Secretary: <%=  Email.first.secretary %> <br>
+      Public Relations: <%=  Email.first.public_relations %> <br>
+      Members at Large: <%=  Email.first.members_at_large %> <br>
+      Email: <%=  Email.first.org_email %> </p>
+    <% end %>
   </body>
 </html>

@@ -1,23 +1,35 @@
+# frozen_string_literal: true
+
 class MembersController < ApplicationController
-  before_action :set_member, only: %i[ show edit update destroy delete_confirmation]
+  before_action :set_member, only: %i[show edit update destroy delete_confirmation]
+  helper_method :sort_column, :sort_direction
 
   def index
+    authorize(Member)
     @members = Member.all
-    @members = @members.search(params[:query]) if params[:query].present?
-    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+    @members = @members.general_search(params[:query]) if params[:query].present?
+    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+
+    @members = @members.where(area_of_study: params[:area_of_study]) if params[:area_of_study].present?
+  end
+
+  def sort
+    @members = Member.order("#{params[:sort_by]} #{params[:direction]}")
+    render(:index)
   end
 
   def sort_column
-    %w{ member_id first_name last_name position points date_joined res_topic }.include?(params[:sort]) ? params[:sort] : "first_name"
+    %w[member_id first_name last_name position points date_joined res_topic].include?(params[:sort]) ? params[:sort] : 'first_name'
   end
 
   def sort_direction
-    %w{ asc desc }.include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   # GET /members/1 or /members/1.json
   def show
-    authorize @member
+    @member = Member.find(params[:id])
+    authorize(@member)
   end
 
   # GET /members/new
@@ -28,12 +40,12 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
-    authorize @member
+    authorize(@member)
   end
 
   # GET /members/1/delete_confirmation
   def delete_confirmation
-    authorize @member
+    authorize(@member)
     # Render delete_confirmation view
   end
 
@@ -55,38 +67,61 @@ class MembersController < ApplicationController
 
   # PATCH/PUT /members/1 or /members/1.json
   def update
-    authorize @member
+    authorize(@member)
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to member_url(@member), notice: "Member was successfully updated." }
-        format.json { render :show, status: :ok, location: @member }
+        if @member.profile_completed?
+          format.html { redirect_to(member_url(@member)) }
+          flash[:success] = 'Profile was successfully updated.'
+        else
+          format.html { redirect_to(root_path) }
+          flash[:success] = 'Profile was successfully created.'
+          @member.update!(profile_completed: true)
+        end
+        format.json { render(:show, status: :ok, location: @member) }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
+        format.html { render(:edit) }
+        format.json { render(json: @member.errors, status: :unprocessable_entity) }
+      end
+    end
+  end
+  # DELETE /members/1 or /members/1.json
+  def destroy
+    authorize(@member)
+    @member.destroy
+
+    respond_to do |format|
+      if @member.destroyed?
+        flash[:success] = 'Member was successfully deleted.'
+        format.html { redirect_to(members_url) }
+        format.json { head(:no_content) }
+      else
+        flash[:alert] = 'Can\'t delete last Admin User'
+        format.html {redirect_to(delete_confirmation_member_path)}
+        format.json { render(json: @member.errors, status: :unprocessable_entity) }
       end
     end
   end
 
-  # DELETE /members/1 or /members/1.json
-  def destroy
-    authorize @member
-    @member.destroy!
+  
 
-    respond_to do |format|
-      format.html { redirect_to members_url, notice: "Member was successfully deleted." }
-      format.json { head :no_content }
-    end
+  def allergies_list
+    @members = Member.all
+    @members = @members.allergies_search(params[:query]) if params[:query].present?
+    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_member
-      @member = Member.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def member_params
-      params.require(:member).permit(:first_name, :last_name, :email, :points, :position, :date_joined, :degree, :food_allergies, :res_topic, :res_lab, :res_pioneer, :res_description, :area_of_study)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_member
+    @member = Member.find(params[:id])
+  end
 
+  # Only allow a list of trusted parameters through.
+  def member_params
+    params.require(:member).permit(:first_name, :last_name, :email, :points, :position, :date_joined, :degree, :food_allergies, :status, :faculty,
+                                   :res_topic, :res_lab, :res_pioneer, :res_description, :area_of_study
+    )
+  end
 end

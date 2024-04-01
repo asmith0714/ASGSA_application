@@ -1,4 +1,4 @@
-<div style="padding: 5%; background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; height: 100vh;">
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover;">
   <%= turbo_frame_tag "member_roles" do %>
     <div class="card">
       <div class="card-header">
@@ -31,8 +31,9 @@
               Filter by Role
             </div>
             <div class="col-auto">
-              <%= form.select :role, options_for_select(['Admin', 'Officer', 'Member'], selected: params[:role]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+              <%= form.select :role, options_for_select(['Admin', 'Officer', 'Member'], selected: params[:role]), {include_blank: true}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
             </div>
+            <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
           </div>
         <% end %>
 

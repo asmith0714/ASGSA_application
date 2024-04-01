@@ -1,15 +1,29 @@
 <% # Check if current_member is admin or officer %>
 <% can_see_all_attributes = policy(current_member).admin_officer? %>
 
-<div style="padding: 5%; background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover; height: 100vh;">
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover;">
   <div class="card">
     <div class="card-header">
-      <h1>Events</h1>
+      <h1>
+      Events
+      <br>
+      <div class="row">
+        <% if can_see_all_attributes %>
+          <div class='col-auto mx-0 px-1'>
+            <%= link_to("Create New Event", new_event_path, class: 'btn btn-primary', id: "create_btn") %>
+          </div>
+          <div class='col-auto mx-0 px-1'>
+            <% past_events_count = Event.where("date < ? AND archive = ?", DateTime.now, false).count %>
+            <%= button_to "Archive All Past Events", archive_past_events_events_path, method: :post, onclick: "return confirm('Are you sure you want to archive all #{past_events_count} past events?');", class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+      </h1>
     </div>
     <div class="card-body">
       <%= turbo_frame_tag "events" do %>
         <p id="notice" class="mb-4"><%= notice %></p>
-
+      <div class="entity-filter">
         <%= form_with url: "", method: :get, data: { turbo_frame: "events", turbo_action: "advance" } do |form| %>
           <div class="form-row align-items-center mb-3">
             <div class="col-auto">
@@ -22,14 +36,27 @@
 
           <div class="form-row align-items-center mb-3">
             <div class="col-auto">
+              Filter by
+            </div>
+            <div class="col-auto">
+              <% filter_list = can_see_all_attributes ? ['Upcoming Events', 'Past Events', 'Archived Events'] : ['Upcoming Events', 'Past Events'] %>
+              <%= form.select :filter, options_for_select(filter_list, selected: params[:filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+            </div>
+          </div>
+
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
               Search 
             </div>
             <div class="col-auto">
               <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
             </div>
           </div>
-        <% end %>
 
+        <% end %>
+      </div>
+
+      <div class="events-table">
         <div class="table-responsive">
           <table class="table table-hover table-striped table-sm">
             <thead>
@@ -37,36 +64,51 @@
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
                 <th scope="col">Time</th>
-                <th scope="col">Capacity</th>
+                <th scope="col">Event Type</th>
+                <th scope="col">Spots Left</th>
                 <th scope="col">Points</th>
                 <th scope="col" style="width: 10%"></th>
               </tr>
             </thead>
             <tbody>
-              <% @events.each do |event| %>
+              <% @events.order(date: :asc, start_time: :desc).each do |event| %>
                 <tr>
                   <td><%= event.name %></td>
-                  <td><%= event.date.strftime('%m/%d') %></td>
+                  <td><%= event.date.strftime('%m/%d/%y') %></td>
                   <td><%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></td>
-                  <td><%= event.capacity || "No Limit" %></td>
+                  <td><%= event.category %></td>
+                  <td>
+                  <% if event.capacity.present? %>
+                    <%= event.capacity - event.attendees.count %>
+                  <% else %>
+                    No Limit
+                  <% end %>
+                  </td>
                   <td><%= event.points %></td>
                   <td>
-                  	<%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary", id: "show_btn" %>
-                    <% if can_see_all_attributes %>
-						<%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
-                      	<%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger", id: "delete_btn" %>
-                    <% end %>
+                    <div class="btn-group" role="group">
+                  	  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-1", id: "show_btn" %>
+                      <% if can_see_all_attributes %>
+                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-1", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
+                        <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-1", id: "delete_btn" %>
+                        <% if event.date < Date.today %>
+                          <%= button_to "<i class='fa-solid fa-box-archive'></i>".html_safe, toggle_archive_event_path(event), method: :patch, class: "btn btn-warning rounded mr-1", id: "archive_btn" %>
+                        <% end %>
+                      <% end %>
+                    </div>
                   </td>
                 </tr>
               <% end %>
             </tbody>
           </table>
         </div>
+      </div>
         <%== pagy_nav @pagy %>
       <% end %>
-	  <% if can_see_all_attributes %>
-	  	<%= link_to("Add New Event", new_event_path, class: 'btn btn-primary', id: "create_btn") %>
-	  <% end %>
+        <div class='row'>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

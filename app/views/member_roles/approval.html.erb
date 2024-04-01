@@ -1,0 +1,64 @@
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover;">
+  <%= turbo_frame_tag "member_roles" do %>
+    <div class="card">
+      <div class="card-header">
+        <h1>Accounts Pending Approval</h1>
+      </div>
+      <div class="card-body">
+        <p id="notice" class="mb-4"><%= notice %></p>
+
+        <%= form_with url: "", method: :get, data: { turbo_frame: "member_roles", turbo_action: "advance" } do |form| %>
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
+              Show 
+            </div>
+            <div class="col-auto">
+              <%= form.select :count, options_for_select([10, 25, 50, 100], selected: params[:count]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+            </div>
+          </div>
+
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
+              Search 
+            </div>
+            <div class="col-auto">
+              <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col" colspan="0"></th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @member_roles.each do |member_role| %>
+                <tr>
+                  <td>
+                    <% if member_role.member.avatar_url.present? %>
+                      <%= image_tag(member_role.member.avatar_url, alt: member_role.member.first_name, class: 'profile-icon2') %>
+                    <% else %>
+                      <%= image_tag('default_avatar.jpeg', alt: member_role.member.first_name, class: 'profile-icon2') %>
+                    <% end %>
+                  </td>
+                  <td><%= member_role.member.first_name %></td>
+                  <td><%= member_role.member.last_name %></td>
+                  <td><%= button_to 'Approve', approve_member_role_path(member_role), method: :put, class: 'btn btn-success d-inline-block' %> </td>
+                  <td><%= button_to 'Reject', reject_member_role_path(member_role), method: :put, class: 'btn btn-danger d-inline-block'%></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%== pagy_nav @pagy %>
+      </div>
+    </div>
+  <% end %>
+</div>

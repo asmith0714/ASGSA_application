@@ -7,20 +7,33 @@ FactoryBot.define do
         avatar_url { "https://example.com/image.jpg" }
         points { 100 }
         date_joined { Date.today }
-        degree { "Bachelor" }
+        degree { "MS" }
         food_allergies { "None" }
         position { "Member" }
+        transient do
+            role { "Member" }
+          end
 
         trait :admin do
-            position { "Admin" }
+            transient do
+                role { "Admin" }
+            end
         end
     
         trait :officer do
-            position { "Officer" }
+            transient do
+                role { "Officer" }
+            end
+        end
+
+        trait :unapproved do
+            transient do
+                role { "Unapproved" }
+            end
         end
     
         after(:create) do |member, evaluator|
-            role_id = Role.find_by(name: member.position).id
+            role_id = Role.find_by(name: evaluator.role).id
             MemberRole.create!(member_id: member.member_id, role_id: role_id)
         end
 

@@ -1,18 +1,19 @@
+# frozen_string_literal: true
+
 class AttendeesController < ApplicationController
-  before_action :set_attendee, only: %i[ show edit update destroy delete ]
-  before_action :set_event, only: %i[ index new edit delete check_in new_check_in ]
+  before_action :set_attendee, only: %i[show edit update destroy delete]
+  before_action :set_event, only: %i[index new edit delete check_in new_check_in]
 
   # GET /attendees or /attendees.json
   def index
     @members = Member.all
     @attendees = Attendee.where(event_id: params[:event_id])
     @members = @members.search(params[:query]) if params[:query].present?
-    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
   # GET /attendees/1 or /attendees/1.json
-  def show
-  end
+  def show; end
 
   # GET /attendees/new
   def new
@@ -27,17 +28,17 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/edit
   def edit
     @member = Member.find(@attendee.member_id)
-    currentPoints = @member.points
+    current_points = @member.points
 
     if @attendee.attended
-      currentPoints -= @event.points
+      current_points -= @event.points
     else
-      currentPoints += @event.points
+      current_points += @event.points
     end
-    @member.update(points: currentPoints)
-    @attendee.update(attended: !@attendee.attended)
+    @member.update!(points: current_points)
+    @attendee.update!(attended: !@attendee.attended)
 
-    redirect_to check_in_event_attendees_path(@event, member_filter: params[:member_filter])
+    redirect_to(check_in_event_attendees_path(@event, member_filter: params[:member_filter]))
   end
 
   # POST /attendees or /attendees.json
@@ -48,22 +49,22 @@ class AttendeesController < ApplicationController
     if Member.exists?(member_id: attendee_params[:member_id]) && @attendee.save
       respond_to do |format|
         if @attendee.rsvp
-          format.html { redirect_to event_attendees_path(@event), notice: "RSVP was successfully created." }
+          flash[:success] = 'RSVP was successfully created.'
+          format.html { redirect_to(event_attendees_path(@event)) }
         else
-          @attendee.update(rsvp: true)
-          format.html { redirect_to check_in_event_attendees_path(@event), notice: "Member was successfully checked in." }
+          @attendee.update!(rsvp: true)
+          flash[:success] = 'Member was successfully checked in.'
+          format.html { redirect_to(check_in_event_attendees_path(@event)) }
         end
-        format.json { render :show, status: :created, location: @attendee }
+        format.json { render(:show, status: :created, location: @attendee) }
       end
     end
   end
 
   # PATCH/PUT /attendees/1 or /attendees/1.json
-  def update
-  end
+  def update; end
 
-  def delete
-  end
+  def delete; end
 
   # DELETE /attendees/1 or /attendees/1.json
   def destroy
@@ -72,18 +73,20 @@ class AttendeesController < ApplicationController
 
     if @attendee.attended
       @member.points -= Event.find(event_id).points
-      @member.update(points: @member.points)
+      @member.update!(points: @member.points)
     end
 
     @attendee.destroy!
 
     respond_to do |format|
-      format.html { redirect_to event_attendees_path(Event.find(event_id)), notice: "RSVP was successfully destroyed." }
-      format.json { head :no_content }
+      flash[:success] = 'RSVP was successfully deleted.'
+      format.html { redirect_to(event_attendees_path(Event.find(event_id))) }
+      format.json { head(:no_content) }
     end
   end
 
   def check_in
+    # SEARCH FEATURE NOT WORKING PROPERLY FOR 'Attended' AND 'RSVP'
     attendees = Attendee.where(event_id: params[:event_id])
     @members = Member.all
     @members = @members.search(params[:query]) if params[:query].present?
@@ -92,19 +95,21 @@ class AttendeesController < ApplicationController
     case params[:member_filter]
     when "Attended"
       @members = attendees.where(attended: true).map(&:member)
-    when "RSVP"
-      @members = attendees.where(rsvp: true).map(&:member)
+    when "All Members"
+  
     when "Non-RSVP"
-      @members = Member.where.not(member_id: attendees.pluck(:member_id))
+      @members = @members.where.not(member_id: attendees.pluck(:member_id))
+    else # Default to "RSVP"
+      @members = attendees.where(rsvp: true, attended: false).map(&:member)
     end
   end
 
   def sort_column
-    %w{ member_id first_name last_name position points date_joined res_topic }.include?(params[:sort]) ? params[:sort] : "first_name"
+    %w[member_id first_name last_name position points date_joined res_topic].include?(params[:sort]) ? params[:sort] : 'first_name'
   end
 
   def sort_direction
-    %w{ asc desc }.include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   def new_check_in
@@ -113,17 +118,18 @@ class AttendeesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_attendee
-      @attendee = Attendee.find(params[:id])
-    end
 
-    def set_event
-      @event = Event.find(params[:event_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_attendee
+    @attendee = Attendee.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def attendee_params
-      params.require(:attendee).permit(:attended, :rsvp, :member_id, :event_id)
-    end
+  def set_event
+    @event = Event.find(params[:event_id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def attendee_params
+    params.require(:attendee).permit(:attended, :rsvp, :member_id, :event_id)
+  end
 end

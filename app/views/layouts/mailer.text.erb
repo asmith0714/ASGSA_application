@@ -1,1 +1,14 @@
 <%= yield %>
+<% if Email.exists? %>
+
+
+ASGSA Executive Committe <%= Email.first.start_year %> - <%= Email.first.end_year %>
+President: <%=  Email.first.president %> 
+Vice President: <%=  Email.first.vice_president %> 
+Secretary: <%=  Email.first.secretary %> 
+Treasurer: <%=  Email.first.treasurer %> 
+Secretary: <%=  Email.first.secretary %> 
+Public Relations: <%=  Email.first.public_relations %> 
+Members at Large: <%=  Email.first.members_at_large %> 
+Email: <%=  Email.first.org_email %> 
+<% end %>

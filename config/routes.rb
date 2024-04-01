@@ -9,22 +9,47 @@ Rails.application.routes.draw do
   post 'help', to: 'pages#help'
   get 'faq_member', to: 'pages#faq_member'
   get 'faq_officer', to: 'pages#faq_officer'
+  get 'faq_admin', to: 'pages#faq_admin'
 
   resources :roles
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :member_roles
+  resources :member_roles do
+    member do
+      put 'approve'
+      put 'reject'
+    end
+
+    collection do
+      get 'approval'
+    end
+  end
+  
   resources :members do
+    collection do
+      get 'allergies_list'
+    end
     member do
       get 'delete_confirmation'
     end
+
+    collection do
+      get :sort
+    end
   end
+
+  resources :roles
 
   root "dashboards#show"
 
   resources :events do
     get 'delete_confirmation', on: :member
+    post 'archive_past_events', on: :collection
+    member do
+      get 'delete'
+      patch 'toggle_archive'
+    end
     # attendees resources
     resources :attendees do
       collection do
@@ -36,9 +61,6 @@ Rails.application.routes.draw do
       end
     end
     # end attendees resources
-    member do
-      get 'delete'
-    end
   end
 
   resources :notifications do
@@ -50,6 +72,10 @@ Rails.application.routes.draw do
     member do
       patch 'mark_seen'
     end
+  end
+
+  resources :emails do
+    get 'delete'
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

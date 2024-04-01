@@ -1,0 +1,85 @@
+<% # Check if current_member is admin or officer %>
+<% can_see_all_attributes = policy(current_member).admin_officer? %>
+
+<!-- Style only included when the current controller is member and the current action is index -->
+<%= stylesheet_link_tag 'member', media: 'all', 'data-turbolinks-track': 'reload' if controller_name == 'members' && action_name == 'index' %>
+
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover;">
+  <div class="card">
+    <div class="card-header">
+      <h1>
+      Allergies List
+      <br>
+      <%= link_to "Member List", members_path, class: "btn btn-primary" %>
+      </h1>
+    </div>
+    <div class="card-body">
+      <%= turbo_frame_tag "members" do %>
+        <p id="notice" class="mb-4"><%= notice %></p>
+
+        <%= form_with url: "", method: :get, data: { turbo_frame: "members", turbo_action: "advance" } do |form| %>
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
+              Show 
+            </div>
+            <div class="col-auto">
+              <%= form.select :count, options_for_select([10, 25, 50, 100], selected: params[:count]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+            </div>
+          </div>
+
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
+              Search 
+            </div>
+            <div class="col-auto">
+              <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Allergies</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @members.each do |member| %>
+                <tr>
+                  <td>
+                    <% if member.avatar_url.present? %>
+                      <%= image_tag(member.avatar_url, alt: member.first_name, class: 'profile-icon2') %>
+                    <% else %>
+                      <%= image_tag('default_avatar.jpeg', alt: member.first_name, class: 'profile-icon2') %>
+                    <% end %>
+                  </td>
+                  <td><%= member.first_name %></td>
+                  <td><%= member.last_name %></td>
+                  <td><%= member.food_allergies %></td>
+                  <td>
+                  <div class="btn-group" role="group">
+                  <%= link_to "<i class='fas fa-eye'></i>".html_safe, member, class: "btn btn-secondary", id: "show_btn" %>
+                    <% if can_see_all_attributes || member == current_member %>
+                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_path(member), class: "btn btn-primary", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
+                    <% end %>
+                    <% if can_see_all_attributes %>
+                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_member_path(member), method: :get, class: "btn btn-danger", id: "delete_btn" %>
+                    <% end %>
+                  </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%== pagy_nav @pagy %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
