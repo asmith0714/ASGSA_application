@@ -20,6 +20,7 @@ class Member < ApplicationRecord
   has_many :roles, through: :member_roles
   has_many :member_notifications, dependent: :destroy
   has_many :notifications, through: :member_notifications
+  before_destroy :at_least_one_admin, prepend: true
 
   def admin?
     member_roles.exists?(role_id: Role.find_by(name: 'Admin').id)
@@ -56,4 +57,14 @@ class Member < ApplicationRecord
     MemberRole.create!(member: member, role: role) if first_time
     [member, first_time]
   end
+
+  def at_least_one_admin
+    admin_role = Role.find_by(name: 'Admin')
+    admins = admin_role.members if admin_role
+    if admins.size == 1 && admins.find_by(member_id: member_id)
+      errors.add(:role, "At least one user must be an admin at all times")
+      throw(:abort)
+    end
+  end
+
 end
