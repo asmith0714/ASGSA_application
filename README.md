@@ -40,7 +40,7 @@ Run the following code in Powershell if using windows or the terminal using Linu
 
   `cd ASGSA_Application`
 
-  `docker run --rm -it --volume "$(pwd):/rails_app" -e DATABASE_USER=test_app -e DATABASE_PASSWORD=test_password -p 3000:3000 dmartinez05/ruby_rails_postgresql:latest`
+  `docker run --rm -it --volume "$(pwd):/rails_app" -e DATABASE_USER=test_app -e DATABASE_PASSWORD=test_password -p 3000:3000 [username]/ruby_rails_postgresql:latest`
 
   `cd rails_app`
 
@@ -99,6 +99,8 @@ For continuous development, we set up Heroku to automatically deploy our apps wh
 
   `Review app: test branch`
 
+  `Staging app: main branch`
+
   `Production app: main branch`
 
 For continuous integration, we set up a Github action to run our specs, security checks, linter, etc. after every push or pull-request. This allows us to automatically ensure that our code is working as intended.
@@ -109,5 +111,5 @@ For continuous integration, we set up a Github action to run our specs, security
 
 ## Support ##
 
-Admins looking for support should first look at the application help page.
-Users looking for help seek out assistance from the customer.
+All users looking for support should first look at the FAQ page linked in the footer.
+If further assistance is required, users should navigate to the Contact Us page linked in the footer and fill out the support form, and a representative from the support team will get back to you.
