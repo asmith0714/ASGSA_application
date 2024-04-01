@@ -89,5 +89,4 @@ RSpec.describe Notification, type: :model do
       expect(notification.errors[:attachment]).to include('must be a JPEG, JPG, PNG, or PDF file')
     end
   end
-  
 end
