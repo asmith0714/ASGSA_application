@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="d-flex align-items-center vh-90" style="background-image: url(<%= asset_path 'tamu_stock5.jpg' %>); background-size: cover;">
+  <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
       <div class="card mx-auto" style="width: 50rem;">
           <div class="card-header">
             <% if email.new_record? %>
@@ -26,12 +26,12 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <%= form.label :start_year, 'Start Year', class: 'form-label' %>
-                <%= form.text_area :start_year, required: true, class: 'form-control', style: 'height: 40px' %>
+                <%= form.text_field :start_year, required: true, class: 'form-control', style: 'height: 40px' %>
               </div>
 
               <div class="col-md-6 mb-3">
                 <%= form.label :end_year, 'End Year', class: 'form-label' %>
-                <%= form.text_area :end_year, class: 'form-control', style: 'height: 40px' %>
+                <%= form.text_field :end_year, class: 'form-control', style: 'height: 40px' %>
               </div>
             </div>
 
@@ -77,9 +77,9 @@
             </div>
 
               <% if email.new_record? %>
-                <%= form.submit 'Update Footer', class: 'btn btn-primary'%>
+                <%= form.submit 'Create Footer', class: 'btn btn-primary'%>
               <% else %>
-                <%= form.submit 'Edit Footer', class: 'btn btn-primary'%>
+                <%= form.submit 'Update Footer', class: 'btn btn-primary'%>
               <% end %>
           </div>
       </div>
