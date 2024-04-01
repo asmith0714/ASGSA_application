@@ -44,7 +44,7 @@ end
 #   event.archive = false
 # end
 
-Event.find_or_create_by!(name: 'Test Event', location: 'Test Location', start_time: Time.zone.now, end_time: Time.zone.now + 1.hour, date: Time.zone.today + 1.day,
+Event.find_or_create_by!(name: 'Test Event', location: 'Test Location', start_time: Time.zone.now + 1.hour, end_time: Time.zone.now + 2.hour, date: Time.zone.today + 1.day,
                          description: 'This is a test event', capacity: 100, points: 10, contact_info: 'test@example.com', category: 'Test Category', archive: false
 )
 
