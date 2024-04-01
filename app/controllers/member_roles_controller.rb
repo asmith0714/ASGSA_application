@@ -58,6 +58,7 @@ class MemberRolesController < ApplicationController
   end
 
   def approval
+    authorize(MemberRole)
     @pagy, @member_roles = pagy(MemberRole.joins(:role).where(roles: { name: 'Unapproved' }))
   end
 
