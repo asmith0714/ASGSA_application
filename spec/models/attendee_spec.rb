@@ -55,9 +55,12 @@ RSpec.describe(Attendee, type: :model) do
     expect(subject).not_to(be_valid)
   end
 
-  it 'is has unique member_id and event_id' do
-    attendee = described_class.create!(event_id: subject.event_id, member_id: subject.member_id)
-    expect(attendee).not_to(be_valid)
-    expect(attendee.errors[:base]).to(include('RSVP for this event has already been created'))
-  end
+  it 'has unique member_id and event_id' do
+    # Attempt to create another attendee with the same member_id and event_id
+    duplicate_attendee = described_class.create(event_id: subject.event_id, member_id: subject.member_id)
+    
+    # Check if the duplicate attendee is invalid due to the uniqueness constraint
+    expect(duplicate_attendee.valid?).to be false
+    expect(duplicate_attendee.errors[:base]).to include('RSVP for this event has already been created')
+  end  
 end
