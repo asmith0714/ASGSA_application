@@ -55,7 +55,7 @@
         Animal Science Graduate Student Association
       </div>
       <% if member_signed_in? && !policy(current_member).approved? %>
-        <div class="alert alert-warning" role="alert" style="margin-left: 2.5%; margin-top: 1%;">
+        <div class="alert alert-warning" role="alert" style= "position: absolute; top: 15%; left: 40%; width: 30%">
           Your account is pending approval. Once approved, you will receive an email notification and be able to access the website.
         </div>
       <% end %>

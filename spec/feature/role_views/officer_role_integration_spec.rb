@@ -96,4 +96,9 @@ RSpec.describe "Officer View", type: :feature do
     visit notifications_path
     expect(page).to(have_content('Edit'))
   end
+
+  it "Officer can't view role management" do
+    visit member_roles_path
+    expect(page).to(have_content('You are not authorized to perform this action.'))
+  end
 end

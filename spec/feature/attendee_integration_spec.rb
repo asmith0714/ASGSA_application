@@ -142,5 +142,10 @@ RSpec.feature "Attendee Features", type: :feature do
     click_link "Check In"
 
     expect(page).to_not have_content(@member.first_name)
+    visit event_attendees_path(@event)
+    click_link "Delete RSVP"
+    click_button "Delete RSVP"
+    expect(page).to have_content("RSVP was successfully deleted.")
+    expect(@member.points).to eq(100)
   end
 end
