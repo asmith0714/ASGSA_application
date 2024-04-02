@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.feature "MemberFeatures", type: :feature do
+RSpec.describe('MemberFeatures', type: :feature) do
   before do
     Rails.application.load_seed
 
@@ -19,50 +21,50 @@ RSpec.feature "MemberFeatures", type: :feature do
         image: @member1.avatar_url
       },
       credentials: {
-        token: "token",
-        refresh_token: "refresh token",
-        expires_at: DateTime.now,
+        token: 'token',
+        refresh_token: 'refresh token',
+        expires_at: DateTime.now
       }
-    })
+    }
+                                                                      )
 
     # Route to trigger the OmniAuth callback directly for testing
     visit member_google_oauth2_omniauth_callback_path
-
   end
 
-  scenario "List all members" do
+  it 'List all members' do
     visit members_path
 
-    expect(page).to have_content(@member1.first_name)
-    expect(page).to have_content(@member1.last_name)
+    expect(page).to(have_content(@member1.first_name))
+    expect(page).to(have_content(@member1.last_name))
   end
 
-  scenario "View a member's details" do
+  it "View a member's details" do
     visit member_path(@member1)
 
-    expect(page).to have_content(@member1.first_name)
-    expect(page).to have_content(@member1.last_name)
-    expect(page).to have_content(@member1.email)
+    expect(page).to(have_content(@member1.first_name))
+    expect(page).to(have_content(@member1.last_name))
+    expect(page).to(have_content(@member1.email))
   end
 
-  scenario "Update a member's information" do
+  it "Update a member's information" do
     visit edit_member_path(@member1)
 
-    select "Animal Nutrition", from: "Area of Study" 
-    click_button "Update Profile"
+    select 'Animal Nutrition', from: 'Area of Study'
+    click_button 'Update Profile'
 
-    expect(page).to have_content("Profile was successfully created")
+    expect(page).to(have_content('Profile was successfully created'))
     visit member_path(@member1)
-    expect(page).to have_content("Animal Nutrition")
+    expect(page).to(have_content('Animal Nutrition'))
   end
 
-  scenario "Delete a member" do
+  it 'Delete a member' do
     visit delete_confirmation_member_path(@member1)
-    expect(page).to have_content(@member1.first_name)
+    expect(page).to(have_content(@member1.first_name))
 
-    click_button "Delete this member"
+    click_button 'Delete this member'
 
-    expect(page).to have_content("You need to sign in or sign up before continuing.")
-    expect(page).not_to have_content(@member1.first_name)
+    expect(page).to(have_content('You need to sign in or sign up before continuing.'))
+    expect(page).not_to(have_content(@member1.first_name))
   end
 end

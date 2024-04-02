@@ -85,10 +85,11 @@ class MembersController < ApplicationController
       end
     end
   end
+
   # DELETE /members/1 or /members/1.json
   def destroy
     authorize(@member)
-    @member.destroy
+    @member.destroy!
 
     respond_to do |format|
       if @member.destroyed?
@@ -97,18 +98,16 @@ class MembersController < ApplicationController
         format.json { head(:no_content) }
       else
         flash[:alert] = 'Can\'t delete last Admin User'
-        format.html {redirect_to(delete_confirmation_member_path)}
+        format.html { redirect_to(delete_confirmation_member_path) }
         format.json { render(json: @member.errors, status: :unprocessable_entity) }
       end
     end
   end
 
-  
-
   def allergies_list
     @members = Member.all
     @members = @members.allergies_search(params[:query]) if params[:query].present?
-    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
   private

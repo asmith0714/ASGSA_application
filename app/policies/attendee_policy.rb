@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AttendeePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -60,7 +62,5 @@ class AttendeePolicy < ApplicationPolicy
     user.admin? || user.officer? || user.member?
   end
 
-  def approved?
-    user.approved?
-  end
+  delegate :approved?, to: :user
 end

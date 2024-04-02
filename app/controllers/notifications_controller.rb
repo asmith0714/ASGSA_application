@@ -34,7 +34,7 @@ class NotificationsController < ApplicationController
 
   # POST /notifications or /notifications.json
   def create
-    authorize Notification
+    authorize(Notification)
     @notification = Notification.new(notification_params)
     @members = Member.all
 
@@ -54,20 +54,19 @@ class NotificationsController < ApplicationController
           member_role = Role.find_by(name: 'Member')
           @members = member_role.members if member_role
           MemberMailer.notification_email(@notification, @members).deliver_now if @members
-      end
-        
-        
+        end
+
         # creates a member_notification for all members id selected
         @members.each do |mem|
-          @notification.member_notifications.create(member_id: mem.id, notification_id: @notification.id, seen: false)
+          @notification.member_notifications.create!(member_id: mem.id, notification_id: @notification.id, seen: false)
         end
-        
+
         flash[:success] = 'Notification was successfully created.'
-        format.html { redirect_to notifications_url }
-        format.json { render :show, status: :created, location: @notification }
+        format.html { redirect_to(notifications_url) }
+        format.json { render(:show, status: :created, location: @notification) }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @notification.errors, status: :unprocessable_entity }
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @notification.errors, status: :unprocessable_entity) }
       end
     end
   end
