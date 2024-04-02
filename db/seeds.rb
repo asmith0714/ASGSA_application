@@ -44,16 +44,16 @@ end
 #   event.archive = false
 # end
 
-# Event.find_or_create_by!(name: 'Test Event', location: 'Test Location', start_time: Time.zone.now + 1.hour, end_time: Time.zone.now + 2.hour, date: Time.zone.today + 1.day,
-#                          description: 'This is a test event', capacity: 100, points: 10, contact_info: 'test@example.com', category: 'Test Category', archive: false
-# )
+Event.find_or_create_by!(name: 'Test Event', location: 'Test Location', start_time: Time.zone.parse("14:00"), end_time: Time.zone.parse("16:00"), date: Time.zone.today + 1.day,
+             description: 'This is a test event', capacity: 100, points: 10, contact_info: 'test@example.com', category: 'Test Category', archive: false
+)
 
 # Create a mock notification
-# Notification.find_or_create_by(title: "Test Notification") do |notification|
-#   notification.description = "This is a test notification"
-#   notification.event_id = Event.first.id
-#   notification.date = Date.today
-# end
+Notification.find_or_create_by(title: "Test Notification") do |notification|
+  notification.description = "This is a test notification"
+  notification.event_id = Event.first.id
+  notification.date = Date.today
+end
 
 # # Create 15 sample members
 # 15.times do
