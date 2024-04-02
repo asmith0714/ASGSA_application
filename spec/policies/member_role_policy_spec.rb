@@ -103,5 +103,29 @@ RSpec.describe MemberRolePolicy, type: :policy do
         expect(MemberRolePolicy.new(unapproved, member_role).destroy?).to be_falsey
       end
     end
+
+    describe '#approval?' do
+      it 'checks for approval check' do
+        expect(MemberRolePolicy.new(admin, member_role).approval?).to be_truthy
+        expect(MemberRolePolicy.new(officer, member_role).approval?).to be_truthy
+      end
+
+      it 'denies member and unapproved member from approval check' do
+        expect(MemberRolePolicy.new(member, member_role).approval?).to be_falsey
+        expect(MemberRolePolicy.new(unapproved, member_role).approval?).to be_falsey
+      end
+    end
+
+    describe '#admin_officer?' do
+      it 'allows admin and officer to access member roles' do
+        expect(MemberRolePolicy.new(admin, member_role).admin_officer?).to be_truthy
+        expect(MemberRolePolicy.new(officer, member_role).admin_officer?).to be_truthy
+      end
+
+      it 'denies member and unapproved member from accessing member roles' do
+        expect(MemberRolePolicy.new(member, member_role).admin_officer?).to be_falsey
+        expect(MemberRolePolicy.new(unapproved, member_role).admin_officer?).to be_falsey
+      end
+    end
   end
 end

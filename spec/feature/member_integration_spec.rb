@@ -5,6 +5,7 @@ RSpec.feature "MemberFeatures", type: :feature do
     Rails.application.load_seed
 
     @member1 = create(:member, :admin)
+    @member2 = create(:member, :admin)
 
     # Setup mock OmniAuth user
     OmniAuth.config.test_mode = true
@@ -50,7 +51,8 @@ RSpec.feature "MemberFeatures", type: :feature do
     select "Animal Nutrition", from: "Area of Study" 
     click_button "Update Profile"
 
-    expect(page).to have_content("Member was successfully updated")
+    expect(page).to have_content("Profile was successfully created")
+    visit member_path(@member1)
     expect(page).to have_content("Animal Nutrition")
   end
 

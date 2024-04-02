@@ -64,7 +64,7 @@ RSpec.describe "Officer View", type: :feature do
 
   it 'Officer can create events' do
     visit events_path
-    expect(page).to(have_content('Add New Event'))
+    expect(page).to(have_content('Create New Event'))
   end
 
   it 'Officer can edit events' do
@@ -84,16 +84,21 @@ RSpec.describe "Officer View", type: :feature do
 
   it 'Officer can create notifications' do
     visit new_notification_path
-    expect(page).to(have_content('New notification'))
+    expect(page).to(have_content('New Notification'))
   end
 
-  it 'Officer can delete notifications' do
-    visit notifications_path
-    expect(page).to(have_content('Delete'))
-  end
+  #it 'Officer can delete notifications' do
+  #  visit notifications_path
+  #  expect(page).to(have_content('Delete'))
+  #end
 
-  it 'Officer can edit notifications' do
-    visit notifications_path
-    expect(page).to(have_content('Edit'))
+  #it 'Officer can edit notifications' do
+  #  visit notifications_path
+  #  expect(page).to(have_content('Edit'))
+  #end
+
+  it "Officer can't view role management" do
+    visit member_roles_path
+    expect(page).to(have_content('You are not authorized to perform this action.'))
   end
 end

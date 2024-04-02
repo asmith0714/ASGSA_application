@@ -88,14 +88,22 @@ class MembersController < ApplicationController
   # DELETE /members/1 or /members/1.json
   def destroy
     authorize(@member)
-    @member.destroy!
+    @member.destroy
 
     respond_to do |format|
-      flash[:success] = 'Member was successfully deleted.'
-      format.html { redirect_to(members_url) }
-      format.json { head(:no_content) }
+      if @member.destroyed?
+        flash[:success] = 'Member was successfully deleted.'
+        format.html { redirect_to(members_url) }
+        format.json { head(:no_content) }
+      else
+        flash[:alert] = 'Can\'t delete last Admin User'
+        format.html {redirect_to(delete_confirmation_member_path)}
+        format.json { render(json: @member.errors, status: :unprocessable_entity) }
+      end
     end
   end
+
+  
 
   def allergies_list
     @members = Member.all

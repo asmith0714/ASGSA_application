@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :roles
+
   root "dashboards#show"
 
   resources :events do

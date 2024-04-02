@@ -1,7 +1,7 @@
 <% # Check if current_member is admin or officer %>
 <% can_see_all_attributes = policy(current_member).admin_officer? %>
 
-<div style="padding: 5%; background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover; height: 100vh;">
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover;">
   <div class="card">
     <div class="card-header">
       <h1>
@@ -23,7 +23,7 @@
     <div class="card-body">
       <%= turbo_frame_tag "events" do %>
         <p id="notice" class="mb-4"><%= notice %></p>
-
+      <div class="entity-filter">
         <%= form_with url: "", method: :get, data: { turbo_frame: "events", turbo_action: "advance" } do |form| %>
           <div class="form-row align-items-center mb-3">
             <div class="col-auto">
@@ -55,7 +55,9 @@
           </div>
 
         <% end %>
+      </div>
 
+      <div class="events-table">
         <div class="table-responsive">
           <table class="table table-hover table-striped table-sm">
             <thead>
@@ -86,7 +88,7 @@
                   <td><%= event.points %></td>
                   <td>
                     <div class="btn-group" role="group">
-                  	<%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-1", id: "show_btn" %>
+                  	  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-1", id: "show_btn" %>
                       <% if can_see_all_attributes %>
                         <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-1", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
                         <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-1", id: "delete_btn" %>
@@ -101,6 +103,7 @@
             </tbody>
           </table>
         </div>
+      </div>
         <%== pagy_nav @pagy %>
       <% end %>
         <div class='row'>

@@ -1,6 +1,14 @@
 <div style="margin-left: 1%">
   <h1>Are you sure you want to delete this member?</h1>
-
+  <% if @member.errors.any? %>
+          <div style="color: red; text-align: center">
+              <% member.errors.each do |error| %>
+                <div>
+                  <%= error.full_message %>
+                </div>
+              <% end %>
+          </div>
+        <% end %>
   <div style="max-width: 80%">
   <%= render @member %>
 

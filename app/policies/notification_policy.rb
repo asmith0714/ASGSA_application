@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 class NotificationPolicy < ApplicationPolicy
-  class Scope < Scope
+  # class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
     #   scope.all
     # end
-    def resolve
-      if user.admin?
-        scope.all
-      else
-        scope.where(id: user.id)
-      end
-    end
-  end
+  #   def resolve
+  #     if user.admin?
+  #       scope.all
+  #     else
+  #       scope.where(id: user.id)
+  #     end
+  #   end
+  # end
 
   def index?
     admin_officer?

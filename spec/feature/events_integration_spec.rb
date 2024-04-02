@@ -25,27 +25,26 @@ RSpec.describe('EventsFeature', type: :feature) do
         expires_at: DateTime.now
       }
     }
-                                                                      )
+    )
 
     # Route to trigger the OmniAuth callback directly for testing
     visit member_google_oauth2_omniauth_callback_path
   end
 
-    let(:new_event) {
-        {
-        name: "Events integration Test",
-        location: "1234 Fake Street",
-        start_time: "1:00PM",
-        end_time: "2:00PM",
-        date: Time.zone.today,
-        capacity: 40,
-        points: 5,
-        category: "Social Event",
-        contact_info: "You can contact FakeUser@tamu.edu",
-        description: "This is a description for test event"
-        }
-    }
-  end
+  let(:new_event) {
+      {
+      name: "Events integration Test",
+      location: "1234 Fake Street",
+      start_time: "1:00PM",
+      end_time: "2:00PM",
+      date: Time.zone.today,
+      capacity: 40,
+      points: 5,
+      category: "Social Event",
+      contact_info: "You can contact FakeUser@tamu.edu",
+      description: "This is a description for test event"
+      }
+  }
 
   it 'Create an event' do
     visit new_event_path
@@ -87,8 +86,8 @@ RSpec.describe('EventsFeature', type: :feature) do
 
   it 'View events list' do
     # Create some events to test against
-    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today, points: 5, category: "Social Event")
-    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today, points: 5, category: "Coffee Break")
+    event1 = Event.create(name: "Event 1", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today + 1.day, points: 5, category: "Social Event")
+    event2 = Event.create(name: "Event 2", location: "1234 Fake Street", start_time: "1:00PM", end_time: "2:00PM", date: Time.zone.today + 1.day, points: 5, category: "Coffee Break")
 
     visit events_path
 
