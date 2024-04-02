@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-header">
       <h1>Check In Members for Event: <%= @event.name %></h1>  
+      <%= link_to 'Add Points', add_points_event_attendees_path, class: 'btn btn-primary' %>
     </div>
       <div class="card-body">
         <%= link_to("Back To Event", event_attendees_path(@event))%>
@@ -23,7 +24,7 @@
                 Filter By
               </div>
               <div class="col-auto">
-                <%= form.select :member_filter, options_for_select(["RSVP", "Attended", "Non-RSVP", "All Members"], selected: params[:member_filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+                <%= form.select :member_filter, options_for_select(["All Members", "RSVP", "Attended", "Non-RSVP"], selected: params[:member_filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
               </div>
             </div>
 
@@ -70,12 +71,12 @@
                     <% if attendee == nil %>
                       <td> Non-RSVP </td>
                       <td>
-                        <%= link_to "Check In", new_check_in_event_attendees_path(@event, member_id: member.member_id, member_filter: params[:member_filter]), class: "btn btn-secondary" %>
+                        <%= link_to "Check In", new_check_in_event_attendees_path(@event, member_id: member.member_id, member_filter: params[:member_filter]), class: "btn btn-success" %>
                       </td>
                     <% elsif !attendee.attended %>
                       <td> RSVP </td>
                       <td>
-                        <%= link_to "Check In", edit_event_attendee_path(@event, attendee, member_filter: params[:member_filter]), class: "btn btn-secondary" %>
+                        <%= link_to "Check In", edit_event_attendee_path(@event, attendee, member_filter: params[:member_filter]), class: "btn btn-success" %>
                       </td>
                     <% else %>
                       <td> Attended </td>

@@ -10,6 +10,7 @@ FactoryBot.define do
         degree { "MS" }
         food_allergies { "None" }
         position { "Member" }
+        status { "Active" }
         transient do
             role { "Member" }
           end

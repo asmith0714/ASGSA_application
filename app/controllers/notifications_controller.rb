@@ -62,7 +62,8 @@ class NotificationsController < ApplicationController
           @notification.member_notifications.create(member_id: mem.id, notification_id: @notification.id, seen: false)
         end
         
-        format.html { redirect_to notifications_url, notice: "Notification was successfully created." }
+        flash[:success] = 'Notification was successfully created.'
+        format.html { redirect_to notifications_url }
         format.json { render :show, status: :created, location: @notification }
       else
         format.html { render :new, status: :unprocessable_entity }
