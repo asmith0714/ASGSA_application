@@ -3,7 +3,7 @@
     <div class="card-header">
     <%= link_to "Back Notifications", member_notifications_path %>
       | <%= link_to "Edit Notification", edit_member_notification_path(@member_notification) %>
-      | <%= link_to "Delete Notification", @member_notification, method: :delete %>
+      | <%= button_to "Delete Notification", @member_notification, method: :delete %>
       <h1 class="mt-3" style="text-align: center"><strong><%= @member_notification.notification.title %></strong></h1>
       
       </div>
