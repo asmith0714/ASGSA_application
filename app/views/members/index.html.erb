@@ -50,7 +50,11 @@
 
         <% end %>
 
-        <div class="members-table">
+        <% if can_see_all_attributes %>
+          <div class="members-table">
+        <% else %>
+          <div class="members-table-member-view">
+        <% end %>
         <div class="table-responsive">
           <table class="table table-hover table-striped table-sm">
             <thead>
