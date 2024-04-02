@@ -4,10 +4,14 @@
 <!-- Style only included when the current controller is member and the current action is index -->
 <%= stylesheet_link_tag 'member', media: 'all', 'data-turbolinks-track': 'reload' if controller_name == 'members' && action_name == 'index' %>
 
-<div style="padding: 5%; background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover; height: 100vh;">
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover;">
   <div class="card">
     <div class="card-header">
-      <h1>Members</h1>
+      <h1>
+      Members
+      <br>
+      <%= link_to "Allergies List", allergies_list_members_path, class: "btn btn-primary" %>
+      </h1>
     </div>
     <div class="card-body">
       <%= turbo_frame_tag "members" do %>
@@ -25,14 +29,32 @@
 
           <div class="form-row align-items-center mb-3">
             <div class="col-auto">
+              Filter by Area Of Study
+            </div>
+            <div class="col-auto">
+              <%= form.select :area_of_study, options_for_select(['Physiology of Reproduction', 'Animal Nutrition', 'Livestock Extension', 
+              'Meat Science', 'Microbiology', 'Gene Editing', 'Equine Sciences', 'Animal Welfare', 'Animal Breeding & Genetics',
+              'Epigenetics', 'Dairy Science', 'Genomics'], selected: params[:area_of_study]), {include_blank: true}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+            </div>
+            <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
+          </div>
+          
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
               Search 
             </div>
             <div class="col-auto">
               <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
             </div>
           </div>
+
         <% end %>
 
+        <% if can_see_all_attributes %>
+          <div class="members-table">
+        <% else %>
+          <div class="members-table-member-view">
+        <% end %>
         <div class="table-responsive">
           <table class="table table-hover table-striped table-sm">
             <thead>
@@ -42,8 +64,13 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Position</th>
+                <th scope="col">Area of Study</th>
                 <% if can_see_all_attributes %>
-                  <th scope="col">Points</th>
+                  <th scope="col">
+                    Points
+                    <%= link_to "#{sort_arrow('points')}", {sort: 'points', direction: sort_direction == 'asc' ? 'desc' : 'asc'} %>
+                  </th>
+                  <th scope="col">Status</th>
                 <% end %>
                 <th scope="col" style="width: 10%"></th>
               </tr>
@@ -62,22 +89,27 @@
                   <td><%= member.last_name %></td>
                   <td><%= member.email %></td>
                   <td><%= member.position %></td>
+                  <td><%= member.area_of_study %></td>
                   <% if can_see_all_attributes %>
                     <td><%= member.points %></td>
+                    <td><%= member.status %></td>
                   <% end %>
                   <td>
-                  <%= link_to "<i class='fas fa-eye'></i>".html_safe, member, class: "btn btn-secondary", id: "show_btn" %>
+                  <div class="btn-group" role="group">
+                  <%= link_to "<i class='fas fa-eye'></i>".html_safe, member, class: "btn btn-secondary rounded mr-2", id: "show_btn" %>
                     <% if can_see_all_attributes || member == current_member %>
-                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_path(member), class: "btn btn-primary", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
+                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_path(member), class: "btn btn-primary rounded mr-2", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
                     <% end %>
                     <% if can_see_all_attributes %>
-                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_member_path(member), method: :get, class: "btn btn-danger", id: "delete_btn" %>
+                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_member_path(member), method: :get, class: "btn btn-danger rounded mr-2", id: "delete_btn" %>
                     <% end %>
+                  </div>
                   </td>
                 </tr>
               <% end %>
             </tbody>
           </table>
+        </div>
         </div>
         <%== pagy_nav @pagy %>
       <% end %>

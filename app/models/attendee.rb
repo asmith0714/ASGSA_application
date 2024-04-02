@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class Attendee < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :search, against: %i[first_name last_name email position], using: { tsearch: { prefix: true } }
   belongs_to :event
   belongs_to :member
 
@@ -13,8 +17,6 @@ class Attendee < ApplicationRecord
   def unique_member_and_event
     existing_attendee = Attendee.find_by(member_id: member_id, event_id: event_id)
 
-    if existing_attendee && existing_attendee != self
-      errors.add(:base, "RSVP for this event has already been created")
-    end
+    errors.add(:base, 'RSVP for this event has already been created') if existing_attendee && existing_attendee != self
   end
 end

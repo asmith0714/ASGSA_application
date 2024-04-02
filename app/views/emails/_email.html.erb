@@ -1,0 +1,27 @@
+<div id="<%= dom_id email %>">
+  <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock5.jpg' %>); background-size: cover;">
+    <div class="card mx-auto" style="width: 50rem;">
+      <div class="card-header">
+          <h1>Footer</h1>
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <%= link_to "Edit this Footer", edit_email_path(email), class: "btn btn-secondary mx-1" %>
+            <%= button_to "Destroy this Footer", email, method: :delete, class: "btn btn-danger mx-1" %>
+          </div>
+          </h1>
+      </div>
+
+      <div class="card-body">
+        <h4 style="color:#953132;">ASGSA Executive Committe <%= email.start_year%> - <%= email.end_year%> </h4>
+        <p> President: <%= email.president %> <br>
+          Vice President: <%= email.vice_president %> <br>
+          Secretary: <%= email.secretary %> <br>
+          Treasurer: <%= email.treasurer %> <br>
+          Secretary: <%= email.secretary %> <br>
+          Public Relations: <%= email.public_relations %> <br>
+          Members at Large: <%= email.members_at_large %> <br>
+          Email: <%= email.org_email %> </p>
+      </div>
+
+    </div>
+  </div>
+</div>

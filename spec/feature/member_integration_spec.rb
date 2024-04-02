@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.feature "MemberFeatures", type: :feature do
+RSpec.describe('MemberFeatures', type: :feature) do
   before do
     Rails.application.load_seed
 
     @member1 = create(:member, :admin)
+    @member2 = create(:member, :admin)
 
     # Setup mock OmniAuth user
     OmniAuth.config.test_mode = true
@@ -18,58 +21,50 @@ RSpec.feature "MemberFeatures", type: :feature do
         image: @member1.avatar_url
       },
       credentials: {
-        token: "token",
-        refresh_token: "refresh token",
-        expires_at: DateTime.now,
+        token: 'token',
+        refresh_token: 'refresh token',
+        expires_at: DateTime.now
       }
-    })
+    }
+                                                                      )
 
     # Route to trigger the OmniAuth callback directly for testing
     visit member_google_oauth2_omniauth_callback_path
-
   end
 
-  scenario "List all members" do
+  it 'List all members' do
     visit members_path
 
-    expect(page).to have_content(@member1.first_name)
-    expect(page).to have_content(@member1.last_name)
+    expect(page).to(have_content(@member1.first_name))
+    expect(page).to(have_content(@member1.last_name))
   end
 
-  scenario "View a member's details" do
+  it "View a member's details" do
     visit member_path(@member1)
 
-    expect(page).to have_content(@member1.first_name)
-    expect(page).to have_content(@member1.last_name)
-    expect(page).to have_content(@member1.email)
+    expect(page).to(have_content(@member1.first_name))
+    expect(page).to(have_content(@member1.last_name))
+    expect(page).to(have_content(@member1.email))
   end
 
-  scenario "Update a member's information" do
-    puts "Before update: MemberRoles and their Roles"
-    MemberRole.joins(:role).select('member_roles.member_role_id, member_roles.member_id, roles.name as role_name').each do |mr|
-      puts "MemberRole ID: #{mr.member_role_id}, Member ID: #{mr.member_id}, Role: #{mr.role_name}"
-    end
-
-    # Example query adjusting to use `member_id`
-    Member.select(:member_id, :first_name, :last_name).each do |member|
-      puts "Member ID: #{member.member_id}, Name: #{member.first_name} #{member.last_name}"
-    end
+  it "Update a member's information" do
     visit edit_member_path(@member1)
 
-    fill_in "member[res_lab]", with: "Lab A"
-    click_button "Update Profile"
+    select 'Animal Nutrition', from: 'Area of Study'
+    click_button 'Update Profile'
 
-    expect(page).to have_content("Member was successfully updated")
-    expect(page).to have_content("Lab A")
+    expect(page).to(have_content('Profile was successfully created'))
+    visit member_path(@member1)
+    expect(page).to(have_content('Animal Nutrition'))
   end
 
-  scenario "Delete a member" do
+  it 'Delete a member' do
     visit delete_confirmation_member_path(@member1)
-    expect(page).to have_content(@member1.first_name)
+    expect(page).to(have_content(@member1.first_name))
 
-    click_button "Delete this member"
+    click_button 'Delete this member'
 
-    expect(page).to have_content("You need to sign in or sign up before continuing.")
-    expect(page).not_to have_content(@member1.first_name)
+    expect(page).to(have_content('You need to sign in or sign up before continuing.'))
+    expect(page).not_to(have_content(@member1.first_name))
   end
 end

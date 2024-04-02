@@ -1,15 +1,41 @@
+# frozen_string_literal: true
+
+# spec/helpers/application_helper_spec.rb
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PagesHelper. For example:
-#
-# describe PagesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
-RSpec.describe PagesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe(ApplicationHelper, type: :helper) do
+  before do
+    allow(helper).to(receive(:url_for)) do |options|
+      "/?#{options.to_query}"
+    end
+  end
+
+  describe '#sort_link_to' do
+    it 'returns a link with the correct sort parameters' do
+      allow(helper).to(receive(:params).and_return({ sort: 'name', direction: 'asc' }))
+      expect(helper.sort_link_to('Name', 'name')).to(include('sort=name', 'direction=desc'))
+    end
+
+    it 'defaults to ascending order if no sort parameter is present' do
+      allow(helper).to(receive(:params).and_return({}))
+      expect(helper.sort_link_to('Name', 'name')).to(include('sort=name', 'direction=asc'))
+    end
+  end
+
+  describe '#sort_arrow' do
+    it 'returns an up arrow for ascending order' do
+      allow(helper).to(receive(:params).and_return({ sort: 'name', direction: 'asc' }))
+      expect(helper.sort_arrow('name')).to(eq('↑'))
+    end
+
+    it 'returns a down arrow for descending order' do
+      allow(helper).to(receive(:params).and_return({ sort: 'name', direction: 'desc' }))
+      expect(helper.sort_arrow('name')).to(eq('↓'))
+    end
+
+    it 'defaults to an up arrow if no sort parameter is present' do
+      allow(helper).to(receive(:params).and_return({}))
+      expect(helper.sort_arrow('first_name')).to(eq('↑'))
+    end
+  end
 end

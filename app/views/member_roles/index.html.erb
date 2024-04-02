@@ -1,4 +1,4 @@
-<div style="padding: 5%; background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; height: 100vh;">
+<div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover;">
   <%= turbo_frame_tag "member_roles" do %>
     <div class="card">
       <div class="card-header">
@@ -19,6 +19,16 @@
 
           <div class="form-row align-items-center mb-3">
             <div class="col-auto">
+              Filter by Role
+            </div>
+            <div class="col-auto">
+              <%= form.select :role, options_for_select(['Admin', 'Officer', 'Member'], selected: params[:role]), {include_blank: true}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+            </div>
+            <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
+          </div>
+          
+          <div class="form-row align-items-center mb-3">
+            <div class="col-auto">
               Search 
             </div>
             <div class="col-auto">
@@ -26,14 +36,6 @@
             </div>
           </div>
 
-          <div class="form-row align-items-center mb-3">
-            <div class="col-auto">
-              Filter by Role
-            </div>
-            <div class="col-auto">
-              <%= form.select :role, options_for_select(['Admin', 'Officer', 'Member'], selected: params[:role]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
-            </div>
-          </div>
         <% end %>
 
         <div class="table-responsive">
@@ -41,9 +43,9 @@
             <thead>
               <tr>
                 <th scope="col" colspan="0"></th>
-                <th scope="col">Member ID</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
+                <th scope="col">Position</th>
                 <th scope="col">Role</th>
                 <th scope="col" style="width: 5%"></th>
               </tr>
@@ -58,9 +60,9 @@
                       <%= image_tag('default_avatar.jpeg', alt: member_role.member.first_name, class: 'profile-icon2') %>
                     <% end %>
                   </td>
-                  <td><%= member_role.member_id %></td>
                   <td><%= member_role.member.first_name %></td>
                   <td><%= member_role.member.last_name %></td>
+                  <td><%= member_role.member.position %></td>
                   <td><%= member_role.role.name %></td>
                   <td><%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_role_path(member_role), id: "edit_btn", class: "btn btn-primary", style: "background-color: #007bff; border-color: #007bff" %></td>
                 </tr>
