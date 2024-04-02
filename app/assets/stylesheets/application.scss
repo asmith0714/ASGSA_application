@@ -177,6 +177,13 @@ body {
     .members-table th:first-child, .members-table td:first-child {
         display: none;
     }
+
+    
+    .members-table-member-view th:nth-last-child(-n+4):not(:last-child),
+    .members-table-member-view td:nth-last-child(-n+4):not(:last-child),
+    .members-table-member-view th:first-child, .members-table-member-view td:first-child {
+        display: none;
+    }
 }
 
 .footer {
