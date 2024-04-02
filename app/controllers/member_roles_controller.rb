@@ -60,7 +60,7 @@ class MemberRolesController < ApplicationController
   def approval
     authorize(MemberRole)
     @pagy, @member_roles = pagy(MemberRole.joins(:role).where(roles: { name: 'Unapproved' }))
-    @member_roles2 = MemberRole.All
+    @member_roles2 = MemberRole.all
     if params[:query].present?
       @member_roles2 = @member_roles2.joins(:member, :role).where('members.first_name ILIKE ? OR members.last_name ILIKE ? OR roles.name ILIKE ?',
                                                                 "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%"
