@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberRolePolicy < ApplicationPolicy
   # class Scope < Scope
   #   def resolve
@@ -16,13 +18,13 @@ class MemberRolePolicy < ApplicationPolicy
   def show?
     admin?
   end
-  
+
   def new?
     admin?
   end
 
   def create?
-    admin? 
+    admin?
   end
 
   def edit?
@@ -49,8 +51,5 @@ class MemberRolePolicy < ApplicationPolicy
     user.admin? || user.officer?
   end
 
-  def admin?
-    user.admin?
-  end
-
+  delegate :admin?, to: :user
 end

@@ -41,7 +41,7 @@ class MemberNotificationPolicy < ApplicationPolicy
   end
 
   def destroy?
-    admin_officer?
+    admin_officer_member_info?
   end
 
   def admin_officer_member_info?

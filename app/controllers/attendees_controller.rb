@@ -92,15 +92,15 @@ class AttendeesController < ApplicationController
     @members = Member.all
     @members = @members.general_search(params[:query]) if params[:query].present?
 
-    @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
+    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
 
     case params[:member_filter]
-    when "Attended"
+    when 'Attended'
       @members = attendees.where(attended: true).map(&:member)
-    when "Non-RSVP"
+    when 'Non-RSVP'
       @members = @members.where.not(member_id: attendees.pluck(:member_id))
-    when "All Members"
-      
+    when 'All Members'
+
     else
       @members = attendees.where(rsvp: true, attended: false).map(&:member)
     end

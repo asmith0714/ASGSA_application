@@ -20,15 +20,15 @@ RSpec.describe('Creating a Role', type: :feature) do
         image: @member1.avatar_url
       },
       credentials: {
-        token: "token",
-        refresh_token: "refresh token",
-        expires_at: DateTime.now,
+        token: 'token',
+        refresh_token: 'refresh token',
+        expires_at: DateTime.now
       }
-    })
+    }
+                                                                      )
 
     # Route to trigger the OmniAuth callback directly for testing
     visit member_google_oauth2_omniauth_callback_path
-
   end
 
   it 'valid inputs' do

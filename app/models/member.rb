@@ -4,8 +4,9 @@ class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   include PgSearch::Model
-  pg_search_scope :general_search, against: [:first_name, :last_name, :email, :position, :area_of_study, :points, :status], using: { tsearch: { prefix: true } }
-  pg_search_scope :allergies_search, against: [:first_name, :last_name, :food_allergies], using: { tsearch: { prefix: true } }
+  pg_search_scope :general_search, against: %i[first_name last_name email position area_of_study points status],
+                                   using: { tsearch: { prefix: true } }
+  pg_search_scope :allergies_search, against: %i[first_name last_name food_allergies], using: { tsearch: { prefix: true } }
   devise :omniauthable, omniauth_providers: [:google_oauth2]
   # Validate presence of essential attributes
   # validates :first_name, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: "can only contain letters" }
@@ -62,9 +63,8 @@ class Member < ApplicationRecord
     admin_role = Role.find_by(name: 'Admin')
     admins = admin_role.members if admin_role
     if admins.size == 1 && admins.find_by(member_id: member_id)
-      errors.add(:role, "At least one user must be an admin at all times")
+      errors.add(:role, 'At least one user must be an admin at all times')
       throw(:abort)
     end
   end
-
 end

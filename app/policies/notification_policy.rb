@@ -2,10 +2,10 @@
 
 class NotificationPolicy < ApplicationPolicy
   # class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+  # NOTE: Be explicit about which records you allow access to!
+  # def resolve
+  #   scope.all
+  # end
   #   def resolve
   #     if user.admin?
   #       scope.all
@@ -22,13 +22,13 @@ class NotificationPolicy < ApplicationPolicy
   def show?
     admin_officer?
   end
-  
+
   def new?
     admin_officer?
   end
 
   def create?
-    admin_officer? 
+    admin_officer?
   end
 
   def edit?
@@ -50,5 +50,4 @@ class NotificationPolicy < ApplicationPolicy
   def admin_officer?
     user.admin? || user.officer?
   end
-
 end

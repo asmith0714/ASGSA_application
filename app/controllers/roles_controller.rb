@@ -5,7 +5,7 @@ class RolesController < ApplicationController
 
   # GET /roles or /roles.json
   def index
-    authorize Role
+    authorize(Role)
     @roles = Role.all
     @roles = @roles.search(params[:query]) if params[:query].present?
     @pagy, @roles = pagy(@roles.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
@@ -21,25 +21,25 @@ class RolesController < ApplicationController
 
   # GET /roles/1 or /roles/1.json
   def show
-    authorize Role
+    authorize(Role)
     @role = Role.find(params[:id])
   end
 
   # GET /roles/new
   def new
-    authorize Role
+    authorize(Role)
     @role = Role.new
   end
 
   # GET /roles/1/edit
   def edit
-    authorize Role
+    authorize(Role)
     @role = Role.find(params[:id])
   end
 
   # POST /roles or /roles.json
   def create
-    authorize Role
+    authorize(Role)
     @role = Role.new(role_params)
 
     respond_to do |format|
@@ -56,7 +56,7 @@ class RolesController < ApplicationController
 
   # PATCH/PUT /roles/1 or /roles/1.json
   def update
-    authorize Role
+    authorize(Role)
     respond_to do |format|
       if @role.update(role_params)
         flash[:success] = 'Role was successfully updated.'
@@ -71,7 +71,7 @@ class RolesController < ApplicationController
 
   # DELETE /roles/1 or /roles/1.json
   def destroy
-    authorize Role
+    authorize(Role)
     @role.destroy!
 
     respond_to do |format|

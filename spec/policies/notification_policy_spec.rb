@@ -1,25 +1,26 @@
+# frozen_string_literal: true
 
 require 'rails_helper'
 
-RSpec.describe NotificationPolicy, type: :policy do
+RSpec.describe(NotificationPolicy, type: :policy) do
+  subject { described_class }
+
   before do
     Rails.application.load_seed
   end
 
-  subject { described_class }
-
   let(:admin) { create(:member, :admin) }
   let(:officer) { create(:member, :officer) }
   let(:member) { create(:member) }
-  let(:unapproved) { create(:member, :unapproved) } 
+  let(:unapproved) { create(:member, :unapproved) }
 
-  let(:notification) {
+  let(:notification) do
     {
-    title: "Test Notification",
-    description: "This is a test notification",
-    date: Date.today
+      title: 'Test Notification',
+      description: 'This is a test notification',
+      date: Time.zone.today
     }
-  } 
+  end
 
   # describe 'Scope' do
   #   context 'for an admin' do
@@ -43,12 +44,12 @@ RSpec.describe NotificationPolicy, type: :policy do
 
   permissions :index?, :show?, :new?, :create?, :edit?, :update?, :destroy?, :delete_confirmation? do
     it 'grants access to admin and officer' do
-      expect(subject).to permit(admin, notification)
-      expect(subject).to permit(officer, notification)
+      expect(subject).to(permit(admin, notification))
+      expect(subject).to(permit(officer, notification))
     end
 
     it 'denies access to regular members' do
-      expect(subject).not_to permit(member, notification)
+      expect(subject).not_to(permit(member, notification))
     end
   end
 end

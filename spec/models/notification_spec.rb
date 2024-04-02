@@ -2,27 +2,32 @@
 
 require 'rails_helper'
 
-RSpec.describe Notification, type: :model do
-  let(:valid_event) { Event.create!(
-    name: "Test Event",
-    location: "College Station",
-    start_time: Time.now ,
-    end_time: Time.current + 2.hour,
-    date: Time.zone.today,
-    description: "This is a description for test event",
-    capacity: 20,
-    points: 3, 
-    category: "Social Event"
-  ) }
-  #Define a valid member
-  let(:valid_attributes){
+RSpec.describe(Notification, type: :model) do
+  let(:valid_event) do
+    Event.create!(
+      name: 'Test Event',
+      location: 'College Station',
+      start_time: Time.zone.now,
+      end_time: Time.current + 2.hours,
+      date: Time.zone.today,
+      description: 'This is a description for test event',
+      capacity: 20,
+      points: 3,
+      category: 'Social Event'
+    )
+  end
+  let(:notification) do
+    described_class.new(title: 'Test Notification', description: 'A test description', date: Time.zone.today, event: valid_event)
+  end
+  # Define a valid member
+  let(:valid_attributes) do
     {
       title: 'Test notification',
       description: 'A test description',
       date: Time.zone.today,
       event_id: valid_event.id
     }
-  }
+  end
 
   # Directly inside your RSpec.describe block, define a method to attach files
   def attach_file_to(notification, filename, content_type)
@@ -32,11 +37,10 @@ RSpec.describe Notification, type: :model do
       content_type,
       original_filename: filename # Provide the original filename here
     )
-    
+
     # Attach the mock file to the notification object
     notification.attachment.attach(mock_file)
   end
-  
 
   context 'validations' do
     it 'is valid with valid attributes' do
@@ -63,30 +67,26 @@ RSpec.describe Notification, type: :model do
     end
   end
 
-  let(:notification) do
-    described_class.new(title: 'Test Notification', description: 'A test description', date: Date.today, event: valid_event)
-  end
-  
   context 'attachment validations' do
     it 'is valid with a JPEG file attached' do
       attach_file_to(notification, 'test.jpeg', 'image/jpeg')
-      expect(notification).to be_valid
+      expect(notification).to(be_valid)
     end
-  
+
     it 'is valid with a PNG file attached' do
       attach_file_to(notification, 'test.png', 'image/png')
-      expect(notification).to be_valid
+      expect(notification).to(be_valid)
     end
-  
+
     it 'is valid with a PDF file attached' do
       attach_file_to(notification, 'test.pdf', 'application/pdf')
-      expect(notification).to be_valid
+      expect(notification).to(be_valid)
     end
-  
+
     it 'is not valid with a GIF file attached' do
       attach_file_to(notification, 'test.gif', 'image/gif')
       notification.valid?
-      expect(notification.errors[:attachment]).to include('must be a JPEG, JPG, PNG, or PDF file')
+      expect(notification.errors[:attachment]).to(include('must be a JPEG, JPG, PNG, or PDF file'))
     end
   end
 end

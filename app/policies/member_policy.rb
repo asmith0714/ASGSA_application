@@ -56,17 +56,11 @@ class MemberPolicy < ApplicationPolicy
     user.admin? || user.officer?
   end
 
-  def officer?
-    user.officer?
-  end
+  delegate :officer?, to: :user
 
   delegate :admin?, to: :user
 
-  def approved?
-    user.approved?
-  end
+  delegate :approved?, to: :user
 
-  def unapproved?
-    user.unapproved?
-  end
+  delegate :unapproved?, to: :user
 end

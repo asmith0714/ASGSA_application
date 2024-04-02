@@ -158,7 +158,7 @@
                 <%= link_to faq_officer_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
                 <% end %>
-              <% elsif member_signed_in? && policy(current_member).member? %>
+              <% else %>
                 <%= link_to faq_member_path , style: "color: white; text-decoration: none" do %>
                   <i class="fa-solid fa-question fa-xl"></i>  FAQs
                 <% end %>

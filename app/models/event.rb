@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-
   include PgSearch::Model
   pg_search_scope :search, against: %i[name date category capacity points], using: { tsearch: { prefix: true } }
   validates :name, presence: true
@@ -30,11 +29,8 @@ class Event < ApplicationRecord
   end
 
   def end_time_after_start_time
-      return if end_time.blank? || start_time.blank?
+    return if end_time.blank? || start_time.blank?
 
-      if end_time <= start_time
-      errors.add(:end_time, "must be after the start time")
-      end
+    errors.add(:end_time, 'must be after the start time') if end_time <= start_time
   end
-
 end
