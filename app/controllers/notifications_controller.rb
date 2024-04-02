@@ -48,12 +48,12 @@ class NotificationsController < ApplicationController
           # Send email to officers only
           officer_role = Role.find_by(name: 'Officer')
           @members = officer_role.members if officer_role
-          MemberMailer.notification_email(@notification, @members).deliver_now if officers
+          MemberMailer.notification_email(@notification, @members).deliver_now if @members
         when 'members'
           # Send email to members only
           member_role = Role.find_by(name: 'Member')
           @members = member_role.members if member_role
-          MemberMailer.notification_email(@notification, @members).deliver_now if members
+          MemberMailer.notification_email(@notification, @members).deliver_now if @members
       end
         
         
@@ -62,7 +62,8 @@ class NotificationsController < ApplicationController
           @notification.member_notifications.create(member_id: mem.id, notification_id: @notification.id, seen: false)
         end
         
-        format.html { redirect_to notification_url(@notification), notice: "Notification was successfully created." }
+        flash[:success] = 'Notification was successfully created.'
+        format.html { redirect_to notifications_url }
         format.json { render :show, status: :created, location: @notification }
       else
         format.html { render :new, status: :unprocessable_entity }

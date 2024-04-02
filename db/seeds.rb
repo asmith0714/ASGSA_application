@@ -54,3 +54,15 @@ Notification.find_or_create_by(title: "Test Notification") do |notification|
   notification.event_id = Event.first.id
   notification.date = Date.today
 end
+
+# # Create 15 sample members
+# 15.times do
+#   FactoryBot.create(:member)
+# end
+
+# # Create 15 sample events
+# 15.times do |i|
+#   Event.find_or_create_by!(name: "Test Event #{i}", location: "Test Location #{i}", start_time: Time.zone.now, end_time: Time.zone.now + 1.hour, date: Time.zone.today + 1.day,
+#                            description: "This is a test event #{i}", capacity: 15, points: 10, contact_info: "test#{i}@example.com", category: "Social Event", archive: false
+#   )
+# end

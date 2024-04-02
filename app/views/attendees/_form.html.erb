@@ -30,12 +30,12 @@
       <% if attendee = Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id) %>
         You have already RSVP'd for this event. <br>
         <% if !attendee.attended %>
-          <%= link_to("Delete RSVP", delete_event_attendee_path(@event, Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id)), class: 'action delete') %>
+          <%= link_to("Delete RSVP", delete_event_attendee_path(@event, Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id)), class: 'btn btn-danger') %>
         <% end %>
       <% elsif @current_time > @event_time %>
         The sign-up window for this event has closed.
       <% else %>
-        <%=form.submit "Confirm RSVP" %>
+        <%=form.submit "Confirm RSVP", class: "btn btn-primary" %>
       <% end %>
     <% end %>
 
