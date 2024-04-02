@@ -88,12 +88,12 @@
                   <td><%= event.points %></td>
                   <td>
                     <div class="btn-group" role="group">
-                  	  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-1", id: "show_btn" %>
+                  	  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-2", id: "show_btn" %>
                       <% if can_see_all_attributes %>
-                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-1", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
-                        <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-1", id: "delete_btn" %>
+                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-2", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
+                        <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-2", id: "delete_btn" %>
                         <% if event.date < Date.today %>
-                          <%= button_to "<i class='fa-solid fa-box-archive'></i>".html_safe, toggle_archive_event_path(event), method: :patch, class: "btn btn-warning rounded mr-1", id: "archive_btn" %>
+                          <%= button_to "<i class='fa-solid fa-box-archive'></i>".html_safe, toggle_archive_event_path(event), method: :patch, class: "btn btn-warning rounded mr-2", id: "archive_btn" %>
                         <% end %>
                       <% end %>
                     </div>
