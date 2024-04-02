@@ -22,7 +22,7 @@
                 Filter By
               </div>
               <div class="col-auto">
-                <%= form.select :member_filter, options_for_select(["RSVP", "Attended", "Non-RSVP", "All Members"], selected: params[:member_filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
+                <%= form.select :member_filter, options_for_select(["All Members", "RSVP", "Attended", "Non-RSVP"], selected: params[:member_filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
               </div>
             </div>
 

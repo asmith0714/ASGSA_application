@@ -28,14 +28,7 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/edit
   def edit
     @member = Member.find(@attendee.member_id)
-    current_points = @member.points
 
-    if @attendee.attended
-      current_points -= @event.points
-    else
-      current_points += @event.points
-    end
-    @member.update!(points: current_points)
     @attendee.update!(attended: !@attendee.attended)
 
     redirect_to(check_in_event_attendees_path(@event, member_filter: params[:member_filter]))
@@ -71,11 +64,6 @@ class AttendeesController < ApplicationController
     event_id = @attendee.event_id
     @member = Member.find(@attendee.member_id)
 
-    if @attendee.attended
-      @member.points -= Event.find(event_id).points
-      @member.update!(points: @member.points)
-    end
-
     @attendee.destroy!
 
     respond_to do |format|
@@ -96,7 +84,7 @@ class AttendeesController < ApplicationController
     when "Attended"
       @members = attendees.where(attended: true).map(&:member)
     when "All Members"
-  
+
     when "Non-RSVP"
       @members = @members.where.not(member_id: attendees.pluck(:member_id))
     else # Default to "RSVP"
