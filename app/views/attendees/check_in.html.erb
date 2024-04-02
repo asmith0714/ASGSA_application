@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-header">
       <h1>Check In Members for Event: <%= @event.name %></h1>  
+      <%= link_to 'Add Points', add_points_event_attendees_path, class: 'btn btn-primary' %>
     </div>
       <div class="card-body">
         <%= turbo_frame_tag "members" do %>

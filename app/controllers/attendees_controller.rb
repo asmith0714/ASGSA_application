@@ -2,7 +2,7 @@
 
 class AttendeesController < ApplicationController
   before_action :set_attendee, only: %i[show edit update destroy delete]
-  before_action :set_event, only: %i[index new edit delete check_in new_check_in]
+  before_action :set_event, only: %i[index new edit delete check_in new_check_in destroy add_points]
 
   # GET /attendees or /attendees.json
   def index
@@ -10,6 +10,12 @@ class AttendeesController < ApplicationController
     @attendees = Attendee.where(event_id: params[:event_id])
     @members = @members.search(params[:query]) if params[:query].present?
     @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+
+    @current_time = Time.zone.now
+
+    date = @event.date
+
+    @event_time = @event.start_time.change(year: date.year, month: date.month, day: date.day)
   end
 
   # GET /attendees/1 or /attendees/1.json
@@ -62,7 +68,6 @@ class AttendeesController < ApplicationController
   # DELETE /attendees/1 or /attendees/1.json
   def destroy
     event_id = @attendee.event_id
-    @member = Member.find(@attendee.member_id)
 
     @attendee.destroy!
 
@@ -74,22 +79,32 @@ class AttendeesController < ApplicationController
   end
 
   def check_in
-    # SEARCH FEATURE NOT WORKING PROPERLY FOR 'Attended' AND 'RSVP'
     attendees = Attendee.where(event_id: params[:event_id])
     @members = Member.all
-    @members = @members.search(params[:query]) if params[:query].present?
+    @members = @members.general_search(params[:query]) if params[:query].present?
+
     @pagy, @members = pagy @members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10)
 
     case params[:member_filter]
     when "Attended"
       @members = attendees.where(attended: true).map(&:member)
-    when "All Members"
-
     when "Non-RSVP"
       @members = @members.where.not(member_id: attendees.pluck(:member_id))
-    else # Default to "RSVP"
+    when "RSVP"
       @members = attendees.where(rsvp: true, attended: false).map(&:member)
     end
+  end
+
+  def add_points
+    members = Attendee.where(event_id: params[:event_id], attended: true).map(&:member)
+
+    members.each do |member|
+      points_update = member.points + @event.points
+      member.update!(points: points_update)
+    end
+
+    flash[:notice] = 'Points successfully added to all attended members.'
+    redirect_to(check_in_event_attendees_path(@event))
   end
 
   def sort_column

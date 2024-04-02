@@ -157,7 +157,8 @@ body {
     .events-table td:nth-last-child(-n+4):not(:last-child) {
       display: none;
     }
-    .attendees-table th:nth-child(3), .attendees-table td:nth-child(3) {
+    .attendees-table th:nth-child(1), .attendees-table td:nth-child(1),
+    .attendees-table th:nth-child(4), .attendees-table td:nth-child(4) {
         display: none;
     }
 

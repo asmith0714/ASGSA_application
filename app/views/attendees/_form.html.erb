@@ -27,9 +27,11 @@
     <% if attendeeCount != nil && attendeeCount == @event.capacity %>
       Event is at max capacity. <br>
     <% else %>
-      <% if Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id) %>
+      <% if attendee = Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id) %>
         You have already RSVP'd for this event. <br>
-        <%= link_to("Delete RSVP", delete_event_attendee_path(@event, Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id)), class: 'action delete') %>
+        <% if !attendee.attended %>
+          <%= link_to("Delete RSVP", delete_event_attendee_path(@event, Attendee.find_by(member_id: current_member.member_id, event_id: @event.event_id)), class: 'action delete') %>
+        <% end %>
       <% elsif @current_time > @event_time %>
         The sign-up window for this event has closed.
       <% else %>

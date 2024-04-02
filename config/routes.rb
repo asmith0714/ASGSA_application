@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       get 'approval'
     end
   end
-  
+
   resources :members do
     collection do
       get 'allergies_list'
@@ -55,6 +55,7 @@ Rails.application.routes.draw do
       collection do
         get 'check_in'
         get 'new_check_in'
+        get 'add_points'
       end
       member do
         get 'delete'
