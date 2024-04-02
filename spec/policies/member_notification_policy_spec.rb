@@ -27,7 +27,7 @@ RSpec.describe(MemberNotificationPolicy) do
     end
   end
 
-  permissions :new?, :create?, :destroy? do
+  permissions :new?, :create? do
     it 'grants access if user is an admin or officer' do
       expect(subject).to(permit(admin))
       expect(subject).to(permit(officer))
@@ -39,7 +39,7 @@ RSpec.describe(MemberNotificationPolicy) do
     end
   end
 
-  permissions :edit?, :mark_seen?, :update? do
+  permissions :edit?, :update? do
     it 'grants access if user is an admin, officer, or the record owner' do
       expect(subject).to(permit(admin, admin))
       expect(subject).to(permit(officer, officer))

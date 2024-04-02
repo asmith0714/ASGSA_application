@@ -8,9 +8,9 @@ RSpec.describe('Attendee Features', type: :feature) do
     @event = Event.create!(
       name: 'name',
       location: 'location',
-      start_time: Time.zone.now + 100_000,
-      end_time: Time.zone.now + 100_000,
-      date: Time.zone.today,
+      start_time: Time.zone.parse('14:00'),
+      end_time: Time.zone.parse('16:00'),
+      date: Time.zone.today + 1.day,
       description: 'Sample Description',
       capacity: 100,
       points: 5,

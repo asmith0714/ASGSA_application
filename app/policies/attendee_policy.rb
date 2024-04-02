@@ -44,7 +44,7 @@ class AttendeePolicy < ApplicationPolicy
     admin_officer?
   end
 
-  def new_check_in
+  def new_check_in?
     admin_officer?
   end
 

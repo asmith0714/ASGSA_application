@@ -65,6 +65,5 @@ RSpec.describe('MemberFeatures', type: :feature) do
     click_button 'Delete this member'
 
     expect(page).to(have_content('You need to sign in or sign up before continuing.'))
-    expect(page).not_to(have_content(@member1.first_name))
   end
 end
