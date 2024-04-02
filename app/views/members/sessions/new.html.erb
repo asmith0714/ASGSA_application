@@ -2,7 +2,7 @@
   <div class="header">
       <h1 class="display-4" style="font-size: max(32px, 3vw);">Welcome to the Texas A&M Animal Science Graduate Student Association</h1>
       <h1 class="display-4" style="font-size: max(32px, 3vw);"><br>Our Mission</h1>
-      <p class="lead" style="font-size: max(16px, 2vw);">
+      <p class="lead" style="font-size: max(16px, 1.5vw);">
         ASGSA aims to foster close relationships among Animal Science graduate 
         students and faculty among all disciplines of Animal Science at the 
         Texas A&M University; to encourage leadership; to promote greater interest 
@@ -13,13 +13,13 @@
     <h2 class="display-4" style="font-size: max(24px, 3vw);">Upcoming Events</h2>
     <div class="upcoming-events-list">
       <% @events.order(:date, :start_time).last(3).each do |event| %>
-        <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; padding: 1% 1%">
+        <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; padding: 1% 1%; max-width: 100%">
           <div class="card-body">
-            <h3 class="card-title" style="font-size: max(24px, 2.5vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Location: <%= event.location %></p>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Capacity: <%= event.capacity %></p>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Points: <%= event.points %></p>
+            <h3 class="card-title" style="font-size: max(24px, 2vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Location: <%= event.location %></p>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Capacity: <%= event.capacity %></p>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Points: <%= event.points %></p>
             <% if member_signed_in? %>
               <%= link_to "View Event", event_path(event), class: "btn btn-primary", style: "font-size: max(16px, 1.5vw); padding: 5% 5%" %>
             <% end %>
