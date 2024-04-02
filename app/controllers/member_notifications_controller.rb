@@ -36,7 +36,6 @@ class MemberNotificationsController < ApplicationController
   end
 
   def mark_seen
-    authorize(MemberNotification)
     @member_notification = MemberNotification.find(params[:id])
 
     respond_to do |format|

@@ -6,6 +6,7 @@ class AttendeesController < ApplicationController
 
   # GET /attendees or /attendees.json
   def index
+    authorize(Attendee)
     @members = Member.all
     @attendees = Attendee.where(event_id: params[:event_id])
     @members = @members.search(params[:query]) if params[:query].present?
@@ -19,10 +20,13 @@ class AttendeesController < ApplicationController
   end
 
   # GET /attendees/1 or /attendees/1.json
-  def show; end
+  def show
+    authorize(Attendee)
+  end
 
   # GET /attendees/new
   def new
+    authorize(Attendee)
     @attendee = Attendee.new
     @current_time = Time.zone.now
 
@@ -33,6 +37,7 @@ class AttendeesController < ApplicationController
 
   # GET /attendees/1/edit
   def edit
+    authorize(Attendee)
     @member = Member.find(@attendee.member_id)
 
     @attendee.update!(attended: !@attendee.attended)
@@ -42,6 +47,7 @@ class AttendeesController < ApplicationController
 
   # POST /attendees or /attendees.json
   def create
+    authorize(Attendee)
     @event = Event.find(attendee_params[:event_id])
     @attendee = Attendee.new(attendee_params)
 
@@ -61,12 +67,15 @@ class AttendeesController < ApplicationController
   end
 
   # PATCH/PUT /attendees/1 or /attendees/1.json
-  def update; end
+  def update
+    authorize(Attendee)
+  end
 
   def delete; end
 
   # DELETE /attendees/1 or /attendees/1.json
   def destroy
+    authorize(Attendee)
     event_id = @attendee.event_id
 
     @attendee.destroy!
@@ -79,6 +88,7 @@ class AttendeesController < ApplicationController
   end
 
   def check_in
+    authorize(Attendee)
     attendees = Attendee.where(event_id: params[:event_id])
     @members = Member.all
     @members = @members.general_search(params[:query]) if params[:query].present?
@@ -96,6 +106,7 @@ class AttendeesController < ApplicationController
   end
 
   def add_points
+    authorize(Attendee)
     members = Attendee.where(event_id: params[:event_id], attended: true).map(&:member)
 
     members.each do |member|
@@ -116,6 +127,7 @@ class AttendeesController < ApplicationController
   end
 
   def new_check_in
+    authorize(Attendee)
     @attendee = Attendee.new
     @member = Member.find(params[:member_id])
   end
