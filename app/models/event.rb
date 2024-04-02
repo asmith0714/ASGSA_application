@@ -3,7 +3,7 @@
 class Event < ApplicationRecord
 
   include PgSearch::Model
-  pg_search_scope :search, against: %i[name date capacity points], using: { tsearch: { prefix: true } }
+  pg_search_scope :search, against: %i[name date category capacity points], using: { tsearch: { prefix: true } }
   validates :name, presence: true
   validates :location, presence: true
   validates :start_time, presence: true
