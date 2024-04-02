@@ -12,7 +12,7 @@ class NotificationsTest < ApplicationSystemTestCase
 
   test "should create notification" do
     visit notifications_url
-    click_on "New notification"
+    click_on "New Notification"
 
     fill_in "Description", with: @notification.description
     check "Is sent" if @notification.is_sent

@@ -69,8 +69,8 @@ RSpec.describe "Member View", type: :feature do
         visit members_path
         find('#edit_btn').click
         expect(page).to have_content("Edit Profile")
-        expect(page).to have_field('member[first_name]', disabled: true)
-        expect(page).to have_field('member[last_name]', disabled: true)
+        expect(page).to have_field('member[first_name]', disabled: false)
+        expect(page).to have_field('member[last_name]', disabled: false)
         expect(page).to have_field('member[email]', disabled: true)
         expect(page).to have_field('member[points]', disabled: true)
         expect(page).to have_field('member[position]', disabled: true)
