@@ -1,10 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">
+  <div class="card mx-auto" style="width: 40rem;">
+    <div class="card-header">
+    <%= link_to "Back Notifications", member_notifications_path %>
+      | <%= link_to "Edit Notification", edit_member_notification_path(@member_notification) %>
+      | <%= link_to "Delete Notification", @member_notification, method: :delete %>
+      <h1 class="mt-3" style="text-align: center"><strong><%= @member_notification.notification.title %></strong></h1>
+      
+      </div>
+      
+      <div class="card-body">
+        <div class="mb-3">
+          Seen: 
+          <% if @member_notification.seen %>
+            <i class="far fa-check-square"></i>
+          <% else %>
+            <i class="fa-regular fa-square"></i>
+          <% end %>
+        </div>
 
-<%= render @member_notification %>
-
-<div>
-  <%= link_to "Edit this member notification", edit_member_notification_path(@member_notification) %> |
-  <%= link_to "Back to member notifications", member_notifications_path %>
-
-  <%= button_to "Destroy this member notification", @member_notification, method: :delete %>
+        <div class="mb-3 top-bottom-text">
+          <strong>Description</strong>
+          <%= @member_notification.notification.description %>
+        </div>
+      
+        <% if @member_notification.notification.event %>
+          <div class="mb-3 top-bottom-text">
+            <strong>Linked Event</strong>
+            <%= @member_notification.notification.event.name %>
+          </div>
+          <%= link_to "View Event Details", @member_notification.notification.event, class: "btn btn-primary"%>
+        <% end %>
+    </div>
+  </div>
 </div>
