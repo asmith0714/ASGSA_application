@@ -88,7 +88,6 @@ class AttendeesController < ApplicationController
   end
 
   def check_in
-    authorize(Attendee)
     attendees = Attendee.where(event_id: params[:event_id])
     @members = Member.all
     @members = @members.general_search(params[:query]) if params[:query].present?
@@ -100,7 +99,9 @@ class AttendeesController < ApplicationController
       @members = attendees.where(attended: true).map(&:member)
     when "Non-RSVP"
       @members = @members.where.not(member_id: attendees.pluck(:member_id))
-    when "RSVP"
+    when "All Members"
+      
+    else
       @members = attendees.where(rsvp: true, attended: false).map(&:member)
     end
   end
