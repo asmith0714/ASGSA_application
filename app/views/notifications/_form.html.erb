@@ -40,8 +40,8 @@
                 <%= form.select :event_id, options_for_select(Event.all.map{|e|[e.name, e.id]}, selected: notification.event_id || nil), {include_blank: true}, {class: 'form-control'} %>
               </div>
 
-              <div class="col-md-6 mb-3"
-                <p class="card-text"> Leave blank if this notification isn't for an event </p> 
+              <div class="md-6 mb-3"
+                <p class="card-text"> *Leave blank if you don't want to link an event </p> 
               </div>
             </div>
             </div>
@@ -52,16 +52,17 @@
                 <%= label_tag :send_email_all, 'Send email to all members', class: 'form-check-label' %>
               </div>
       
+              
+              <div class="form-check mb-3">
+              <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
+              <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
+              </div>
+              
               <div class="form-check mb-3">
                 <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
                 <%= label_tag :send_email_officers, 'Send email to officers only', class: 'form-check-label' %>
               </div>
-      
-              <div class="form-check mb-3">
-                <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
-                <%= label_tag :send_email_members, 'Send email to members only', class: 'form-check-label' %>
-              </div>
-      
+              
               <div class="form-check mb-3">
                 <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
                 <%= label_tag :send_email_members, 'Send in app notification only', class: 'form-check-label' %>

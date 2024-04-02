@@ -81,7 +81,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_31_224733) do
     t.boolean "archive", default: false
   end
 
-  create_table "member_notifications", force: :cascade do |t|
+  create_table "member_notifications", primary_key: "member_notification_id", force: :cascade do |t|
     t.integer "member_id"
     t.integer "notification_id"
     t.datetime "created_at", null: false

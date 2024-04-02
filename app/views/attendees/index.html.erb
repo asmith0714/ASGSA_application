@@ -20,6 +20,10 @@
       </h1>
     </div>
     <div class="card-body">
+      <div>
+      <%= link_to "Back to Details", @event %>
+      | <%= link_to "Back to Events", events_path %>
+      </div>
       <%= turbo_frame_tag "members" do %>
         <p id="notice" class="mb-4"><%= notice %></p>
       <div class="entity-filter">
@@ -87,10 +91,6 @@
       </div>
         <%== pagy_nav @pagy %>
       <% end %>
-      
-      <%= link_to "Back to Details", @event %>
-      | <%= link_to "Back to Events", events_path %>
-
     </div>
   </div>
 </div>

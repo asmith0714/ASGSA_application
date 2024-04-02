@@ -1,10 +1,48 @@
-
-<h1> Email Settings </h1>
 <% if @emails.count == 0 %>
-<%= link_to "New footer", new_email_path, class: 'btn btn-primary' %>
+  <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%">  
+    <div class="card mx-auto" style="width: 50rem;">
+      <div class="card-header">
+          <h1>Email Settings Footer</h1>
+      </div>
+
+      <div class="card-body">
+        <%= link_to "Create New Footer", new_email_path, class: 'btn btn-primary' %>
+      </div>
+      
+    </div>
+  </div>
+<% else %>
+  <div class="d-flex align-items-center vh-100" style="background-image: url(<%= asset_path 'tamu_stock3.jpg' %>); background-size: cover; padding: 5%"> 
+    <% @emails.each do |email| %>
+      <div class="card mx-auto" style="width: 50rem;">
+        <div class="card-header">
+            <h1>Email Settings Footer</h1>
+            <div class="row px-2">
+              <div class="col-auto mx-0 px-1">
+                <%= link_to "Edit footer", edit_email_path(email), class: "btn btn-primary" %>
+              </div>
+              <div class="col-auto mx-0 px-1">
+                <%= button_to "Delete Footer", email, method: :delete, class: "btn btn-primary" %>
+              </div>
+            </div>
+        </div>
+  
+        <div class="card-body">
+          <h4 style="color:#953132;">ASGSA Executive Committe <%= email.start_year%> - <%= email.end_year%> </h4>
+          <p> President: <%= email.president %> <br>
+            Vice President: <%= email.vice_president %> <br>
+            Secretary: <%= email.secretary %> <br>
+            Treasurer: <%= email.treasurer %> <br>
+            Secretary: <%= email.secretary %> <br>
+            Public Relations: <%= email.public_relations %> <br>
+            Members at Large: <%= email.members_at_large %> <br>
+            Email: <%= email.org_email %> 
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% end %>
 
-    <% @emails.each do |email| %>
-      <%= render email %>
-    <% end %>
+
 

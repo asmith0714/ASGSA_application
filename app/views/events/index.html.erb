@@ -7,7 +7,7 @@
       <h1>
       Events
       <br>
-      <div class="row">
+      <div class="row px-2">
         <% if can_see_all_attributes %>
           <div class='col-auto mx-0 px-1'>
             <%= link_to("Create New Event", new_event_path, class: 'btn btn-primary', id: "create_btn") %>
@@ -42,6 +42,7 @@
               <% filter_list = can_see_all_attributes ? ['Upcoming Events', 'Past Events', 'Archived Events'] : ['Upcoming Events', 'Past Events'] %>
               <%= form.select :filter, options_for_select(filter_list, selected: params[:filter]), {}, { onchange: "this.form.requestSubmit()", class: "form-control" } %>
             </div>
+            <%= link_to "Reset Filters", {sort: nil, direction: nil}, class: "btn btn-primary" %>
           </div>
 
           <div class="form-row align-items-center mb-3">
@@ -87,12 +88,12 @@
                   <td><%= event.points %></td>
                   <td>
                     <div class="btn-group" role="group">
-                  	  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-1", id: "show_btn" %>
+                  	  <%= link_to "<i class='fas fa-eye'></i>".html_safe, event, class: "btn btn-secondary rounded mr-2", id: "show_btn" %>
                       <% if can_see_all_attributes %>
-                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-1", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
-                        <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-1", id: "delete_btn" %>
+                        <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_event_path(event), class: "btn btn-primary rounded mr-2", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
+                        <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_event_path(event), method: :get, class: "btn btn-danger rounded mr-2", id: "delete_btn" %>
                         <% if event.date < Date.today %>
-                          <%= button_to "<i class='fa-solid fa-box-archive'></i>".html_safe, toggle_archive_event_path(event), method: :patch, class: "btn btn-warning rounded mr-1", id: "archive_btn" %>
+                          <%= button_to "<i class='fa-solid fa-box-archive'></i>".html_safe, toggle_archive_event_path(event), method: :patch, class: "btn btn-warning rounded mr-2", id: "archive_btn" %>
                         <% end %>
                       <% end %>
                     </div>

@@ -115,7 +115,7 @@
       <%= yield %>
     </div>
 
-    <% unless action_name == 'edit' || ((controller_name == 'events' || controller_name == 'members') && action_name == 'show') %>
+    <% unless action_name == 'edit' || (action_name == 'show' && (controller_name == 'members' || controller_name == 'events' || controller_name == 'notifications')) || action_name == 'new' || (action_name == 'index' && controller_name == 'notifications') || action_name == 'delete_confirmation' %>
       <div class="footer" style="margin-top: 0">
         <div class="flex-row">
           <div class="col-md-4" style="height: fit-content">

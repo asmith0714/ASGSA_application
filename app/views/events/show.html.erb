@@ -21,13 +21,13 @@
 
       <div class="row">
         <div class="col-md-3 mb-3 top-bottom-text">
-          <strong>Time</strong>
-          <%= @event.start_time&.strftime("%I:%M %p") %> - <%= @event.end_time&.strftime("%I:%M %p") %>
+          <strong>Date</strong>
+          <%= @event.date.strftime('%m/%d/%y') %>
         </div>
 
         <div class="col-md-4 mb-3 top-bottom-text">
-          <strong>Date</strong>
-          <%= @event.date.strftime('%m/%d/%y') %>
+          <strong>Time</strong>
+          <%= @event.start_time&.strftime("%I:%M %p") %> - <%= @event.end_time&.strftime("%I:%M %p") %>
         </div>
       </div>
       
