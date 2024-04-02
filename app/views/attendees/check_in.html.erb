@@ -4,6 +4,7 @@
       <h1>Check In Members for Event: <%= @event.name %></h1>  
     </div>
       <div class="card-body">
+        <%= link_to("Back To Event", event_attendees_path(@event))%>
         <%= turbo_frame_tag "members" do %>
           <p id="notice" class="mb-4"><%= notice %></p>
         <div class="entity-filter">
@@ -89,10 +90,6 @@
           </div>
         </div>
           <%== pagy_nav @pagy %>
-
-          <%= link_to("Back To Event", event_attendees_path(@event))%>
-
-
         <% end %>
       </div>
   </div>
