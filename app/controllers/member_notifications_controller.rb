@@ -84,7 +84,6 @@ class MemberNotificationsController < ApplicationController
 
   # DELETE /member_notifications/1 or /member_notifications/1.json
   def destroy
-    authorize(MemberNotification)
     @member_notification.destroy!
 
     respond_to do |format|

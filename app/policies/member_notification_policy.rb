@@ -40,10 +40,6 @@ class MemberNotificationPolicy < ApplicationPolicy
     admin_officer_member_info?
   end
 
-  def destroy?
-    admin_officer_member_info?
-  end
-
   def admin_officer_member_info?
     user.admin? || user.officer? || record.id == user.id
   end
