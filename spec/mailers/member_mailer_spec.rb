@@ -27,7 +27,7 @@ RSpec.describe(MemberMailer, type: :mailer) do
   end
 
   describe 'event_email' do
-    let(:event) { Event.create!(name: 'Event', location: 'Location', start_time: Time.zone.now, end_time: Time.zone.now + 1.hour, date: Time.zone.today, description: 'Description', category: 'Category', capacity: 100, points: 5) }
+    let(:event) { Event.create!(name: 'Event', location: 'Location', start_time: Time.zone.parse('14:00'), end_time: Time.zone.parse('16:00'), date: Time.zone.today + 1.day, description: 'Description', category: 'Category', capacity: 100, points: 5) }
     let(:recipients) { create_list(:member, 3) }
     let(:mail) { described_class.event_email(event, recipients) }
 

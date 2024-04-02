@@ -7,9 +7,9 @@ RSpec.describe(Notification, type: :model) do
     Event.create!(
       name: 'Test Event',
       location: 'College Station',
-      start_time: Time.zone.now,
-      end_time: Time.current + 2.hours,
-      date: Time.zone.today,
+      start_time: Time.zone.parse('14:00'),
+      end_time: Time.zone.parse('16:00'),
+      date: Time.zone.today + 1.day,
       description: 'This is a description for test event',
       capacity: 20,
       points: 3,
