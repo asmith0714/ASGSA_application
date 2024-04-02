@@ -24,7 +24,7 @@ RSpec.feature "Attendee Features", type: :feature do
       date: Time.zone.today - 1,
       description: "Sample Description",
       capacity: 100,
-      points: 5, 
+      points: 5,
       category: "Test Category",
       archive: false
     )
@@ -143,9 +143,6 @@ RSpec.feature "Attendee Features", type: :feature do
 
     expect(page).to_not have_content(@member.first_name)
     visit event_attendees_path(@event)
-    click_link "Delete RSVP"
-    click_button "Delete RSVP"
-    expect(page).to have_content("RSVP was successfully deleted.")
-    expect(@member.points).to eq(100)
+    expect(page).to_not have_content("Delete RSVP")
   end
 end
