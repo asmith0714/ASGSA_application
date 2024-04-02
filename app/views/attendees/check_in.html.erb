@@ -69,12 +69,12 @@
                     <% if attendee == nil %>
                       <td> Non-RSVP </td>
                       <td>
-                        <%= link_to "Check In", new_check_in_event_attendees_path(@event, member_id: member.member_id, member_filter: params[:member_filter]), class: "btn btn-secondary" %>
+                        <%= link_to "Check In", new_check_in_event_attendees_path(@event, member_id: member.member_id, member_filter: params[:member_filter]), class: "btn btn-success" %>
                       </td>
                     <% elsif !attendee.attended %>
                       <td> RSVP </td>
                       <td>
-                        <%= link_to "Check In", edit_event_attendee_path(@event, attendee, member_filter: params[:member_filter]), class: "btn btn-secondary" %>
+                        <%= link_to "Check In", edit_event_attendee_path(@event, attendee, member_filter: params[:member_filter]), class: "btn btn-success" %>
                       </td>
                     <% else %>
                       <td> Attended </td>

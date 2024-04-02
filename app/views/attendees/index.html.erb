@@ -67,7 +67,7 @@
                   <td><%= member.position %></td>
                   <td> 
                     <% if attendee.member_id == current_member.member_id %>
-                      <%= link_to("Delete RSVP", delete_event_attendee_path(@event, attendee), class: 'action delete') %>
+                      <%= link_to("Delete RSVP", delete_event_attendee_path(@event, attendee), class: "btn btn-danger") %>
                     <% end %> 
                   </td>
                 </tr>
