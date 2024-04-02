@@ -15,13 +15,20 @@
       <% @events.order(:date, :start_time).last(3).each do |event| %>
         <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; padding: 1% 1%">
           <div class="card-body">
-            <h3 class="card-title" style="font-size: max(24px, 2.5vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Location: <%= event.location %></p>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Capacity: <%= event.capacity %></p>
-            <p class="card-text" style="font-size: max(16px, 1.5vw); margin: 5% 2%">Points: <%= event.points %></p>
+            <h3 class="card-title" style="font-size: max(24px, 2vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Location: <%= event.location %></p>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">
+              Spots Left:
+                <% if event.capacity.present? %>
+                  <%= event.capacity - event.attendees.count %>
+                <% else %>
+                  No Limit
+                <% end %>
+              </p>
+            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Points: <%= event.points %></p>
             <% if member_signed_in? %>
-              <%= link_to "View Event", event_path(event), class: "btn btn-primary", style: "font-size: max(16px, 1.5vw); padding: 5% 5%" %>
+              <%= link_to "View Event", event_path(event), class: "btn btn-primary", style: "font-size: max(16px, 1vw); padding: 5% 5%" %>
             <% end %>
           </div>
         </div>
