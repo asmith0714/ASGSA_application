@@ -178,10 +178,12 @@
     $(document).ready(function(){
       $('.toast').toast('show');
       var toastEl = document.getElementById('special');
-      var toast = new bootstrap.Toast(toastEl, {
-        autohide: false
-      });
-      toast.show();
+      if (toastEl) {
+        var toast = new bootstrap.Toast(toastEl, {
+          autohide: false
+        });
+        toast.show();
+      }
     });
   </script>
 </html>
