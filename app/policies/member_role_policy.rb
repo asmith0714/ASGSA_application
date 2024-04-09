@@ -43,6 +43,14 @@ class MemberRolePolicy < ApplicationPolicy
     admin_officer?
   end
 
+  def approve?
+    admin_officer?
+  end
+
+  def reject?
+    admin_officer?
+  end
+
   # def admin_officer_member_info?
   #   user.admin? || user.officer? || record.id == user.id
   # end
