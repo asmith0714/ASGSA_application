@@ -12,7 +12,7 @@
   <div class="upcoming-events">
     <h2 class="display-4" style="font-size: max(24px, 3vw);">Upcoming Events</h2>
     <div class="upcoming-events-list">
-      <% @events.order(:date, :start_time).last(3).each do |event| %>
+      <% @events.where('date >= ?', Date.today).order(:date, :start_time).last(3).each do |event| %>
         <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; padding: 1% 1%; max-width: 100%">
           <div class="card-body">
             <h3 class="card-title" style="font-size: max(24px, 2vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>

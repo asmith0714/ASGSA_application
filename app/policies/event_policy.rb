@@ -37,7 +37,7 @@ class EventPolicy < ApplicationPolicy
   end
 
   def delete_confirmation?
-    admin_officer?
+    false
   end
 
   def admin_officer_member_info?

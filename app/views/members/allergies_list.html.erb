@@ -68,7 +68,11 @@
                         <%= link_to "<i class='fas fa-edit'></i>".html_safe, edit_member_path(member), class: "btn btn-primary rounded mr-1", id: "edit_btn", style: "background-color: #007bff; border-color: #007bff" %>
                     <% end %>
                     <% if can_see_all_attributes %>
-                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, delete_confirmation_member_path(member), method: :get, class: "btn btn-danger rounded mr-1", id: "delete_btn" %>
+                      <%= form_with(model: member, method: :delete, html: { onsubmit: "return confirm('Are you sure you want to delete this member?');" }) do |form| %>
+                        <%= form.button type: :submit, class: "btn btn-danger rounded mr-2", id: "delete_btn" do %>
+                          <i class='fas fa-trash'></i>
+                        <% end %>
+                      <% end %>
                     <% end %>
                   </div>
                   </td>
