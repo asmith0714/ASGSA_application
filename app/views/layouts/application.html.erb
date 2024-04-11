@@ -71,8 +71,13 @@
           <li class="nav-item"><%= link_to 'Members', members_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'Events', events_path, class: 'nav-link' %></li>
           <% if member_signed_in? && policy(current_member).admin_officer? %>
-           <li class="nav-item"><%= link_to 'Notifications', notifications_path, class: 'nav-link' %></li>
-           <li class="nav-item"><%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Notifications', notifications_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %>
+              <% pending_approval = Member.joins(:member_roles).where(member_roles: { role: 'Unapproved' }).count %>
+              <% if pending_approval > 0 %>
+                <span class="badge badge-danger"><%= pending_approval %></span>
+              <% end %>
+           </li>
           <% end %>
           <% if member_signed_in? && policy(current_member).admin? %>
             <li class="nav-item"><%= link_to "Role Management", member_roles_path, class: "nav-link" %></li>
