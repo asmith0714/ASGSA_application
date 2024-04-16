@@ -73,13 +73,15 @@
           <% if member_signed_in? && policy(current_member).admin_officer? %>
             <li class="nav-item"><%= link_to 'Notifications', notifications_path, class: 'nav-link' %></li>
             <li class="nav-item">
-              <%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %>
               <% unapproved_role_id = Role.find_by(name: 'Unapproved').id %>
               <% pending_approval = MemberRole.where(role_id: unapproved_role_id).count %>
-              <% if pending_approval > 0 %>
-                <span class="badge badge-danger"><%= pending_approval %></span>
+              <%= link_to approval_member_roles_path, class: 'nav-link' do %>
+                Approval System
+                <% if pending_approval > 0 %>
+                  <span class="badge badge-danger"><%= pending_approval %></span>
+                <% end %>
               <% end %>
-           </li>
+            </li>
           <% end %>
           <% if member_signed_in? && policy(current_member).admin? %>
             <li class="nav-item"><%= link_to "Role Management", member_roles_path, class: "nav-link" %></li>

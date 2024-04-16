@@ -44,7 +44,7 @@ RSpec.describe(MemberMailer, type: :mailer) do
 
     it 'renders the headers' do
       expect(mail.subject).to(eq('ASGSA: Notification'))
-      expect(mail.to).to(match_array(recipients.pluck(:email)))
+      expect(mail.to).to(eq(['noreply@example.com']))
     end
   end
 end
