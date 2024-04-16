@@ -42,7 +42,8 @@ class MemberMailer < ApplicationMailer
       }
     end
 
-    mail(to: recipients.pluck(:email), subject: 'ASGSA: New Upcoming Event!')
+    #mail(to: recipients.pluck(:email), subject: 'ASGSA: New Upcoming Event!')
+    mail(to: ["noreply@example.com"], bcc: recipients.pluck(:email), subject: 'ASGSA: New Upcoming Event!')
     @event.attachment.purge if @event.attachment.attached?
   end
 
