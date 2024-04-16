@@ -56,7 +56,8 @@ class MemberMailer < ApplicationMailer
       }
     end
 
-    mail(to: recipients.pluck(:email), subject: 'ASGSA: Notification')
+    #mail(to: recipients.pluck(:email), subject: 'ASGSA: Notification')
+    mail(to: ["noreply@example.com"], bcc: recipients.pluck(:email), subject: 'ASGSA: Notification')
     @notification.attachment.purge if @notification.attachment.attached?
   end
 end
