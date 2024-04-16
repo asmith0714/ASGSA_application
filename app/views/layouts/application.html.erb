@@ -10,6 +10,8 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag 'https://code.jquery.com/jquery-3.5.1.slim.min.js' %>
+    <%= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
     <style>
         .flash__alert   { color: red; }
         .flash__notice  { color: blue; }
@@ -54,7 +56,7 @@
         Animal Science Graduate Student Association
       </div>
       <% if member_signed_in? && !policy(current_member).approved? %>
-        <div class="alert alert-warning" role="alert" style= "position: absolute; top: 15%; left: 40%;">
+        <div class="alert alert-warning" role="alert" style="margin-right: 5%; padding: 1vw; font-size: max(16px, 1vw);">
           Your account is pending approval. Once approved, you will receive an email notification and be able to access the website.
         </div>
       <% end %>
@@ -69,8 +71,13 @@
           <li class="nav-item"><%= link_to 'Members', members_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'Events', events_path, class: 'nav-link' %></li>
           <% if member_signed_in? && policy(current_member).admin_officer? %>
-           <li class="nav-item"><%= link_to 'Notifications', notifications_path, class: 'nav-link' %></li>
-           <li class="nav-item"><%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Notifications', notifications_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Approval System', approval_member_roles_path, class: 'nav-link' %>
+              <% pending_approval = Member.joins(:member_roles).where(member_roles: { role: 'Unapproved' }).count %>
+              <% if pending_approval > 0 %>
+                <span class="badge badge-danger"><%= pending_approval %></span>
+              <% end %>
+           </li>
           <% end %>
           <% if member_signed_in? && policy(current_member).admin? %>
             <li class="nav-item"><%= link_to "Role Management", member_roles_path, class: "nav-link" %></li>
@@ -133,7 +140,9 @@
                 <i class="fa-brands fa-x-twitter fa-xl"></i> - @TAMU_ASGSA_
               <% end %>
               <br>
-              <i class="fa-solid fa-envelope fa-xl"></i> - asgsa@ag.tamu.edu
+              <%= link_to "mailto:asgsa@ag.tamu.edu", target: "_blank", style: "color: white; text-decoration: none" do %>
+                <i class="fa-solid fa-envelope fa-xl"></i> - asgsa@ag.tamu.edu
+              <% end %>
             </div>
           </div>
           <div class="col-md-4" style="height: fit-content">
@@ -176,10 +185,12 @@
     $(document).ready(function(){
       $('.toast').toast('show');
       var toastEl = document.getElementById('special');
-      var toast = new bootstrap.Toast(toastEl, {
-        autohide: false
-      });
-      toast.show();
+      if (toastEl) {
+        var toast = new bootstrap.Toast(toastEl, {
+          autohide: false
+        });
+        toast.show();
+      }
     });
   </script>
 </html>

@@ -12,19 +12,31 @@
   <div class="upcoming-events">
     <h2 class="display-4" style="font-size: max(24px, 3vw);">Upcoming Events</h2>
     <div class="upcoming-events-list">
-      <% @events.order(:date, :start_time).last(3).each do |event| %>
-        <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; padding: 1% 1%; max-width: 100%">
-          <div class="card-body">
-            <h3 class="card-title" style="font-size: max(24px, 2vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
-            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Location: <%= event.location %></p>
-            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
-            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Capacity: <%= event.capacity %></p>
-            <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Points: <%= event.points %></p>
-            <% if member_signed_in? %>
-              <%= link_to "View Event", event_path(event), class: "btn btn-primary", style: "font-size: max(16px, 1.5vw); padding: 5% 5%" %>
-            <% end %>
+      <% upcoming_events = @events.where('date >= ?', Date.today).order(:date, :start_time).last(3) %>
+      <% if upcoming_events.any? %>
+        <% upcoming_events.each do |event| %>
+          <div class="event card mb-3 col" style="margin-top: 3%; font-weight: 400; padding: 1% 1%; max-width: 100%">
+            <div class="card-body">
+              <h3 class="card-title" style="font-size: max(24px, 2vw); margin: 10% 2%"><%= event.date.strftime('%m/%d') %> - <%= event.name %></h3>
+              <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Location: <%= event.location %></p>
+              <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Time: <%= event.start_time.strftime('%I:%M %p') %> - <%= event.end_time.strftime('%I:%M %p') %></p>
+              <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">
+                Spots Left:
+                <% if event.capacity.present? %>
+                  <%= event.capacity - event.attendees.count %>
+                <% else %>
+                  No Limit
+                <% end %>
+              </p>
+              <p class="card-text" style="font-size: max(16px, 1vw); margin: 5% 2%">Points: <%= event.points %></p>
+              <% if member_signed_in? %>
+                <%= link_to "View Event", event_path(event), class: "btn btn-primary", style: "font-size: max(16px, 1vw); padding: 5% 5%" %>
+              <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p class="h5 sidebar-empty-events" style="text-align: center; color: grey; padding: 0 22%; font-size: max(20px, 1vw)">No Upcoming Events</p>
       <% end %>
     </div>
   </div>

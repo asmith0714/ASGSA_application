@@ -42,8 +42,9 @@ class NotificationsController < ApplicationController
       if @notification.save
         case params[:send_email]
         when 'all'
-          # Send email to all members
-          MemberMailer.notification_email(@notification, Member.all).deliver_now
+          # Send email to all members expect those with role "Unapproved"
+          approved_members = Member.joins(:member_roles).where.not(member_roles: { role: 'Unapproved' })
+          MemberMailer.event_email(@event, approved_members).deliver_now
         when 'officers'
           # Send email to officers only
           officer_role = Role.find_by(name: 'Officer')

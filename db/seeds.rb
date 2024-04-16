@@ -27,7 +27,9 @@
     permissions: 'None'
   }
 ].each do |role|
-  Role.find_or_create_by!(role)
+  unless Role.exists?(name: role[:name])
+    Role.create!(role)
+  end
 end
 
 # Create a mock event

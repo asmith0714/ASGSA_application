@@ -40,7 +40,7 @@ RSpec.describe(EventPolicy) do
     end
   end
 
-  permissions :new?, :create?, :edit?, :update?, :destroy?, :delete_confirmation? do
+  permissions :new?, :create?, :edit?, :update?, :destroy? do
     it 'grants access to admin and officer' do
       expect(subject).to(permit(admin, event))
       expect(subject).to(permit(officer, event))

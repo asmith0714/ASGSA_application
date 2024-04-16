@@ -94,9 +94,9 @@ RSpec.describe(MemberPolicy, type: :policy) do
   end
 
   describe '#delete_confirmation?' do
-    it 'allows admin and officer to access delete confirmation' do
-      expect(described_class.new(admin, member)).to(be_delete_confirmation)
-      expect(described_class.new(officer, member)).to(be_delete_confirmation)
+    it 'denies admin and officer from accessing delete confirmation' do
+      expect(described_class.new(admin, member)).not_to(be_delete_confirmation)
+      expect(described_class.new(officer, member)).not_to(be_delete_confirmation)
     end
 
     it 'denies regular members from accessing delete confirmation' do
