@@ -112,4 +112,6 @@ Rails.application.configure do
     open_timeout:         5,
     read_timeout:         5 
   }
+
+  Rails.application.routes.default_url_options[:host] = 'asgsa-application-47c548b63283.herokuapp.com'
 end
