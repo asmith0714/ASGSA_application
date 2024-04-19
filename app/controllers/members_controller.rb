@@ -89,7 +89,7 @@ class MembersController < ApplicationController
   # DELETE /members/1 or /members/1.json
   def destroy
     authorize(@member)
-    #@member.destroy!
+    @member.destroy!
 
     respond_to do |format|
       if @member.destroyed?
