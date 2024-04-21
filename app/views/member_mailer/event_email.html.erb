@@ -27,7 +27,12 @@
         <strong>Capacity: </strong><%= @event.capacity || 'No Limit' %>
         <br>
         <strong>Points: </strong><%= @event.points %>
-  
+        
+        <br>
+        <% @link = event_attendees_url(@event) %>
+        <a href="<%= @link %>">RSVP for this event</a>
+        <br>
+        <a href="https://asgsa-application-47c548b63283.herokuapp.com">Website Link</a>
     </p>
 </body>
 </html>

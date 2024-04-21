@@ -98,7 +98,7 @@ class MembersController < ApplicationController
         format.json { head(:no_content) }
       else
         flash[:alert] = 'Can\'t delete last Admin User'
-        format.html { redirect_to(delete_confirmation_member_path) }
+        format.html { redirect_to(members_path) }
         format.json { render(json: @member.errors, status: :unprocessable_entity) }
       end
     end

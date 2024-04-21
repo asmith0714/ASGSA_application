@@ -12,7 +12,9 @@
       | <%= link_to "Edit Profile", edit_member_path(@member) %>
       <% end %>
       <% if policy(current_member).admin? %>
-        | <%= link_to "Delete Member", @member, method: :delete %>
+        | <%= form_with(model: @member, method: :delete, html: { onsubmit: "return confirm('Are you sure you want to delete this member?');", style: "display: inline" }) do |form| %>
+            <%= form.button "Delete Member", type: :submit, class: "btn btn-link", style: "padding: 0; border: 0; margin-top: -0.75%" %>
+          <% end %>
       <% end %>
       <div class="row justify-content-center align-items-center mt-3">
         <div class="">

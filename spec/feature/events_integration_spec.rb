@@ -145,8 +145,7 @@ RSpec.describe('EventsFeature', type: :feature) do
     event = Event.create!(new_event)
 
     visit event_path(event)
-    click_link 'Delete Event'
-    click_button 'Delete'
+    click_button 'Delete Event'
 
     expect(page).to(have_content('Event was successfully deleted.'))
     # expect(page).not_to have_content(event.name)

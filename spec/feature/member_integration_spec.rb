@@ -59,11 +59,11 @@ RSpec.describe('MemberFeatures', type: :feature) do
   end
 
   it 'Delete a member' do
-    visit delete_confirmation_member_path(@member1)
+    visit member_path(@member1)
     expect(page).to(have_content(@member1.first_name))
 
-    click_button 'Delete this member'
+    click_button 'Delete Member'
 
-    expect(page).to(have_content('You need to sign in or sign up before continuing.'))
+    expect(page).to(have_content("You need to sign in or sign up before continuing"))
   end
 end

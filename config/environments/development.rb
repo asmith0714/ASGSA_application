@@ -91,4 +91,6 @@ Rails.application.configure do
     open_timeout:         5,
     read_timeout:         5 
   }
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end
