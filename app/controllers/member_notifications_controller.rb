@@ -35,6 +35,12 @@ class MemberNotificationsController < ApplicationController
     authorize(MemberNotification)
   end
 
+  def toggle_seen
+    @member_notification = MemberNotification.find(params[:id])
+    @member_notification.update!(seen: !@member_notification.seen)
+    redirect_back(fallback_location: member_notifications_path)
+  end
+
   def mark_seen
     @member_notification = MemberNotification.find(params[:id])
 

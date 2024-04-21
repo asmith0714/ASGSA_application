@@ -69,9 +69,11 @@ Rails.application.routes.draw do
       get 'delete_confirmation'
     end
   end
+
   resources :member_notifications do
     member do
       patch 'mark_seen'
+      patch 'toggle_seen'
     end
   end
 
