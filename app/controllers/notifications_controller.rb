@@ -7,6 +7,16 @@ class NotificationsController < ApplicationController
   def index
     authorize(Notification)
     @notifications = Notification.all
+    @notifications = @notifications.search(params[:query]) if params[:query].present?
+    @pagy, @notifcations = pagy(@notifications.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+  end
+
+  def sort_column
+    %w[title description event seen].include?(params[:sort]) ? params[:sort] : 'seen'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   # GET /notifications/1 or /notifications/1.json
