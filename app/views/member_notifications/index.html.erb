@@ -32,11 +32,11 @@
           <table class="table table-hover table-striped table-sm">
             <thead>
               <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Event</th>
-                <th scope="col">Seen</th>
-                <th scope="col" style="width: 10%"></th>
+              <th scope="col" style="width: 10%">Title</th>
+              <th scope="col" style="width: 65%">Description</th>
+              <th scope="col">Event</th>
+              <th scope="col">Seen</th>
+              <th scope="col" style="width: 10%"></th>
               </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
                   <% if member_notification.notification.event %>
                     <td><%= member_notification.notification.event.name %></td>
                   <% else %>
-                    <td>N/a</td>
+                    <td>N/A</td>
                   <% end %>
                   <td>
                     <% if member_notification.seen %>
