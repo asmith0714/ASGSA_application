@@ -69,7 +69,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @events.order(date: :asc, start_time: :desc).each do |event| %>
+              <% @events.order(start_time: :asc).each do |event| %>
                 <tr>
                   <td><%= event.name %></td>
                   <td><%= event.date.strftime('%m/%d/%y') %></td>
