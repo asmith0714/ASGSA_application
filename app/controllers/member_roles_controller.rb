@@ -11,8 +11,8 @@ class MemberRolesController < ApplicationController
                                                                 "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%"
       )
     end
-    @pagy, @member_roles = pagy(@member_roles.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
     @member_roles = @member_roles.joins(:role).where(roles: { name: params[:role] }) if params[:role].present?
+    @pagy, @member_roles = pagy(@member_roles.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
   def sort_column
@@ -59,13 +59,13 @@ class MemberRolesController < ApplicationController
 
   def approval
     authorize(MemberRole)
-    @pagy, @member_roles = pagy(MemberRole.joins(:role).where(roles: { name: 'Unapproved' }))
-    @member_roles2 = MemberRole.all
+    @member_roles = MemberRole.joins(:role).where(roles: { name: 'Unapproved' })
     if params[:query].present?
-      @member_roles2 = @member_roles2.joins(:member, :role).where('members.first_name ILIKE ? OR members.last_name ILIKE ?',
+      @member_roles = @member_roles.joins(:member, :role).where('members.first_name ILIKE ? OR members.last_name ILIKE ?',
                                                                   "%#{params[:query]}%", "%#{params[:query]}%"
       )
     end
+    @pagy, @member_roles = pagy(@member_roles, items: params.fetch(:count, 10))
   end
 
   # POST /member_roles or /member_roles.json
