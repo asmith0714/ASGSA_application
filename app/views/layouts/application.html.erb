@@ -126,7 +126,7 @@
       <%= yield %>
     </div>
 
-    <% unless action_name == 'edit' || (action_name == 'show' && (controller_name == 'members' || controller_name == 'events' || controller_name == 'attendees' || controller_name == 'notifications')) || (action_name == 'new' && (controller_name == 'members' || controller_name == 'events' || controller_name == 'attendees' || controller_name == 'notifications')) || (action_name == 'index' && controller_name == 'notifications') || action_name == 'delete_confirmation' %>
+    <% unless action_name == 'edit' || (action_name == 'show' && (controller_name == 'members' || controller_name == 'events' || controller_name == 'attendees' || controller_name == 'notifications')) || (action_name == 'new' && (controller_name == 'members' || controller_name == 'events' || controller_name == 'attendees' || controller_name == 'notifications')) || action_name == 'delete_confirmation' || action_name == 'new_check_in' || (action_name == 'delete' && controller_name == 'attendees') %>
       <div class="footer" style="margin-top: 0">
         <div class="flex-row">
           <div class="col-md-4" style="height: fit-content">

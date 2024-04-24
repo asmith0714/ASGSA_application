@@ -8,7 +8,7 @@ class MemberNotificationsController < ApplicationController
     authorize(MemberNotification)
     @member_notifications = MemberNotification.where(member_id: current_member.id).all
     @member_notifications = @member_notifications.search(params[:query]) if params[:query].present?
-    @pagy, @member_notifcations = pagy(@member_notifications.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+    @pagy, @member_notifications = pagy(@member_notifications.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
   def sort_column
@@ -33,6 +33,12 @@ class MemberNotificationsController < ApplicationController
   # GET /member_notifications/1/edit
   def edit
     authorize(MemberNotification)
+  end
+
+  def toggle_seen
+    @member_notification = MemberNotification.find(params[:id])
+    @member_notification.update!(seen: !@member_notification.seen)
+    redirect_back(fallback_location: member_notifications_path)
   end
 
   def mark_seen

@@ -8,9 +8,8 @@ class MembersController < ApplicationController
     authorize(Member)
     @members = Member.all
     @members = @members.general_search(params[:query]) if params[:query].present?
-    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
-
     @members = @members.where(area_of_study: params[:area_of_study]) if params[:area_of_study].present?
+    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
   def sort

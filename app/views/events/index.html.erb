@@ -4,9 +4,7 @@
 <div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover;">
   <div class="card">
     <div class="card-header">
-      <h1>
-      Events
-      <br>
+      <h1>Events</h1>
       <div class="row px-2">
         <% if can_see_all_attributes %>
           <div class='col-auto mx-0 px-1'>
@@ -18,7 +16,6 @@
           </div>
         <% end %>
       </div>
-      </h1>
     </div>
     <div class="card-body">
       <%= turbo_frame_tag "events" do %>
@@ -72,7 +69,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @events.order(date: :asc, start_time: :desc).each do |event| %>
+              <% @events.order(start_time: :asc).each do |event| %>
                 <tr>
                   <td><%= event.name %></td>
                   <td><%= event.date.strftime('%m/%d/%y') %></td>

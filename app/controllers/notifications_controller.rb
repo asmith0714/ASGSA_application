@@ -7,6 +7,16 @@ class NotificationsController < ApplicationController
   def index
     authorize(Notification)
     @notifications = Notification.all
+    @notifications = @notifications.search(params[:query]) if params[:query].present?
+    @pagy, @notifications = pagy(@notifications.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+  end
+
+  def sort_column
+    %w[notification_id title description event].include?(params[:sort]) ? params[:sort] : 'notification_id'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 
   # GET /notifications/1 or /notifications/1.json
@@ -54,8 +64,11 @@ class NotificationsController < ApplicationController
         when 'officers'
           # Send email to officers only
           officer_role = Role.find_by(name: 'Officer')
-          @members = officer_role.members if officer_role
-          MemberMailer.notification_email(@notification, @members).deliver_now if @members
+          admin_role = Role.find_by(name: 'Admin')
+          officers = officer_role.members if officer_role
+          admins = admin_role.members if admin_role
+          approved_members = officers + admins
+          MemberMailer.notification_email(@notification, approved_members).deliver_now if (officers || admins)
         when 'members'
           # Send email to members only
           member_role = Role.find_by(name: 'Member')
