@@ -7,11 +7,8 @@
 <div class="entity-table" style="background-image: url(<%= asset_path 'tamu_stock2.jpg' %>); background-size: cover;">
   <div class="card">
     <div class="card-header">
-      <h1>
-      Members
-      <br>
+      <h1>Members</h1>
       <%= link_to "Allergies List", allergies_list_members_path, class: "btn btn-primary" %>
-      </h1>
     </div>
     <div class="card-body">
       <%= turbo_frame_tag "members" do %>

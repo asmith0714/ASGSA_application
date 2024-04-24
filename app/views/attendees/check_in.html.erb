@@ -5,7 +5,7 @@
       <%= link_to 'Add Points', add_points_event_attendees_path, class: 'btn btn-primary' %>
     </div>
       <div class="card-body">
-        <%= link_to("Back To Event", event_attendees_path(@event))%>
+        <%= link_to("Back To RSVP List", event_attendees_path(@event))%>
         <%= turbo_frame_tag "members" do %>
           <p id="notice" class="mb-4"><%= notice %></p>
         <div class="entity-filter">

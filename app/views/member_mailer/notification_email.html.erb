@@ -4,26 +4,28 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h3 class="card-title"> <%= @notification.title %></h3>
+    <h1 class="card-title"><u><%= @notification.title %></u></h1>
     <p>
         <%= @notification.description %>
         <br>
         <% if @notification.event %>
-            Event: <%= @notification.event.name %> <br>
-            <%= @notification.event.category %><br>
-            <% if @notification.event.description %>
-              Description: <%= @notification.event.description %> <br>
-            <% end %>
+            <h1><u>Linked Event</u></h1>
+            <h2 style="margin-bottom: 0;"><%= @notification.event.name %> - <%= @notification.event.category %></h2><br>
+            <strong>Date:</strong> <%= @notification.event.date.strftime('%m/%d') %><br>
+            <strong>Time:</strong> <%= @notification.event.start_time&.strftime("%I:%M %p") %> - <%= @notification.event.end_time&.strftime("%I:%M %p") %><br>
+            <strong>Location:</strong> <%= @notification.event.location %><br>
+            <strong>Capacity:</strong> <%= @notification.event.capacity || 'No Limit' %><br>
+            <strong>Points:</strong> <%= @notification.event.points %><br>
             <% if @notification.event.contact_info %>
-              Contact Info: <%= @notification.event.contact_info %> <br>
+              <strong>Contact Info:</strong> <%= @notification.event.contact_info %> <br>
             <% end %>
-            Time: <%= @notification.event.start_time&.strftime("%I:%M %p") %> - <%= @notification.event.end_time&.strftime("%I:%M %p") %><br>
-            Date: <%= @notification.event.date %><br>
-            Location: <%= @notification.event.location %><br>
-            Capacity: <%= @notification.event.capacity || 'No Limit' %><br>
-            Points: <%= @notification.event.points %>
+            <% if @notification.event.description %>
+              <strong>Description:</strong> <%= @notification.event.description %> <br>
+            <% end %>
+            <br>
+            <a href="<%= event_attendees_url(@notification.event) %>">RSVP for Event</a>
+            <br>
         <% end %>
-
         <br>
         <br>
         <a href="https://asgsa-application-47c548b63283.herokuapp.com">Website Link</a>

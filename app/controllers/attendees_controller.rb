@@ -7,9 +7,9 @@ class AttendeesController < ApplicationController
   # GET /attendees or /attendees.json
   def index
     authorize(Attendee)
-    @members = Member.all
     @attendees = Attendee.where(event_id: params[:event_id])
-    @members = @members.search(params[:query]) if params[:query].present?
+    @members = Member.where(member_id: @attendees.pluck(:member_id))
+    @members = @members.general_search(params[:query]) if params[:query].present?
     @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
 
     @current_time = Time.zone.now
@@ -92,18 +92,20 @@ class AttendeesController < ApplicationController
     @members = Member.all
     @members = @members.general_search(params[:query]) if params[:query].present?
 
-    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+    
 
     case params[:member_filter]
     when 'Attended'
-      @members = attendees.where(attended: true).map(&:member)
+      @members = @members.where(member_id: attendees.where(attended: true).pluck(:member_id))
     when 'Non-RSVP'
       @members = @members.where.not(member_id: attendees.pluck(:member_id))
     when 'All Members'
 
-    else
-      @members = attendees.where(rsvp: true, attended: false).map(&:member)
+    else # Default 'RSVP'
+      @members = @members.where(member_id: attendees.where(rsvp: true, attended: false).pluck(:member_id))
     end
+
+    @pagy, @members = pagy(@members.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
   def add_points

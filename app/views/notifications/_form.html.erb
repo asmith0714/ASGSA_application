@@ -37,7 +37,7 @@
               <%= form.label :event, 'Event', class: 'form-label' %>
             <div class="row">
               <div class="col-md-4 mb-3">
-                <%= form.select :event_id, options_for_select(Event.all.map{|e|[e.name, e.id]}, selected: notification.event_id || nil), {include_blank: true}, {class: 'form-control'} %>
+                <%= form.select :event_id, options_for_select(Event.where(archive: false).order(date: :asc).map{|e|[e.name, e.id]}, selected: notification.event_id || nil), {include_blank: true}, {class: 'form-control'} %>
               </div>
 
               <div class="md-6 mb-3"
