@@ -49,12 +49,16 @@ class Member < ApplicationRecord
 
   def self.from_google(email:, first_name:, last_name:, uid:, avatar_url:)
     first_time = !Member.exists?(email: email)
+    first_member = !Member.exists?
     return nil unless /@tamu.edu\z/.match?(email)
 
     member = create_with(uid: uid, first_name: first_name, last_name: last_name, avatar_url: avatar_url, points: 0, position: 'Member',
                          date_joined: Time.current, food_allergies: 'None'
     ).find_or_create_by!(email: email)
     role = Role.find_by(name: 'Unapproved')
+    if first_member
+      role = Role.find_by(name: 'Admin')
+    end
     MemberRole.create!(member: member, role: role) if first_time
     [member, first_time]
   end
