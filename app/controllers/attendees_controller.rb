@@ -117,6 +117,8 @@ class AttendeesController < ApplicationController
       member.update!(points: points_update)
     end
 
+    MemberMailer.checked_in_email(@event, members).deliver_now if members.present?
+
     flash[:notice] = 'Points successfully added to all attended members.'
     redirect_to(check_in_event_attendees_path(@event))
   end

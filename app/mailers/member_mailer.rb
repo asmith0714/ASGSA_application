@@ -61,4 +61,11 @@ class MemberMailer < ApplicationMailer
     mail(to: ["noreply@example.com"], bcc: recipients.pluck(:email), subject: 'ASGSA: Notification')
     @notification.attachment.purge if @notification.attachment.attached?
   end
+
+  def checked_in_email(event, members)
+    @event = event
+    @members = members
+
+    mail(to: ["noreply@example.com"], bcc: members.pluck(:email), subject: 'ASGSA: Successfully Checked In')
+  end
 end
