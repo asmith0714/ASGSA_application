@@ -24,13 +24,13 @@
 
           <div class="card-body">
             <div class="mb-3">
-              <%= form.label :title, 'Title', class: 'form-label' %>
+              <%= form.label :title, 'Title', class: 'form-label required' %>
               <%= form.text_field :title, required: true, class: 'form-control' %>
             </div>
 
             <div class="mb-3">
-              <%= form.label :description, 'Description', class: 'form-label' %>
-              <%= form.text_area :description, class: 'form-control' %>
+              <%= form.label :description, 'Description', class: 'form-label required' %>
+              <%= form.text_area :description, required: true, class: 'form-control' %>
             </div>
 
             <div class="mb-3">
