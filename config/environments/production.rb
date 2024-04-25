@@ -99,7 +99,7 @@ Rails.application.configure do
   ENV['GOOGLE_OAUTH_CLIENT_SECRET'] = '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'
 
   config.action_mailer.delivery_method = :smtp
-  host = 'https://main-staging-app-e7463c3ab7aa.herokuapp.com'
+  host = 'https://asgsa-application-47c548b63283.herokuapp.com'
   config.action_mailer.default_url_options = { host: host }
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
