@@ -45,6 +45,7 @@ class MemberRolesController < ApplicationController
     member_role.update!(role: Role.find_by(name: 'Member'))
     MemberMailer.with(member: member).new_member_email.deliver_now
     flash[:success] = 'Account approved successfully'
+    redirect_to(approval_member_roles_path)
   end
 
   def reject
@@ -53,6 +54,7 @@ class MemberRolesController < ApplicationController
     member_role.destroy!
     member.destroy! if member.member_roles.empty?
     flash[:warning] = 'Account deleted successfully'
+    redirect_to(approval_member_roles_path)
   end
 
   def approval
