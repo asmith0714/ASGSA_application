@@ -75,26 +75,6 @@
           <%= form.label :description, 'Description', class: 'form-label' %>
           <%= form.text_area :description, class: 'form-control', style: 'height: 150px' %>
         </div>
-              
-        <div class="form-check mb-3">
-          <%= radio_button_tag :send_email, 'all', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_all, 'Notify change to everyone', class: 'form-check-label' %>
-        </div>
-
-        <div class="form-check mb-3">
-          <%= radio_button_tag :send_email, 'members', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_members, 'Notify change to members only', class: 'form-check-label' %>
-        </div>
-
-        <div class="form-check mb-3">
-          <%= radio_button_tag :send_email, 'officers', false, class: 'form-check-input' %>
-          <%= label_tag :send_email_officers, 'Notify change to officers only', class: 'form-check-label' %>
-        </div>
-
-        <div class="form-check mb-3">
-          <%= radio_button_tag :send_email, 'none', true, class: 'form-check-input' %>
-          <%= label_tag :send_email_members, 'Don\'t send notification', class: 'form-check-label' %>
-        </div>
             
         <%= form.submit 'Update Event', class: 'btn btn-primary'%>
       </div>

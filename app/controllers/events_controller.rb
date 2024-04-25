@@ -7,16 +7,7 @@ class EventsController < ApplicationController
     authorize(Event)
     @events = Event.all
     @events = @events.search(params[:query]) if params[:query].present?
-    # if params[:query].present?
-    #   if parsed_date = parse_mm_dd_yyyy(params[:query])
-    #     # If the search query is a valid date in MM/DD/YYYY format
-    #     @events = @events.where("date(date) = ?", parsed_date)
-    #   else
-    #     # If the search query is not a valid date, search in other fields
-    #     @events = @events.search(params[:query])
-    #   end
-    # end
-    @pagy, @events = pagy(@events.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
+    
 
     @events = case params[:filter]
               when 'Past Events'
@@ -26,29 +17,10 @@ class EventsController < ApplicationController
               else # Default to "Upcoming Events"
                 @events.where('date >= ? AND archive = ?', DateTime.now, false)
               end
+              
+    @pagy, @events = pagy(@events.reorder(sort_column => sort_direction), items: params.fetch(:count, 10))
   end
 
-  # def parse_mm_dd_yyyy(date_string)
-  #   begin
-  #     # Try parsing the date in MM/DD/YYYY format
-  #     Date.strptime(date_string, '%m/%d/%Y')
-  #   rescue ArgumentError
-  #     begin
-  #       # Try parsing the date with just month and day
-  #       Date.strptime(date_string, '%m/%d')
-  #     rescue ArgumentError
-  #       begin
-  #         # Try parsing the date with just day
-  #         Date.strptime(date_string, '%d')
-  #       rescue ArgumentError
-  #         # Handle if the date string is not in any expected format
-  #         nil
-  #       end
-  #     end
-  #   end
-  # end
-
-  # FIX NEED TO BE SORTED BY DATE AND TIME, ONLY DATE RIGHT NOW
   def sort_column
     %w[name date start_time end_time category capacity points].include?(params[:sort]) ? params[:sort] : 'date'
   end
@@ -99,8 +71,11 @@ class EventsController < ApplicationController
         when 'officers'
           # Send email to officers only
           officer_role = Role.find_by(name: 'Officer')
+          admin_role = Role.find_by(name: 'Admin')
           officers = officer_role.members if officer_role
-          MemberMailer.event_email(@event, officers).deliver_now if officers
+          admins = admin_role.members if admin_role
+          approved_members = officers + admins
+          MemberMailer.event_email(@event, approved_members).deliver_now if officers || admins
         when 'members'
           # Send email to members only
           member_role = Role.find_by(name: 'Member')

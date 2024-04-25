@@ -18,13 +18,13 @@
           </div>
 
           <div class="form-row align-items-center mb-3">
-            <div class="col-auto invisible">
-             <%# Search 
+            <div class="col-auto">
+              Search 
             </div>
             <div class="col-auto">
               <%= form.search_field :query, value: params[:query], onchange: "this.form.requestSubmit()", class: "form-control" %>
-            #%></div>
-          </div> 
+            </div>
+          </div>
           
         <% end %>
           
@@ -33,21 +33,21 @@
             <thead>
               <tr>
               <th scope="col" style="width: 10%">Title</th>
-              <th scope="col" style="width: 65%">Description</th>
-              <th scope="col">Event</th>
+              <th scope="col" style="width: 60%">Description</th>
+              <th scope="col" style="width: 15%">Linked Event</th>
               <th scope="col">Seen</th>
               <th scope="col" style="width: 10%"></th>
               </tr>
             </thead>
             <tbody>
-              <% @member_notifications.each do |member_notification| %>
+              <% @member_notifications.order(member_notification_id: :desc).each do |member_notification| %>
                 <tr>
                   <td><%= member_notification.notification.title %></td>
                   <td><%= member_notification.notification.description %></td>
                   <% if member_notification.notification.event %>
                     <td><%= member_notification.notification.event.name %></td>
                   <% else %>
-                    <td>N/a</td>
+                    <td>None</td>
                   <% end %>
                   <td>
                     <% if member_notification.seen %>
