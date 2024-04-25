@@ -74,6 +74,14 @@ class NotificationsController < ApplicationController
           member_role = Role.find_by(name: 'Member')
           @members = member_role.members if member_role
           MemberMailer.notification_email(@notification, @members).deliver_now if @members
+        else
+          member_role = Role.find_by(name: 'Member')
+          officer_role = Role.find_by(name: 'Officer')
+          admin_role = Role.find_by(name: 'Admin')
+          members = member_role.members if member_role
+          officers = officer_role.members if officer_role
+          admins = admin_role.members if admin_role
+          @members = members + officers + admins
         end
 
         # creates a member_notification for all members id selected
