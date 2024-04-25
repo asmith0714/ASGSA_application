@@ -59,16 +59,16 @@ class NotificationsController < ApplicationController
           members = member_role.members if member_role
           officers = officer_role.members if officer_role
           admins = admin_role.members if admin_role
-          approved_members = members + officers + admins
-          MemberMailer.notification_email(@notification, approved_members).deliver_now
+          @members = members + officers + admins
+          MemberMailer.notification_email(@notification, @members).deliver_now
         when 'officers'
           # Send email to officers only
           officer_role = Role.find_by(name: 'Officer')
           admin_role = Role.find_by(name: 'Admin')
           officers = officer_role.members if officer_role
           admins = admin_role.members if admin_role
-          approved_members = officers + admins
-          MemberMailer.notification_email(@notification, approved_members).deliver_now if (officers || admins)
+          @members = officers + admins
+          MemberMailer.notification_email(@notification, @members).deliver_now if @members
         when 'members'
           # Send email to members only
           member_role = Role.find_by(name: 'Member')
