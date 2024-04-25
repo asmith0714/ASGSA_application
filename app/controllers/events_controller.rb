@@ -75,7 +75,7 @@ class EventsController < ApplicationController
           officers = officer_role.members if officer_role
           admins = admin_role.members if admin_role
           approved_members = officers + admins
-          MemberMailer.event_email(@event, approved_members).deliver_now if officers || admins
+          MemberMailer.event_email(@event, approved_members).deliver_now if approved_members
         when 'members'
           # Send email to members only
           member_role = Role.find_by(name: 'Member')
