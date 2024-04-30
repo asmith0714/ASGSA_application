@@ -16,6 +16,7 @@ class Event < ApplicationRecord
   has_many :attendees, dependent: :destroy
   has_one_attached :attachment
   validate :acceptable_file
+  has_many :notifications, dependent: :destroy
 
   private
 
